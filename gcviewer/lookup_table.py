@@ -15,24 +15,29 @@ class LookupTable():
         pass
 
 
-class ImageLookupTable():
-    def __init__(self, path):
+class ArrayLookupTable(LookupTable):
+    def __init__(self, array):
         super().__init__()
-        self.image_data = scipy.misc.imread(path)
+        self.array = array
 
     def sample_position(self, pos):
         try:
-            color = self.image_data[pos[1], pos[0]]
+            color = self.array[pos[1], pos[0]]
             result = np.average(color)
             return result
         except IndexError:
             return None
 
 
-class FilteredImageDepthMmap(ImageLookupTable):
+class ImageLookupTable(ArrayLookupTable):
+    def __init__(self, path):
+        super().__init__(scipy.misc.imread(path))
+
+
+class FilteredImageLookupTable(ImageLookupTable):
     def __init__(self, path, filter_function):
         super().__init__(path)
-        self.image_data = filter_function(self.image_data)
+        self.array = filter_function(self.array)
 
 
 class ErodedImageLookupTable(ImageLookupTable):
@@ -41,7 +46,7 @@ class ErodedImageLookupTable(ImageLookupTable):
         self.erode_map(kernel)
 
     def erode_map(self, kernel):
-        self.image_data = ndimage.grey_erosion(self.image_data, kernel)
+        self.array = ndimage.grey_erosion(self.array, kernel)
 
 
 class HysteresisLookupTable(LookupTable):
@@ -89,7 +94,7 @@ class PerspectiveCorrectedLookupTable(ImageLookupTable):
     def __init__(self, path, fov):
         super().__init__(path)
         self.fov = fov
-        self.image_data = self.correct_depth_map(self.image_data, self.fov)
+        self.array = self.correct_depth_map(self.array, self.fov)
 
     @staticmethod
     def correct_depth_map(uncorrected_depthmap, fov, normalise=False):
