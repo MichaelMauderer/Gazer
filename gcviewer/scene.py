@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from gcviewer.interpolator import InstantInterpolator
 
 
 class Scene():
@@ -7,20 +8,16 @@ class Scene():
     def __init__(self):
         self.gaze_pos = None
 
-    @abstractmethod
     def update_gaze(self, pos):
-        pass
+        self.gaze_pos = pos
 
     @abstractmethod
     def render(self):
         pass
 
-    def update_gaze(self, pos):
-        self.gaze_pos = pos
-
 
 class ImageStackScene(Scene):
-    def __init__(self, image_manager, depth_map, interpolator):
+    def __init__(self, image_manager, depth_map, interpolator=InstantInterpolator()):
         self.image_manager = image_manager
         self.depth_map = depth_map
         self.interpolator = interpolator
@@ -31,10 +28,8 @@ class ImageStackScene(Scene):
 
         self.p = False
 
-
     def set_depth(self, depth):
         self.target_depth = depth
-
 
     def render(self):
         if not self.gaze_pos:

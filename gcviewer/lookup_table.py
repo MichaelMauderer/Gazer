@@ -3,7 +3,9 @@ from abc import ABCMeta
 import numpy as np
 from scipy import ndimage
 import scipy
+import logging
 
+logger = logging.getLogger(__name__)
 
 class LookupTable():
     __metaclass__ = ABCMeta
@@ -23,6 +25,7 @@ class ArrayLookupTable(LookupTable):
     def sample_position(self, pos):
         try:
             color = self.array[pos[1], pos[0]]
+            #Avoid issues with RGB images
             result = np.average(color)
             return result
         except IndexError:

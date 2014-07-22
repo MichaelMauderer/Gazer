@@ -23,7 +23,7 @@ def _get_scene(name):
     path_pattern = os.path.abspath('./resources/{0}_scene/{0}'.format(name) + '{0:0>3}.bmp')
 
     def depth_to_index(depth):
-        return math.floor(abs(depth - 255) / offset) + 1
+        return depth
 
     def depth_to_image_path(depth):
         return path_pattern.format(depth_to_index(depth))
