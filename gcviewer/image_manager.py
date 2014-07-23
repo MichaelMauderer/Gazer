@@ -4,7 +4,7 @@ import logging
 import numpy
 import pygame
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractproperty
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +23,14 @@ class ImageManager():
     def draw_image(self, key):
         pass
 
+    @abstractmethod
+    def load_array(self, key):
+        pass
+
+    @abstractproperty
+    def keys(self):
+        pass
+
 
 class ArrayStackImageManager(ImageManager):
     def __init__(self, arrays):
@@ -37,10 +45,16 @@ class ArrayStackImageManager(ImageManager):
             logger.warn('Image {} not found'.format(key))
             return None
 
-
     def load_image(self, key):
+        return self.load_array(key)
+
+    def load_array(self, key):
         array = self._get_array(key)
         return array
+
+    @property
+    def keys(self):
+        return range(len(self._arrays))
 
 
 class PyGameArrayStackManager(ArrayStackImageManager):
@@ -87,4 +101,14 @@ class PyGameImageManager(ImageManager):
         if image is not None:
             self.screen.blit(image, image.get_rect())
             pygame.display.flip()
+
+    def load_array(self, key):
+        image = self.load_image(key)
+        array = pygame.surfarray.pixels3d(image)
+        return array
+
+    @property
+    def keys(self):
+        #TODO fix this
+        return range(1,31)
 

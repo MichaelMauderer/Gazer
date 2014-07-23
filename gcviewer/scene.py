@@ -17,9 +17,9 @@ class Scene():
 
 
 class ImageStackScene(Scene):
-    def __init__(self, image_manager, depth_map, interpolator=InstantInterpolator()):
+    def __init__(self, image_manager, lookup_table, interpolator=InstantInterpolator()):
         self.image_manager = image_manager
-        self.depth_map = depth_map
+        self.lookup_table = lookup_table
         self.interpolator = interpolator
 
         self.current_depth = 0
@@ -34,7 +34,7 @@ class ImageStackScene(Scene):
     def render(self):
         if not self.gaze_pos:
             return
-        sampled_depth = self.depth_map.sample_position(self.gaze_pos)
+        sampled_depth = self.lookup_table.sample_position(self.gaze_pos)
         if sampled_depth is not None:
             self.interpolator.target = sampled_depth
         self.current_depth = self.interpolator.make_step()

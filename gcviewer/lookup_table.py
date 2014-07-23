@@ -63,7 +63,7 @@ class HysteresisLookupTable(LookupTable):
         try:
             color = depthmap[pos[1], pos[0]]
             depth = np.average(color)
-            self._current_index = self.depth_to_index(depth)
+            self._current_index = int(self.depth_to_index(depth))
             return depth
         except IndexError:
             return None
@@ -106,7 +106,7 @@ class PerspectiveCorrectedLookupTable(ImageLookupTable):
 
         Parameters
         ----------
-        depth_map : Depth map with distances to camera
+        lookup_table : Depth map with distances to camera
         fov : Angle of field of view (longest edge of the given scene) in radians.
         """
         depth_map = uncorrected_depthmap

@@ -2,28 +2,29 @@ import bson
 import scipy.misc
 import os
 import numpy
-import io
 import bz2
 
 import bson.json_util
 from bson import BSON
+from gcviewer.image_manager import ArrayStackImageManager
 
-from gcviewer.io import array_to_string
+from gcviewer.io import array_to_bytes, SimpleImageStack, write_file
+from gcviewer.lookup_table import ImageLookupTable, ArrayLookupTable
+from gcviewer.scene import ImageStackScene
 
 
-def convert_to_file(out_path, depth_array, arrays):
+def write_to_file(file, lut_array, arrays):
     wrapper = {'encoder': 'gcviewer',
                'version': '0.1',
                'compression': 'bz2',
                'type': 'simple_array_stack'
     }
-    data = {'lookup_table': array_to_string(depth_array),
-            'frames': {str(key): array_to_string(array) for key, array in enumerate(arrays)}
+    data = {'lookup_table': array_to_bytes(lut_array),
+            'frames': {str(key): array_to_bytes(array) for key, array in enumerate(arrays)}
     }
 
-    with open(out_path, 'w') as out_file:
-        wrapper['data'] = bz2.compress(BSON.encode(data))
-        out_file.write(bson.json_util.dumps(BSON.encode(wrapper)))
+    wrapper['data'] = bz2.compress(BSON.encode(data))
+    file.write(bson.json_util.dumps(BSON.encode(wrapper)))
 
 
 if __name__ == '__main__':
@@ -35,5 +36,9 @@ if __name__ == '__main__':
     for index in [i + 1 for i in range(30)]:
         array = scipy.misc.imread(path_pattern.format(index))
         frames.append(array)
+    lut = ArrayLookupTable(depth_array)
+    manager = ArrayStackImageManager(frames)
+    scene = ImageStackScene(manager, lut)
 
-    convert_to_file('out.gc', depth_array, frames)
+    with open('example_image.gc', 'w') as out_file:
+        write_file(out_file, scene)

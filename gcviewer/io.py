@@ -5,37 +5,78 @@ import bson.json_util
 import bz2
 import numpy
 import io
+import scipy
 from gcviewer.image_manager import ArrayStackImageManager, PyGameArrayStackManager
 from gcviewer.lookup_table import ArrayLookupTable
 from gcviewer.scene import ImageStackScene
+import png
 
 logger = logging.getLogger(__name__)
 
 
 class SimpleArrayStack():
-    def scene_from_data(self, data, screen):
+    @classmethod
+    def scene_from_data(cls, data, screen):
         data_dict = BSON.decode(data)
-        lut = ArrayLookupTable(string_to_array(data_dict['lookup_table']))
-        print(set(string_to_array(data_dict['lookup_table']).flatten()))
+        lut = ArrayLookupTable(cls._decode_array(data_dict['lookup_table']))
+        print(set(bytes_to_array(data_dict['lookup_table']).flatten()))
         print(sorted(map(float, data_dict['frames'].keys())))
-        frames = [numpy.flipud(numpy.rot90(string_to_array(value))) for key, value in
+        frames = [numpy.flipud(numpy.rot90(cls._decode_array(value))) for key, value in
                   sorted(data_dict['frames'].items(), key=lambda x: int(x[0]))]
         # print(frames)
         image_manager = PyGameArrayStackManager(frames, screen)
         scene = ImageStackScene(image_manager, lut)
         return scene
 
+    @classmethod
+    def data_from_scene(cls, scene):
+        lut_array = scene.lookup_table.array
+        lut_array_values = set(lut_array.flatten())
+
+        def frame_iterator():
+            for frame_index in sorted(scene.image_manager.keys):
+                frame = scene.image_manager.load_array(frame_index)
+                yield frame
+
+        stream = io.BytesIO()
+
+        data = {'lookup_table': cls._encode_array(lut_array),
+                'frames': {str(key): cls._encode_array(array) for key, array in enumerate(frame_iterator())}
+        }
+
+        stream.write(BSON.encode(data))
+        stream.seek(0)
+        return stream.getvalue()
+
+    @classmethod
+    def _encode_array(cls, array):
+        return array_to_bytes(array)
+
+    @classmethod
+    def _decode_array(cls, data):
+        return bytes_to_array(data)
+
+
+class SimpleImageStack(SimpleArrayStack):
+    @classmethod
+    def _encode_array(cls, array):
+        stream = io.BytesIO()
+        scipy.misc.imsave(stream, array, format='png')
+
+    @classmethod
+    def _decode_array(cls, data):
+        scipy.misc.imread(data)
 
 decoders = {'simple_array_stack': SimpleArrayStack}
 
 
-def array_to_string(array):
+def array_to_bytes(array):
     stream = io.BytesIO()
     numpy.save(stream, array)
     return stream.getvalue()
 
 
-def string_to_array(string):
+def bytes_to_array(string):
     stream = io.BytesIO(string)
     array = numpy.load(stream)
     return array
@@ -50,21 +91,20 @@ def read_file(file, screen):
     body = wrapper['data']
     if wrapper['compression'] == 'bz2':
         body = bz2.decompress(body)
-    scene = decoder().scene_from_data(body, screen)
+    scene = decoder.scene_from_data(body, screen)
     print(scene)
     return scene
 
 
-def write_file(scene):
+def write_file(file, scene):
     wrapper = {'encoder': 'gcviewer',
                'version': '0.1',
-               'compression': None,
-               'type': 'simple_stack'
+               'compression': 'bz2',
+               'type': 'simple_array_stack',
+               'data': bz2.compress(SimpleArrayStack.data_from_scene(scene))
     }
-    data = {'lookup_table': scene,
-            'frames': {'key', 'value'
+    file.write(bson.json_util.dumps(BSON.encode(wrapper)))
 
-            }
-    }
 
-    wrapper['data'] = data
+
+
