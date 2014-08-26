@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class SimpleArrayStack():
     @classmethod
-    def scene_from_data(cls, data, screen):
+    def scene_from_data(cls, data):
         data_dict = BSON.decode(data)
         lut = ArrayLookupTable(cls._decode_array(data_dict['lookup_table']))
         print(set(bytes_to_array(data_dict['lookup_table']).flatten()))
@@ -24,7 +24,7 @@ class SimpleArrayStack():
         frames = [numpy.flipud(numpy.rot90(cls._decode_array(value))) for key, value in
                   sorted(data_dict['frames'].items(), key=lambda x: int(x[0]))]
         # print(frames)
-        image_manager = PyGameArrayStackManager(frames, screen)
+        image_manager = ArrayStackImageManager(frames)
         scene = ImageStackScene(image_manager, lut)
         return scene
 
@@ -82,7 +82,7 @@ def bytes_to_array(string):
     return array
 
 
-def read_file(file, screen):
+def read_file(file):
     wrapper = BSON.decode(bson.json_util.loads(file.read()))
 
     logger.debug('Loading gc file with content type,', wrapper['type'])
@@ -91,8 +91,7 @@ def read_file(file, screen):
     body = wrapper['data']
     if wrapper['compression'] == 'bz2':
         body = bz2.decompress(body)
-    scene = decoder.scene_from_data(body, screen)
-    print(scene)
+    scene = decoder.scene_from_data(body)
     return scene
 
 

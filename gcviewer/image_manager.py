@@ -109,6 +109,6 @@ class PyGameImageManager(ImageManager):
 
     @property
     def keys(self):
-        #TODO fix this
-        return range(1,31)
+        # TODO fix this
+        return range(1, 31)
 
