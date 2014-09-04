@@ -89,6 +89,7 @@ class GCImageViewer(QMainWindow):
         super(GCImageViewer, self).__init__()
 
         self.render_area = GCImageWidget(None)
+        #self.render_area.setBackgroundRole(QPalette.Base)
         self.render_area.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.render_area.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(self.render_area)
@@ -138,7 +139,7 @@ class GCImageViewer(QMainWindow):
             if event.key() == Qt.Key_F12:
                 self.toggle_fullscreen()
                 return True
-        return False
+        return super(GCImageViewer, self).event(event)
 
     def toggle_fullscreen(self):
         if self.isFullScreen():
