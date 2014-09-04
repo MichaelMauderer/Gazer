@@ -1,3 +1,5 @@
+import functools
+from functools import lru_cache
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDir, Qt, pyqtSlot, pyqtSignal, QPoint
 from PyQt5.QtGui import QImage, QPainter, QPalette, QPixmap
@@ -8,14 +10,49 @@ import gcviewer.io
 import numpy as np
 
 
+class QtSceneWrapper(gcviewer.scene.Scene):
+    def __init__(self, scene):
+        self._scene = scene
+
+    def array_to_pixmap(self, array):
+        array = np.require(array, np.uint8, 'C')
+        q_image = QImage(array.data, array.shape[1], array.shape[0], QImage.Format_RGB888)
+        return QPixmap.fromImage(q_image)
+
+    def _get_pixmap(self):
+        image = self._scene.get_image()
+        if image is None:
+            return None
+        return self.array_to_pixmap(image)
+
+    def update_gaze(self, pos):
+        super(QtSceneWrapper, self).update_gaze(pos)
+        self._scene.update_gaze(pos)
+
+    def get_image(self):
+        return self._get_pixmap()
+
+
 class GCImageWidget(QLabel):
     gaze_change = pyqtSignal(Sample)
+
+    @property
+    def gc_scene(self):
+        return self._gc_scene
+
+    @gc_scene.setter
+    def gc_scene(self, value):
+        if value is not None:
+            self._gc_scene = QtSceneWrapper(value)
+        else:
+            self._gc_scene = None
 
     def __init__(self, gc_scene, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.gc_scene = gc_scene
-
+        self._gaze = QPoint(0, 0)
         self.gaze_change.connect(self.update_gaze)
+
 
     def update_gaze(self, sample):
         if self.gc_scene is None:
@@ -23,12 +60,11 @@ class GCImageWidget(QLabel):
 
         local_pos = self.mapFromGlobal(QPoint(sample.x, sample.y))
         self._gaze = local_pos
-        self.gc_scene.update_gaze((local_pos.x() / self.size().width(), 1 - (local_pos.y() / self.size().height()) ))
+        norm_pos = local_pos.x() / self.size().width(), 1 - (local_pos.y() / self.size().height())
+        self.gc_scene.update_gaze(tuple(np.clip(norm_pos, 0, 1)))
         image = self.gc_scene.get_image()
         if image is not None:
-            image = np.require(image, np.uint8, 'C')
-            q_image = QImage(image.data, image.shape[1], image.shape[0], QImage.Format_RGB888)
-            self.setPixmap(QPixmap.fromImage(q_image))
+            self.setPixmap(image)
             self.update()
 
     def paintEvent(self, QPaintEvent):

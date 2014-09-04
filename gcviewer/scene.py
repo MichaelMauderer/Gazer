@@ -15,7 +15,7 @@ class Scene():
         self.gaze_pos = pos
 
     @abstractmethod
-    def render(self):
+    def get_image(self):
         pass
 
 

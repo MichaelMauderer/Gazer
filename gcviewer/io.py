@@ -54,7 +54,9 @@ class SimpleArrayStack():
 
     @classmethod
     def _decode_array(cls, data):
-        return bytes_to_array(data)
+        array = bytes_to_array(data)
+        array.flags.writeable = False
+        return array
 
 
 class SimpleImageStack(SimpleArrayStack):
