@@ -95,12 +95,14 @@ class GCImageViewer(QMainWindow):
 
         # Create Actions
         self.open_action = QAction("&Open...", self, shortcut="Ctrl+O", triggered=self.load_scene)
+        self.save_action = QAction("&Save...", self, shortcut="Ctrl+S", triggered=self.save_scene)
 
         self.exit_action = QAction("E&xit", self, shortcut="Ctrl+Q", triggered=self.close)
 
         # Create Menues
         self.file_menu = QMenu("&File", self)
         self.file_menu.addAction(self.open_action)
+        self.file_menu.addAction(self.save_action)
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.exit_action)
 
@@ -121,6 +123,15 @@ class GCImageViewer(QMainWindow):
                 # QMessageBox.information(self, "Image Viewer",
                 # "Cannot load %s." % file_name)
                 # return
+
+    def save_scene(self):
+        file_name, _ = QFileDialog.getSaveFileName(self, "Save File",
+                                                   QDir.currentPath())
+        if file_name:
+            with open(file_name, 'w') as out_file:
+                scene = self.render_area.gc_scene._scene
+                gcviewer.io.write_file(out_file, scene)
+
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:
