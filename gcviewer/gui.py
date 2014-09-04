@@ -64,6 +64,7 @@ class GCImageWidget(QLabel):
         self.gc_scene.update_gaze(tuple(np.clip(norm_pos, 0, 1)))
         image = self.gc_scene.get_image()
         if image is not None:
+            image = image.scaled(self.size(), Qt.KeepAspectRatio)
             self.setPixmap(image)
             self.update()
 
@@ -74,15 +75,22 @@ class GCImageWidget(QLabel):
         painter.drawEllipse(self._gaze.x(), self._gaze.y(), 50, 50)
         painter.end()
 
+    def heightForWidth(self, p_int):
+        width = self.self.gc_scene.get_image().size().width()
+        height = self.self.gc_scene.get_image().size().height()
+        return (p_int / width) * height
+
+    def hasHeightForWidth(self):
+        return True
+
 
 class GCImageViewer(QMainWindow):
     def __init__(self):
         super(GCImageViewer, self).__init__()
 
         self.render_area = GCImageWidget(None)
-        self.render_area.setBackgroundRole(QPalette.Base)
         self.render_area.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.render_area.setScaledContents(True)
+        self.render_area.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(self.render_area)
 
         # Create Actions
