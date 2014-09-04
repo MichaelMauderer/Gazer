@@ -1,7 +1,7 @@
 import functools
 from functools import lru_cache
 from PyQt5 import QtGui
-from PyQt5.QtCore import QDir, Qt, pyqtSlot, pyqtSignal, QPoint
+from PyQt5.QtCore import QDir, Qt, pyqtSlot, pyqtSignal, QPoint, QEvent
 from PyQt5.QtGui import QImage, QPainter, QPalette, QPixmap
 from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
                              QMainWindow, QMenu, QMessageBox, QScrollArea, QSizePolicy)
@@ -122,6 +122,18 @@ class GCImageViewer(QMainWindow):
                 # "Cannot load %s." % file_name)
                 # return
 
+    def event(self, event):
+        if event.type() == QEvent.KeyPress:
+            if event.key() == Qt.Key_F12:
+                self.toggle_fullscreen()
+                return True
+        return False
+
+    def toggle_fullscreen(self):
+        if self.isFullScreen():
+            self.showNormal()
+        else:
+            self.showFullScreen()
 
 if __name__ == '__main__':
     import sys
