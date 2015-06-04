@@ -64,6 +64,7 @@ class GCImageWidget(QLabel):
         self.gaze_change.connect(self.update_gaze)
 
         self.mouse_mode = False
+        self.show_cursor = False
 
     def update_gaze(self, sample):
         if self.gc_scene is None:
@@ -104,13 +105,14 @@ class GCImageWidget(QLabel):
 
     def paintEvent(self, QPaintEvent):
         super().paintEvent(QPaintEvent)
-        painter = QtGui.QPainter(self)
-        painter.setBrush(QtGui.QColor(0, 255, 0))
-        size = 10
-        painter.drawEllipse(self._gaze.x() - size / 2,
-                            self._gaze.y() - size / 2,
-                            size, size)
-        painter.end()
+        if self.show_cursor:
+            painter = QtGui.QPainter(self)
+            painter.setBrush(QtGui.QColor(0, 255, 0))
+            size = 10
+            painter.drawEllipse(self._gaze.x() - size / 2,
+                                self._gaze.y() - size / 2,
+                                size, size)
+            painter.end()
 
     def heightForWidth(self, p_int):
         width = self.self.gc_scene.get_image().size().width()
@@ -151,6 +153,12 @@ class GCImageViewer(QMainWindow):
                                            checked=False,
                                            )
 
+        self.cursor_toggle_action = QAction("Toggle debug cursor",
+                                            self,
+                                            triggered=self.toggle_cursor,
+                                            checkable=True,
+                                            checked=False,
+                                            )
         # Create Menues
         self.file_menu = QMenu("&File", self)
         self.file_menu.addAction(self.open_action)
@@ -161,6 +169,7 @@ class GCImageViewer(QMainWindow):
         # Create Option Menu
         self.options_menu = QMenu("&Options", self)
         self.options_menu.addAction(self.mouse_toggle_action)
+        self.options_menu.addAction(self.cursor_toggle_action)
 
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
@@ -170,6 +179,9 @@ class GCImageViewer(QMainWindow):
 
     def toggle_mouse_mode(self):
         self.render_area.mouse_mode = not self.render_area.mouse_mode
+
+    def toggle_cursor(self):
+        self.render_area.show_cursor = not self.render_area.show_cursor
 
     def load_scene(self):
         file_name, _ = QFileDialog.getOpenFileName(self,
