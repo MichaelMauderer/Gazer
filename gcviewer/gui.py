@@ -68,12 +68,22 @@ class GCImageWidget(QLabel):
     def update_gaze(self, sample):
         if self.gc_scene is None:
             return
+        if self.pixmap():
+            pixmap_size = self.pixmap().size()
+        else:
+            pixmap_size = self.size()
+        x_offset = (self.size().width() - pixmap_size.width()) / 2
+        y_offset = (self.size().height() - pixmap_size.height()) / 2
 
-        local_pos = self.mapFromGlobal(QPoint(sample.x, sample.y))
-        self._gaze = local_pos
-        norm_pos = local_pos.x() / self.size().width(), (
-            local_pos.y() / self.size().height())
-        self.gc_scene.update_gaze(tuple(np.clip(norm_pos, 0, 1)))
+        local_pos_pixmap = self.mapFromGlobal(QPoint(sample.x, sample.y))
+        self._gaze = local_pos_pixmap
+        local_pos_pixmap = QPoint(local_pos_pixmap.x() - x_offset,
+                                  local_pos_pixmap.y() - y_offset)
+        norm_pos_pixmap = (local_pos_pixmap.x() / (
+            self.size().width() - (2 * x_offset))), \
+                          (local_pos_pixmap.y() / (
+                              self.size().height() - (2 * y_offset)))
+        self.gc_scene.update_gaze(tuple(np.clip(norm_pos_pixmap, 0, 1)))
         image = self.gc_scene.get_image()
         if image is not None:
             image = image.scaled(self.size(), Qt.KeepAspectRatio)
@@ -96,7 +106,10 @@ class GCImageWidget(QLabel):
         super().paintEvent(QPaintEvent)
         painter = QtGui.QPainter(self)
         painter.setBrush(QtGui.QColor(0, 255, 0))
-        painter.drawEllipse(self._gaze.x(), self._gaze.y(), 50, 50)
+        size = 10
+        painter.drawEllipse(self._gaze.x() - size / 2,
+                            self._gaze.y() - size / 2,
+                            size, size)
         painter.end()
 
     def heightForWidth(self, p_int):
