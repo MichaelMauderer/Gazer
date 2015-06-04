@@ -19,8 +19,10 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
     @staticmethod
     def array_to_pixmap(array):
-        array = np.require(array, np.uint8, 'C')
-        q_image = QImage(array.data, array.shape[1], array.shape[0],
+        q_image = QImage(array.data,
+                         array.shape[1],
+                         array.shape[0],
+                         3 * array.shape[1],
                          QImage.Format_RGB888)
         return QPixmap.fromImage(q_image)
 
