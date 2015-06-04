@@ -71,7 +71,7 @@ class GCImageWidget(QLabel):
 
         local_pos = self.mapFromGlobal(QPoint(sample.x, sample.y))
         self._gaze = local_pos
-        norm_pos = local_pos.x() / self.size().width(), 1 - (
+        norm_pos = local_pos.x() / self.size().width(), (
             local_pos.y() / self.size().height())
         self.gc_scene.update_gaze(tuple(np.clip(norm_pos, 0, 1)))
         image = self.gc_scene.get_image()
