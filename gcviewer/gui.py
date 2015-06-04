@@ -4,7 +4,8 @@ from PyQt5 import QtGui
 from PyQt5.QtCore import QDir, Qt, pyqtSlot, pyqtSignal, QPoint, QEvent
 from PyQt5.QtGui import QImage, QPainter, QPalette, QPixmap
 from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
-                             QMainWindow, QMenu, QMessageBox, QScrollArea, QSizePolicy)
+                             QMainWindow, QMenu, QMessageBox, QScrollArea,
+                             QSizePolicy)
 from eyexinterface import EyeXInterface, Sample
 import gcviewer.io
 import numpy as np
@@ -16,7 +17,8 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
     def array_to_pixmap(self, array):
         array = np.require(array, np.uint8, 'C')
-        q_image = QImage(array.data, array.shape[1], array.shape[0], QImage.Format_RGB888)
+        q_image = QImage(array.data, array.shape[1], array.shape[0],
+                         QImage.Format_RGB888)
         return QPixmap.fromImage(q_image)
 
     def _get_pixmap(self):
@@ -53,6 +55,7 @@ class GCImageWidget(QLabel):
         self._gaze = QPoint(0, 0)
         self.gaze_change.connect(self.update_gaze)
 
+        self.mouse_mode = False
 
     def update_gaze(self, sample):
         if self.gc_scene is None:
@@ -60,13 +63,25 @@ class GCImageWidget(QLabel):
 
         local_pos = self.mapFromGlobal(QPoint(sample.x, sample.y))
         self._gaze = local_pos
-        norm_pos = local_pos.x() / self.size().width(), 1 - (local_pos.y() / self.size().height())
+        norm_pos = local_pos.x() / self.size().width(), 1 - (
+            local_pos.y() / self.size().height())
         self.gc_scene.update_gaze(tuple(np.clip(norm_pos, 0, 1)))
         image = self.gc_scene.get_image()
         if image is not None:
             image = image.scaled(self.size(), Qt.KeepAspectRatio)
             self.setPixmap(image)
             self.update()
+
+    def mouse_event_to_gaze_sample(self, QMouseEvent):
+        return Sample(-1,
+                      float(QMouseEvent.timestamp()),
+                      float(QMouseEvent.globalX()),
+                      float(QMouseEvent.globalY()))
+
+    def mouseMoveEvent(self, QMouseEvent):
+        if self.mouse_mode:
+            sample = self.mouse_event_to_gaze_sample(QMouseEvent)
+            self.gaze_change.emit(sample)
 
     def paintEvent(self, QPaintEvent):
         super().paintEvent(QPaintEvent)
@@ -89,16 +104,25 @@ class GCImageViewer(QMainWindow):
         super(GCImageViewer, self).__init__()
 
         self.render_area = GCImageWidget(None)
-        #self.render_area.setBackgroundRole(QPalette.Base)
+        # self.render_area.setBackgroundRole(QPalette.Base)
         self.render_area.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.render_area.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(self.render_area)
 
         # Create Actions
-        self.open_action = QAction("&Open...", self, shortcut="Ctrl+O", triggered=self.load_scene)
-        self.save_action = QAction("&Save...", self, shortcut="Ctrl+S", triggered=self.save_scene)
+        self.open_action = QAction("&Open...", self, shortcut="Ctrl+O",
+                                   triggered=self.load_scene)
+        self.save_action = QAction("&Save...", self, shortcut="Ctrl+S",
+                                   triggered=self.save_scene)
 
-        self.exit_action = QAction("E&xit", self, shortcut="Ctrl+Q", triggered=self.close)
+        self.exit_action = QAction("E&xit", self, shortcut="Ctrl+Q",
+                                   triggered=self.close)
+
+        self.mouse_toggle_action = QAction("Toggle mouse mode", self,
+                                           triggered=self.toggle_mouse_mode,
+                                           checkable=True,
+                                           checked=False,
+                                           )
 
         # Create Menues
         self.file_menu = QMenu("&File", self)
@@ -107,10 +131,18 @@ class GCImageViewer(QMainWindow):
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.exit_action)
 
+        # Create Option Menu
+        self.options_menu = QMenu("&Options", self)
+        self.options_menu.addAction(self.mouse_toggle_action)
+
         self.menuBar().addMenu(self.file_menu)
+        self.menuBar().addMenu(self.options_menu)
 
         self.setWindowTitle("GC Image Viewer")
         self.resize(800, 600)
+
+    def toggle_mouse_mode(self):
+        imageViewer.render_area.mouse_mode = not imageViewer.render_area.mouse_mode
 
     def load_scene(self):
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
@@ -133,7 +165,6 @@ class GCImageViewer(QMainWindow):
                 scene = self.render_area.gc_scene._scene
                 gcviewer.io.write_file(out_file, scene)
 
-
     def event(self, event):
         if event.type() == QEvent.KeyPress:
             if event.key() == Qt.Key_F12:
@@ -147,6 +178,7 @@ class GCImageViewer(QMainWindow):
         else:
             self.showFullScreen()
 
+
 if __name__ == '__main__':
     import sys
 
@@ -154,7 +186,8 @@ if __name__ == '__main__':
     imageViewer = GCImageViewer()
 
     eye_x = EyeXInterface('../lib/Tobii.EyeX.Client.dll')
-    eye_x.on_event.append(lambda sample: imageViewer.render_area.gaze_change.emit(sample))
+    eye_x.on_event.append(
+        lambda sample: imageViewer.render_area.gaze_change.emit(sample))
 
     imageViewer.show()
     sys.exit(app.exec_())
