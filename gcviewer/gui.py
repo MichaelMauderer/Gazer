@@ -1,14 +1,14 @@
-import functools
-from functools import lru_cache
-from PyQt5 import QtGui
-from PyQt5.QtCore import QDir, Qt, pyqtSlot, pyqtSignal, QPoint, QEvent
-from PyQt5.QtGui import QImage, QPainter, QPalette, QPixmap
-from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
-                             QMainWindow, QMenu, QMessageBox, QScrollArea,
-                             QSizePolicy)
-from eyexinterface import EyeXInterface, Sample
-import gcviewer.io
 import numpy as np
+
+from PyQt5 import QtGui
+from PyQt5.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent
+from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
+                             QMainWindow, QMenu, QSizePolicy)
+
+from eyexinterface import EyeXInterface, Sample
+
+import gcviewer.io
 
 
 class QtSceneWrapper(gcviewer.scene.Scene):
