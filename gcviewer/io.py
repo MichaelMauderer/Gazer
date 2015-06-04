@@ -21,7 +21,7 @@ class SimpleArrayStack:
     def scene_from_data(cls, data):
         data_dict = BSON.decode(data)
         lut = ArrayLookupTable(cls._decode_array(data_dict['lookup_table']))
-        frames = [np.flipud(np.rot90(cls._decode_array(value))) for key, value
+        frames = [cls._decode_array(value) for key, value
                   in
                   sorted(data_dict['frames'].items(), key=lambda x: int(x[0]))]
         image_manager = ArrayStackImageManager(frames)
@@ -74,6 +74,7 @@ decoders = {'simple_array_stack': SimpleArrayStack}
 
 
 def array_to_bytes(array):
+    print('Input array shape:', array.shape)
     stream = io.BytesIO()
     np.save(stream, array)
     return stream.getvalue()
@@ -82,6 +83,7 @@ def array_to_bytes(array):
 def bytes_to_array(string):
     stream = io.BytesIO(string)
     array = np.load(stream)
+    print('Output array shape:', array.shape)
     return array
 
 
