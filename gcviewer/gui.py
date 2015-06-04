@@ -9,13 +9,16 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
 from eyexinterface import EyeXInterface, Sample
 
 import gcviewer.io
+import gcviewer.scene
 
 
 class QtSceneWrapper(gcviewer.scene.Scene):
     def __init__(self, scene):
+        super(QtSceneWrapper, self).__init__()
         self._scene = scene
 
-    def array_to_pixmap(self, array):
+    @staticmethod
+    def array_to_pixmap(array):
         array = np.require(array, np.uint8, 'C')
         q_image = QImage(array.data, array.shape[1], array.shape[0],
                          QImage.Format_RGB888)
@@ -50,8 +53,11 @@ class GCImageWidget(QLabel):
             self._gc_scene = None
 
     def __init__(self, gc_scene, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(GCImageWidget, self).__init__(*args, **kwargs)
+
+        self._gc_scene = None
         self.gc_scene = gc_scene
+
         self._gaze = QPoint(0, 0)
         self.gaze_change.connect(self.update_gaze)
 
@@ -72,7 +78,8 @@ class GCImageWidget(QLabel):
             self.setPixmap(image)
             self.update()
 
-    def mouse_event_to_gaze_sample(self, QMouseEvent):
+    @staticmethod
+    def mouse_event_to_gaze_sample(QMouseEvent):
         return Sample(-1,
                       float(QMouseEvent.timestamp()),
                       float(QMouseEvent.globalX()),
@@ -104,21 +111,26 @@ class GCImageViewer(QMainWindow):
         super(GCImageViewer, self).__init__()
 
         self.render_area = GCImageWidget(None)
-        # self.render_area.setBackgroundRole(QPalette.Base)
         self.render_area.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.render_area.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(self.render_area)
 
         # Create Actions
-        self.open_action = QAction("&Open...", self, shortcut="Ctrl+O",
+        self.open_action = QAction("&Open...",
+                                   self,
+                                   shortcut="Ctrl+O",
                                    triggered=self.load_scene)
-        self.save_action = QAction("&Save...", self, shortcut="Ctrl+S",
+        self.save_action = QAction("&Save...",
+                                   self,
+                                   shortcut="Ctrl+S",
                                    triggered=self.save_scene)
-
-        self.exit_action = QAction("E&xit", self, shortcut="Ctrl+Q",
+        self.exit_action = QAction("E&xit",
+                                   self,
+                                   shortcut="Ctrl+Q",
                                    triggered=self.close)
 
-        self.mouse_toggle_action = QAction("Toggle mouse mode", self,
+        self.mouse_toggle_action = QAction("Toggle mouse mode",
+                                           self,
                                            triggered=self.toggle_mouse_mode,
                                            checkable=True,
                                            checked=False,
@@ -142,11 +154,13 @@ class GCImageViewer(QMainWindow):
         self.resize(800, 600)
 
     def toggle_mouse_mode(self):
-        imageViewer.render_area.mouse_mode = not imageViewer.render_area.mouse_mode
+        self.render_area.mouse_mode = not self.render_area.mouse_mode
 
     def load_scene(self):
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-                                                   QDir.currentPath())
+        file_name, _ = QFileDialog.getOpenFileName(self,
+                                                   "Open File",
+                                                   QDir.currentPath(),
+                                                   )
         if file_name:
             with open(file_name) as in_file:
                 scene = gcviewer.io.read_file(in_file)
@@ -158,8 +172,10 @@ class GCImageViewer(QMainWindow):
                 # return
 
     def save_scene(self):
-        file_name, _ = QFileDialog.getSaveFileName(self, "Save File",
-                                                   QDir.currentPath())
+        file_name, _ = QFileDialog.getSaveFileName(self,
+                                                   "Save File",
+                                                   QDir.currentPath(),
+                                                   )
         if file_name:
             with open(file_name, 'w') as out_file:
                 scene = self.render_area.gc_scene._scene
