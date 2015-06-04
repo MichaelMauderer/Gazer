@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from gcviewer.interpolator import InstantInterpolator, LinearInterpolator
+import numpy as np
 
 
 class Scene():
@@ -20,7 +21,8 @@ class Scene():
 
 
 class ImageStackScene(Scene):
-    def __init__(self, image_manager, lookup_table, interpolator=LinearInterpolator()):
+    def __init__(self, image_manager, lookup_table,
+                 interpolator=LinearInterpolator()):
         self.image_manager = image_manager
         self.lookup_table = lookup_table
         self.interpolator = interpolator
@@ -49,3 +51,10 @@ class ImageStackScene(Scene):
 
     def get_image(self):
         return self.image_manager.load_image(self.current_depth)
+
+    def get_depth_image(self):
+        array = self.lookup_table.array
+        max_elem = array.max()
+        min_elem = array.min()
+        array_normalised = 255 * ((array - min_elem) / (max_elem - min_elem))
+        return np.asarray(array_normalised, np.int8)

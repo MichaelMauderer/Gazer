@@ -39,6 +39,10 @@ class QtSceneWrapper(gcviewer.scene.Scene):
     def get_image(self):
         return self._get_pixmap()
 
+    def get_depth_image(self):
+        array = self._scene.get_depth_image()
+        return self.array_to_pixmap(array)
+
 
 class GCImageWidget(QLabel):
     gaze_change = pyqtSignal(Sample)
@@ -65,6 +69,10 @@ class GCImageWidget(QLabel):
 
         self.mouse_mode = False
         self.show_cursor = False
+        self._show_depthmap = False
+
+    def toggle_depthmap(self):
+        self._show_depthmap = not self._show_depthmap
 
     def update_gaze(self, sample):
         if self.gc_scene is None:
@@ -85,7 +93,11 @@ class GCImageWidget(QLabel):
                           (local_pos_pixmap.y() / (
                               self.size().height() - (2 * y_offset)))
         self.gc_scene.update_gaze(tuple(np.clip(norm_pos_pixmap, 0, 1)))
-        image = self.gc_scene.get_image()
+        if self._show_depthmap:
+            image = self.gc_scene.get_depth_image()
+        else:
+            image = self.gc_scene.get_image()
+
         if image is not None:
             image = image.scaled(self.size(), Qt.KeepAspectRatio)
             self.setPixmap(image)
@@ -159,6 +171,13 @@ class GCImageViewer(QMainWindow):
                                             checkable=True,
                                             checked=False,
                                             )
+        self.toggle_depthmap_action = QAction("Toggle depthmap",
+                                              self,
+                                              triggered=self.toggle_depthmap,
+                                              checkable=True,
+                                              checked=False,
+                                              )
+
         # Create Menues
         self.file_menu = QMenu("&File", self)
         self.file_menu.addAction(self.open_action)
@@ -170,6 +189,7 @@ class GCImageViewer(QMainWindow):
         self.options_menu = QMenu("&Options", self)
         self.options_menu.addAction(self.mouse_toggle_action)
         self.options_menu.addAction(self.cursor_toggle_action)
+        self.options_menu.addAction(self.toggle_depthmap_action)
 
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
@@ -182,6 +202,9 @@ class GCImageViewer(QMainWindow):
 
     def toggle_cursor(self):
         self.render_area.show_cursor = not self.render_area.show_cursor
+
+    def toggle_depthmap(self):
+        self.render_area.toggle_depthmap()
 
     def load_scene(self):
         file_name, _ = QFileDialog.getOpenFileName(self,
