@@ -39,10 +39,12 @@ class ArrayStackImageManager(ImageManager):
 
     def _get_array(self, key):
         try:
-            print(key)
             return self._arrays[int(key)]
         except IndexError:
             logger.warn('Image {} not found'.format(key))
+            return None
+        except TypeError:
+            logger.warn('{} not a valid key'.format(key))
             return None
 
     def load_image(self, key):
