@@ -6,10 +6,10 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
                              QMainWindow, QMenu, QSizePolicy)
 
-from eyexinterface import EyeXInterface, Sample
-
 import gcviewer.io
 import gcviewer.scene
+
+import eyex.api
 
 
 class QtSceneWrapper(gcviewer.scene.Scene):
@@ -45,7 +45,7 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
 
 class GCImageWidget(QLabel):
-    gaze_change = pyqtSignal(Sample)
+    gaze_change = pyqtSignal(eyex.api.Sample)
 
     @property
     def gc_scene(self):
@@ -248,10 +248,11 @@ class GCImageViewer(QMainWindow):
 if __name__ == '__main__':
     import sys
 
+
     app = QApplication(sys.argv)
     imageViewer = GCImageViewer()
 
-    eye_x = EyeXInterface('../lib/Tobii.EyeX.Client.dll')
+    eye_x = eyex.api.EyeXInterface('../lib/Tobii.EyeX.Client.dll')
     eye_x.on_event.append(
         lambda sample: imageViewer.render_area.gaze_change.emit(sample))
 
