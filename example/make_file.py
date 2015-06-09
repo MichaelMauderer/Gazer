@@ -40,5 +40,5 @@ if __name__ == '__main__':
     manager = ArrayStackImageManager(frames)
     scene = ImageStackScene(manager, lut)
 
-    with open('example_image.gc', 'w') as out_file:
+    with open('example_image_new.gc', 'w') as out_file:
         write_file(out_file, scene)

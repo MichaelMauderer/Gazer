@@ -30,15 +30,15 @@ def _get_scene(name):
     def depth_to_image_path(depth):
         return path_pattern.format(depth_to_index(depth))
 
-    depth_map = HysteresisLookupTable(
-        [os.path.abspath('./resources/{0}_scene/depth_maps/dilate{1}/finalMap{2}.png').format(name, dilation, i + 1) for i in range(30)],
-        depth_to_index)
-    #depth_map = ImageLookupTable(os.path.abspath('./resources/{0}_scene/depth_maps/dilate{1}/finalMap{2}.png').format(name, dilation, 15))
+    # depth_map = HysteresisLookupTable(
+    #     [os.path.abspath('./resources/{0}_scene/depth_maps/dilate{1}/finalMap{2}.png').format(name, dilation, i + 1) for i in range(30)],
+    #     depth_to_index)
+    depth_map = ImageLookupTable(os.path.abspath('./resources/{0}_scene/depth_maps/dilate{1}/finalMap{2}.png').format(name, dilation, 15))
 
     image_manager = PyGameImageManager(screen, depth_to_image_path)
     image_manager.preload([i + 1 for i in range(30)])
 
-    return ImageStackScene(image_manager, depth_map, ExponentialInterpolator())
+    return ImageStackScene(image_manager, depth_map)
 
 
 def get_kitchen_scene():
@@ -49,7 +49,6 @@ def get_patio_scene():
     return _get_scene('patio')
 
 
-#scene = get_patio_scene()
 scene = get_kitchen_scene()
 
 with open('example_image.gc', 'wb') as out_file:
@@ -57,7 +56,7 @@ with open('example_image.gc', 'wb') as out_file:
     out_file.write(data)
 
 
-#viewer = PyGameEngine(eye_api)
-#viewer.display_scene(scene)
+viewer = PyGameEngine(eye_api)
+viewer.display_scene(scene)
 
 pygame.quit()
