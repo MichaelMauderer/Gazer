@@ -74,7 +74,12 @@ decoders = {'simple_array_stack': SimpleArrayStack}
 
 
 def array_to_bytes(array):
-    print('Input array shape:', array.shape)
+    logger.debug('Converting array to bytes.')
+    logger.debug('-- Input Array Info Start --')
+    logger.debug('Shape:', array.shape)
+    logger.debug('Dtype:', array.dtype)
+    logger.debug('Flags:', array.flags)
+    logger.debug('-- Input Array Info End --')
     stream = io.BytesIO()
     np.save(stream, array)
     return stream.getvalue()
@@ -83,7 +88,12 @@ def array_to_bytes(array):
 def bytes_to_array(string):
     stream = io.BytesIO(string)
     array = np.load(stream)
-    print('Output array shape:', array.shape)
+    logger.debug('Converting array to bytes.')
+    logger.debug('-- Output Array Info Start --')
+    logger.debug('Shape:', array.shape)
+    logger.debug('Dtype:', array.dtype)
+    logger.debug('Flags:', array.flags)
+    logger.debug('-- Output Array Info End --')
     return array
 
 
