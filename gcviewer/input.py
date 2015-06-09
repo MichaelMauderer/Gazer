@@ -35,8 +35,11 @@ class PygameMouseDummy(EyetrackingAPIBase):
         import pygame
 
         pos = pygame.mouse.get_pos()
+
+        posX = pos[0] / pygame.display.Info().current_w
+        posY = pos[1] / pygame.display.Info().current_h
         return EyeData(None,
-                       pos,
+                       (posX, posY),
                        None)
 
     def pop_sample(self):
