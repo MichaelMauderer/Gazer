@@ -105,7 +105,7 @@ class GCImageWidget(QLabel):
 
     @staticmethod
     def mouse_event_to_gaze_sample(QMouseEvent):
-        return Sample(-1,
+        return eyex.api.Sample(-1,
                       float(QMouseEvent.timestamp()),
                       float(QMouseEvent.globalX()),
                       float(QMouseEvent.globalY()))
