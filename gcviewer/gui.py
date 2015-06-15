@@ -1,3 +1,5 @@
+import logging
+
 import numpy as np
 
 from PyQt5 import QtGui
@@ -10,6 +12,8 @@ import gcviewer.io
 import gcviewer.scene
 
 import eyex.api
+
+logger = logging.getLogger(__name__)
 
 
 class QtSceneWrapper(gcviewer.scene.Scene):
@@ -106,9 +110,9 @@ class GCImageWidget(QLabel):
     @staticmethod
     def mouse_event_to_gaze_sample(QMouseEvent):
         return eyex.api.Sample(-1,
-                      float(QMouseEvent.timestamp()),
-                      float(QMouseEvent.globalX()),
-                      float(QMouseEvent.globalY()))
+                               float(QMouseEvent.timestamp()),
+                               float(QMouseEvent.globalX()),
+                               float(QMouseEvent.globalY()))
 
     def mouseMoveEvent(self, QMouseEvent):
         if self.mouse_mode:
@@ -245,9 +249,10 @@ class GCImageViewer(QMainWindow):
             self.showFullScreen()
 
 
-if __name__ == '__main__':
+def run_qt_gui():
     import sys
 
+    logging.basicConfig(filename='log.debug', level=logging.DEBUG)
 
     app = QApplication(sys.argv)
     imageViewer = GCImageViewer()
@@ -258,3 +263,10 @@ if __name__ == '__main__':
 
     imageViewer.show()
     sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    try:
+        run_qt_gui()
+    except Exception as e:
+        logging.exception('Program terminated with an exception.')

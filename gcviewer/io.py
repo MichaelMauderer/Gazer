@@ -98,10 +98,16 @@ def bytes_to_array(string):
 
 
 def read_file(file):
-    wrapper = BSON.decode(bson.json_util.loads(file.read()))
+    logger.debug('Reading file')
+    try:
+        wrapper = BSON.decode(bson.json_util.loads(file.read()))
+    except:
+        logger.exception('Failed to read file.')
+        return None
 
-    logger.debug('Loading gc file with content type,', wrapper['type'])
+    logger.debug('Processing file with content type,', wrapper['type'])
     decoder = decoders[wrapper['type']]
+
     logger.debug('Found decoder:', decoder)
     body = wrapper['data']
     if wrapper['compression'] == 'bz2':
