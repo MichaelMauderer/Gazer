@@ -75,10 +75,15 @@ class GCImageWidget(QLabel):
         self.show_cursor = False
         self._show_depthmap = False
 
+        self._last_sample = None
+
     def toggle_depthmap(self):
         self._show_depthmap = not self._show_depthmap
 
     def update_gaze(self, sample):
+        self._last_sample = sample
+        if sample is None:
+            sample = eyex.api.Sample(-1, -1, 0, 0)
         if self.gc_scene is None:
             return
         if self.pixmap():
@@ -105,7 +110,6 @@ class GCImageWidget(QLabel):
         if image is not None:
             image = image.scaled(self.size(), Qt.KeepAspectRatio)
             self.setPixmap(image)
-            self.update()
 
     @staticmethod
     def mouse_event_to_gaze_sample(QMouseEvent):
@@ -137,6 +141,10 @@ class GCImageWidget(QLabel):
 
     def hasHeightForWidth(self):
         return True
+
+    def update(self, *__args):
+        super(GCImageWidget, self).update()
+        self.update_gaze(self._last_sample)
 
 
 class GCImageViewer(QMainWindow):
@@ -219,11 +227,7 @@ class GCImageViewer(QMainWindow):
             with open(file_name) as in_file:
                 scene = gcviewer.io.read_file(in_file)
                 self.render_area.gc_scene = scene
-
-                # if image.isNull():
-                # QMessageBox.information(self, "Image Viewer",
-                # "Cannot load %s." % file_name)
-                # return
+                self.render_area.update()
 
     def save_scene(self):
         file_name, _ = QFileDialog.getSaveFileName(self,
