@@ -217,6 +217,7 @@ class GCImageViewer(QMainWindow):
 
     def toggle_depthmap(self):
         self.render_area.toggle_depthmap()
+        self.update()
 
     def load_scene(self):
         file_name, _ = QFileDialog.getOpenFileName(self,
@@ -252,6 +253,10 @@ class GCImageViewer(QMainWindow):
         else:
             self.showFullScreen()
 
+    def update(self, *__args):
+        super(GCImageViewer, self).update()
+        self.render_area.update()
+
 
 def run_qt_gui():
     import sys
@@ -261,7 +266,7 @@ def run_qt_gui():
     app = QApplication(sys.argv)
     imageViewer = GCImageViewer()
 
-    eye_x = eyex.api.EyeXInterface('../lib/Tobii.EyeX.Client.dll')
+    eye_x = eyex.api.EyeXInterface()
     eye_x.on_event.append(
         lambda sample: imageViewer.render_area.gaze_change.emit(sample))
 
