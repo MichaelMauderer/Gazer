@@ -7,7 +7,7 @@ from bson import BSON
 import bson.json_util
 
 import numpy as np
-import scipy.misc
+# import scipy.misc
 
 from gcviewer.image_manager import ArrayStackImageManager
 from gcviewer.lookup_table import ArrayLookupTable
@@ -63,15 +63,15 @@ class SimpleArrayStack:
         return array
 
 
-class SimpleImageStack(SimpleArrayStack):
-    @classmethod
-    def _encode_array(cls, array):
-        stream = io.BytesIO()
-        scipy.misc.imsave(stream, array, format='png')
-
-    @classmethod
-    def _decode_array(cls, data):
-        scipy.misc.imread(data)
+# class SimpleImageStack(SimpleArrayStack):
+#     @classmethod
+#     def _encode_array(cls, array):
+#         stream = io.BytesIO()
+#         scipy.misc.imsave(stream, array, format='png')
+#
+#     @classmethod
+#     def _decode_array(cls, data):
+#         scipy.misc.imread(data)
 
 
 decoders = {'simple_array_stack': SimpleArrayStack}

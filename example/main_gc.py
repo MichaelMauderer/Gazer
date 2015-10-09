@@ -1,5 +1,5 @@
 import math
-import scipy
+# import scipy
 import pygame
 import os
 import gcviewer

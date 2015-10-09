@@ -5,7 +5,7 @@ import logging
 
 import numpy
 import pygame
-from repoze.lru import lru_cache
+#from repoze.lru import lru_cache
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 
@@ -89,7 +89,7 @@ class PyGameImageManager(ImageManager):
             self.load_image(key)
 
     # @functools.lru_cache(maxsize=128)
-    @lru_cache(128)
+    #@lru_cache(128)
     def _load_image(self, path):
         try:
             return pygame.image.load(path)

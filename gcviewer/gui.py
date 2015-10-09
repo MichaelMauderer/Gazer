@@ -150,9 +150,6 @@ class GCImageWidget(QLabel):
         height = self.self.gc_scene.get_image().size().height()
         return (p_int / width) * height
 
-    def hasHeightForWidth(self):
-        return True
-
     def update(self, *__args):
         super(GCImageWidget, self).update()
         self.update_gaze(self._last_sample)
