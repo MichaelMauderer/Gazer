@@ -1,17 +1,10 @@
 # -*- mode: python -*-
-
-block_cipher = None
-
-
 a = Analysis(['gcviewer\\gui.py'],
-             pathex=['C:\\Users\\Administrator\\PycharmProjects\\PyeX', '.\\\\lib', 'C:\\Users\\Administrator\\git\\GCViewer'],
-             hiddenimports=['scipy.linalg', 'scipy.linalg.cython_blas', 'scipy.linalg.cython_lapack', 'scipy.integrate', 'gcviewer'],
-             hookspath=['C:\\Users\\Administrator\\git\\GCViewer\\hooks'],
-             runtime_hooks=None,
-             excludes=None,
-             cipher=block_cipher)
-pyz = PYZ(a.pure,
-             cipher=block_cipher)
+             pathex=['C:\\Users\\project\\PycharmProjects\\gcviewer-py2', '.\\\\lib', 'C:\\Users\\project\\PycharmProjects\\gcviewer-py2'],
+             hiddenimports=['gcviewer'],
+             hookspath=['C:\\Users\\project\\PycharmProjects\\gcviewer-py2\\hooks'],
+             runtime_hooks=None)
+pyz = PYZ(a.pure)
 exe = EXE(pyz,
           a.scripts,
           a.binaries,

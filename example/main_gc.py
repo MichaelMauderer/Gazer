@@ -1,11 +1,11 @@
 import math
-import scipy
+# import scipy
 import pygame
 import os
 import gcviewer
 import numpy as np
 from gcviewer.interpolator import ExponentialInterpolator
-from gcviewer.io import read_file, write_file
+from gcviewer.gcio import read_file, write_file
 from gcviewer.scene import ImageStackScene
 from gcviewer.engine import PyGameEngine
 from gcviewer.lookup_table import HysteresisLookupTable, ArrayLookupTable

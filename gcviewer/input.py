@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division
+
 from abc import ABCMeta, abstractmethod
 import collections
 

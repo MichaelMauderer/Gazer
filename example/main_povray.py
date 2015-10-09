@@ -8,7 +8,7 @@ from gcviewer.engine import PyGameEngine
 from gcviewer.lookup_table import HysteresisLookupTable, ImageLookupTable
 from gcviewer.image_manager import PyGameImageManager
 from gcviewer import input
-from gcviewer.io import SimpleImageStack
+from gcviewer.gcio import SimpleImageStack
 
 pygame.init()
 

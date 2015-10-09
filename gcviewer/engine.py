@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division
+
 class GCViewer():
     def __init__(self, input_api):
         self.input_api = input_api

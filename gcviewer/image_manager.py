@@ -1,8 +1,11 @@
+from __future__ import unicode_literals, division
+
 import functools
 import logging
 
 import numpy
 import pygame
+#from repoze.lru import lru_cache
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 
@@ -19,7 +22,7 @@ class ImageManager():
     def load_image(self, key):
         pass
 
-    @abstractmethod
+    # @abstractmethod
     def draw_image(self, key):
         pass
 
@@ -85,7 +88,8 @@ class PyGameImageManager(ImageManager):
         for key in keys:
             self.load_image(key)
 
-    @functools.lru_cache(maxsize=128)
+    # @functools.lru_cache(maxsize=128)
+    #@lru_cache(128)
     def _load_image(self, path):
         try:
             return pygame.image.load(path)
