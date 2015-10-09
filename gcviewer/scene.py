@@ -1,7 +1,8 @@
+from __future__ import unicode_literals, division
+
 from abc import ABCMeta, abstractmethod
 from gcviewer.interpolator import InstantInterpolator, LinearInterpolator
 import numpy as np
-
 
 class Scene():
     __metaclass__ = ABCMeta
@@ -57,4 +58,10 @@ class ImageStackScene(Scene):
         max_elem = array.max()
         min_elem = array.min()
         array_normalised = 255 * ((array - min_elem) / (max_elem - min_elem))
-        return np.asarray(array_normalised, np.int8)
+
+        return np.asarray(array_normalised, np.uint8)
+        #tmp = np.empty(array.shape, dtype=np.uint8)
+        #tmp += np.rint(array_normalised)
+        #rtn = array_normalised.astype(np.int8, 'C', casting='no')
+        # rtn = array_normalised.astype(np.int8, 'C')
+        #return tmp

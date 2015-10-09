@@ -1,4 +1,5 @@
-from __future__ import division
+from __future__ import unicode_literals, division
+
 from abc import ABCMeta
 import numpy as np
 from scipy import ndimage
@@ -20,7 +21,7 @@ class LookupTable():
 
 class ArrayLookupTable(LookupTable):
     def __init__(self, array):
-        super().__init__()
+        super(ArrayLookupTable, self).__init__()
         self.array = array
 
     def sample_position(self, pos):
@@ -36,18 +37,18 @@ class ArrayLookupTable(LookupTable):
 
 class ImageLookupTable(ArrayLookupTable):
     def __init__(self, path):
-        super().__init__(scipy.misc.imread(path))
+        super(ImageLookupTable, self).__init__(scipy.misc.imread(path))
 
 
 class FilteredImageLookupTable(ImageLookupTable):
     def __init__(self, path, filter_function):
-        super().__init__(path)
+        super(FilteredImageLookupTable, self).__init__(path)
         self.array = filter_function(self.array)
 
 
 class ErodedImageLookupTable(ImageLookupTable):
     def __init__(self, path, kernel):
-        super().__init__(path)
+        super(ErodedImageLookupTable, self).__init__(path)
         self.erode_map(kernel)
 
     def erode_map(self, kernel):
@@ -73,7 +74,7 @@ class HysteresisLookupTable(LookupTable):
 
 class LytroLookupTable(LookupTable):
     def __init__(self, lut_dimensions, image_dimensions, depth_txt):
-        super().__init__()
+        super(LytroLookupTable, self).__init__()
         self._dimensions = lut_dimensions
         self._image_dimensions = image_dimensions
         values = []
@@ -97,7 +98,7 @@ class LytroLookupTable(LookupTable):
 
 class PerspectiveCorrectedLookupTable(ImageLookupTable):
     def __init__(self, path, fov):
-        super().__init__(path)
+        super(PerspectiveCorrectedLookupTable, self).__init__(path)
         self.fov = fov
         self.array = self.correct_depth_map(self.array, self.fov)
 
