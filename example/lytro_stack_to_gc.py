@@ -5,7 +5,7 @@ import numpy as np
 from gcviewer.image_manager import ArrayStackImageManager
 
 
-from gcviewer.io import array_to_bytes, SimpleImageStack, write_file
+from gcviewer.gcio import array_to_bytes, SimpleImageStack, write_file
 from gcviewer.lookup_table import ImageLookupTable, ArrayLookupTable
 from gcviewer.scene import ImageStackScene
 

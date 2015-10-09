@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division
+
 import logging
 import bz2
 
@@ -5,7 +7,7 @@ from bson import BSON
 import bson.json_util
 
 import numpy as np
-import scipy.misc
+# import scipy.misc
 
 from gcviewer.image_manager import ArrayStackImageManager
 from gcviewer.lookup_table import ArrayLookupTable
@@ -19,8 +21,10 @@ logger = logging.getLogger(__name__)
 class SimpleArrayStack:
     @classmethod
     def scene_from_data(cls, data):
-        data_dict = BSON.decode(data)
-        lut = ArrayLookupTable(cls._decode_array(data_dict['lookup_table']))
+        bson_data = BSON(data)
+        data_dict = bson_data.decode()
+        decoded_array = cls._decode_array(data_dict[u'lookup_table'])
+        lut = ArrayLookupTable(decoded_array)
         frames = [cls._decode_array(value) for key, value
                   in
                   sorted(data_dict['frames'].items(), key=lambda x: int(x[0]))]
@@ -59,15 +63,15 @@ class SimpleArrayStack:
         return array
 
 
-class SimpleImageStack(SimpleArrayStack):
-    @classmethod
-    def _encode_array(cls, array):
-        stream = io.BytesIO()
-        scipy.misc.imsave(stream, array, format='png')
-
-    @classmethod
-    def _decode_array(cls, data):
-        scipy.misc.imread(data)
+# class SimpleImageStack(SimpleArrayStack):
+#     @classmethod
+#     def _encode_array(cls, array):
+#         stream = io.BytesIO()
+#         scipy.misc.imsave(stream, array, format='png')
+#
+#     @classmethod
+#     def _decode_array(cls, data):
+#         scipy.misc.imread(data)
 
 
 decoders = {'simple_array_stack': SimpleArrayStack}
@@ -88,27 +92,34 @@ def array_to_bytes(array):
 def bytes_to_array(string):
     stream = io.BytesIO(string)
     array = np.load(stream)
-    logger.debug('Converting array to bytes.')
-    logger.debug('-- Output Array Info Start --')
-    logger.debug('Shape:', array.shape)
-    logger.debug('Dtype:', array.dtype)
-    logger.debug('Flags:', array.flags)
-    logger.debug('-- Output Array Info End --')
+    array = np.require(array, requirements=['C'])
+    array.flags.writeable = False
+    #logger.debug('Converting array to bytes.')
+    #logger.debug('-- Output Array Info Start --')
+    #logger.debug('Shape:', array.shape)
+    #logger.debug('Dtype:', array.dtype)
+    #logger.debug('Flags:', array.flags)
+    #logger.debug('-- Output Array Info End --')
     return array
 
 
 def read_file(file):
     logger.debug('Reading file')
     try:
-        wrapper = BSON.decode(bson.json_util.loads(file.read()))
-    except:
-        logger.exception('Failed to read file.')
+        # contents = unicode(file.read(), 'utf-8')
+        contents = file.read()
+        loaded = bson.json_util.loads(contents)
+        #wrapper = BSON.decode(loaded)
+        bson_obj = BSON(loaded)
+        wrapper = bson_obj.decode()
+    except Exception, e:
+        logger.exception('Failed to read file.' + e.message)
         return None
 
-    logger.debug('Processing file with content type,', wrapper['type'])
+    #logger.debug('Processing file with content type,', wrapper['type'])
     decoder = decoders[wrapper['type']]
 
-    logger.debug('Found decoder:', decoder)
+    # logger.debug('Found decoder:', decoder)
     body = wrapper['data']
     if wrapper['compression'] == 'bz2':
         body = bz2.decompress(body)

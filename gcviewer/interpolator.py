@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division
+
 class Interpolator(object):
     """
     A Interpolator provides stepwise interpolation between a start and a target value.

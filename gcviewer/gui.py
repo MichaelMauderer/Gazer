@@ -1,14 +1,16 @@
+from __future__ import unicode_literals, division
+
 import logging
+import codecs
 
 import numpy as np
 
-from PyQt5 import QtGui
-from PyQt5.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent
-from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
+from PyQt4 import QtGui
+from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QString, QPointF
+from PyQt4.QtGui import QImage, QPixmap
+from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
                              QMainWindow, QMenu, QSizePolicy)
-
-import gcviewer.io
+import gcviewer.gcio
 import gcviewer.scene
 
 import eyex.api
@@ -23,6 +25,8 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
     @staticmethod
     def array_to_pixmap(array):
+        #array = np.require(array, dtype=np.int8, requirements=['C'])
+        #array.flags.writeable = False
         q_image = QImage(array.data,
                          array.shape[1],
                          array.shape[0],
@@ -77,6 +81,8 @@ class GCImageWidget(QLabel):
 
         self._last_sample = None
 
+        self.memo_pixmap = None
+
     def toggle_depthmap(self):
         self._show_depthmap = not self._show_depthmap
 
@@ -108,13 +114,16 @@ class GCImageWidget(QLabel):
             image = self.gc_scene.get_image()
 
         if image is not None:
-            image = image.scaled(self.size(), Qt.KeepAspectRatio)
-            self.setPixmap(image)
+            size = self.size()
+            image = image.scaled(size, Qt.KeepAspectRatio)
+            self.memo_pixmap = image
+
+        self.repaint()
 
     @staticmethod
     def mouse_event_to_gaze_sample(QMouseEvent):
         return eyex.api.Sample(-1,
-                               float(QMouseEvent.timestamp()),
+                               0.0,
                                float(QMouseEvent.globalX()),
                                float(QMouseEvent.globalY()))
 
@@ -124,10 +133,12 @@ class GCImageWidget(QLabel):
             self.gaze_change.emit(sample)
 
     def paintEvent(self, QPaintEvent):
-        super().paintEvent(QPaintEvent)
+        super(QLabel, self).paintEvent(QPaintEvent)
+        painter = QtGui.QPainter(self)
+        painter.setBrush(QtGui.QColor(0, 255, 0))
+        if self.memo_pixmap is not None:
+               painter.drawPixmap(QPointF(0.0, 0.0), self.memo_pixmap)
         if self.show_cursor:
-            painter = QtGui.QPainter(self)
-            painter.setBrush(QtGui.QColor(0, 255, 0))
             size = 10
             painter.drawEllipse(self._gaze.x() - size / 2,
                                 self._gaze.y() - size / 2,
@@ -138,9 +149,6 @@ class GCImageWidget(QLabel):
         width = self.self.gc_scene.get_image().size().width()
         height = self.self.gc_scene.get_image().size().height()
         return (p_int / width) * height
-
-    def hasHeightForWidth(self):
-        return True
 
     def update(self, *__args):
         super(GCImageWidget, self).update()
@@ -220,13 +228,13 @@ class GCImageViewer(QMainWindow):
         self.update()
 
     def load_scene(self):
-        file_name, _ = QFileDialog.getOpenFileName(self,
+        file_name = QFileDialog.getOpenFileName(self,
                                                    "Open File",
                                                    QDir.currentPath(),
                                                    )
         if file_name:
-            with open(file_name) as in_file:
-                scene = gcviewer.io.read_file(in_file)
+            with codecs.open(file_name, 'r', 'utf8') as in_file:
+                scene = gcviewer.gcio.read_file(in_file)
                 self.render_area.gc_scene = scene
                 self.render_area.update()
 
@@ -238,7 +246,7 @@ class GCImageViewer(QMainWindow):
         if file_name:
             with open(file_name, 'w') as out_file:
                 scene = self.render_area.gc_scene._scene
-                gcviewer.io.write_file(out_file, scene)
+                gcviewer.gcio.write_file(out_file, scene)
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:
