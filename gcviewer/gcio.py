@@ -70,29 +70,29 @@ def bytes_to_array(string):
     return array
 
 
-def read_file(file):
+def read_file(in_file):
     """
-    Read a gc file and decode the encoded scene object.
+    Read a gc in_file and decode the encoded scene object.
     Uses the decoder object specified in the gcviwer.settings.
 
     Parameters
     ----------
-    file : file like stream
+    in_file : in_file like stream
         File that contains an encoded scene.
 
     Returns
     -------
     gcviewer.scene.Scene
-        Scene object encoded in the file or None if no valid Scene was encoded.
+        Scene object encoded in the in_file or None if no valid Scene was encoded.
     """
-    logger.debug('Reading file')
+    logger.debug('Reading in_file')
     try:
-        contents = file.read()
+        contents = in_file.read()
         loaded = bson.json_util.loads(contents)
         bson_obj = BSON(loaded)
         wrapper = bson_obj.decode()
     except Exception as e:
-        logger.exception('Failed to read file.' + e.message)
+        logger.exception('Failed to read in_file.' + e.message)
         return None
 
     from gcviewer.settings import DECODERS
@@ -106,14 +106,14 @@ def read_file(file):
     return scene
 
 
-def write_file(file, scene):
+def write_file(out_file, scene):
     """
-    Write a scene to a file.
+    Write a scene to a out_file.
     Uses the Encoder object specified in the gcviwer.settings.
 
     Parameters
     ----------
-    file : file like stream
+    out_file : out_file like stream
         File that contains an encoded scene.
     scene : gcviewer.scene.Scene
         Scene object to be saved.
@@ -127,4 +127,4 @@ def write_file(file, scene):
                'type': scene.scene_id,
                'data': encoder.data_from_scene(scene)
                }
-    file.write(bson.json_util.dumps(BSON.encode(wrapper)))
+    out_file.write(bson.json_util.dumps(BSON.encode(wrapper)))
