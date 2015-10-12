@@ -87,23 +87,33 @@ def read_file(in_file):
         was encoded.
     """
     logger.debug('Reading in_file')
+
+    scene = None
     try:
         contents = in_file.read()
         loaded = bson.json_util.loads(contents)
         bson_obj = BSON(loaded)
         wrapper = bson_obj.decode()
-    except Exception as e:
-        logger.exception('Failed to read in_file.' + e.message)
-        return None
+        from gcviewer.settings import DECODERS
+        decoder = DECODERS.get(wrapper['type'])
+        if decoder is None:
+            raise ValueError('Decoder {} not found'.format(wrapper['type']))
+        body = wrapper['data']
+        if wrapper['compression'] == 'bz2':
+            body = bz2.decompress(body)
+        scene = decoder.scene_from_data(body)
 
-    from gcviewer.settings import DECODERS
-    decoder = DECODERS.get(wrapper['type'])
-    if decoder is None:
-        raise ValueError('Decoder {} not found'.format(wrapper['type']))
-    body = wrapper['data']
-    if wrapper['compression'] == 'bz2':
-        body = bz2.decompress(body)
-    scene = decoder.scene_from_data(body)
+    except Exception as e:
+        logger.exception('Failed to read file.' + e.message)
+
+    if scene is None:
+        logger.debug('Trying to load file as image')
+        try:
+            from gcviewer.modules.color.scenes import SimpleArrayDecoder
+            scene = SimpleArrayDecoder().scene_from_data(in_file)
+        except Exception as e:
+            logger.exception('Failed to read file as image.' + e.message)
+            logger.debug('Giving up on trying to load file')
     return scene
 
 

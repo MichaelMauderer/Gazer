@@ -11,6 +11,7 @@ from PyQt4.QtGui import QImage, QPixmap
 from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
 import gcviewer.gcio
+from gcviewer.modules.color.scenes import SimpleArrayDecoder
 import gcviewer.scene
 
 import eyex.api
@@ -30,8 +31,8 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
     @staticmethod
     def array_to_pixmap(array):
-        # array = np.require(array, dtype=np.int8, requirements=['C'])
-        # array.flags.writeable = False
+        array = np.require(array, dtype=np.int8, requirements=['C'])
+        array.flags.writeable = False
         q_image = QImage(array.data,
                          array.shape[1],
                          array.shape[0],
@@ -253,7 +254,7 @@ class GCImageViewer(QMainWindow):
                                                 QDir.currentPath(),
                                                 )
         if file_name:
-            with codecs.open(file_name, 'r', 'utf8') as in_file:
+            with codecs.open(file_name, 'rb') as in_file:
                 scene = gcviewer.gcio.read_file(in_file)
                 self.render_area.gc_scene = scene
                 self.render_area.update()
