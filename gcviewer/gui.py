@@ -1,4 +1,4 @@
-from __future__ import unicode_literals, division
+from __future__ import unicode_literals, division, print_function
 
 import logging
 import codecs
@@ -6,10 +6,10 @@ import codecs
 import numpy as np
 
 from PyQt4 import QtGui
-from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QString, QPointF
+from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
 from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
-                             QMainWindow, QMenu, QSizePolicy)
+                         QMainWindow, QMenu, QSizePolicy)
 import gcviewer.gcio
 import gcviewer.scene
 
@@ -19,14 +19,19 @@ logger = logging.getLogger(__name__)
 
 
 class QtSceneWrapper(gcviewer.scene.Scene):
+    """
+    Wrapper for generic scenes to provide conversion from raw data to qt
+    specific data types.
+    """
+
     def __init__(self, scene):
         super(QtSceneWrapper, self).__init__()
         self._scene = scene
 
     @staticmethod
     def array_to_pixmap(array):
-        #array = np.require(array, dtype=np.int8, requirements=['C'])
-        #array.flags.writeable = False
+        # array = np.require(array, dtype=np.int8, requirements=['C'])
+        # array.flags.writeable = False
         q_image = QImage(array.data,
                          array.shape[1],
                          array.shape[0],
@@ -53,6 +58,11 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
 
 class GCImageWidget(QLabel):
+    """
+    QtLabel that draws gaze contingent scenes based on current gaze position.
+
+    Gaze updates are retrieved through the qt event system.
+    """
     gaze_change = pyqtSignal(eyex.api.Sample)
 
     @property
@@ -137,7 +147,7 @@ class GCImageWidget(QLabel):
         painter = QtGui.QPainter(self)
         painter.setBrush(QtGui.QColor(0, 255, 0))
         if self.memo_pixmap is not None:
-               painter.drawPixmap(QPointF(0.0, 0.0), self.memo_pixmap)
+            painter.drawPixmap(QPointF(0.0, 0.0), self.memo_pixmap)
         if self.show_cursor:
             size = 10
             painter.drawEllipse(self._gaze.x() - size / 2,
@@ -156,6 +166,11 @@ class GCImageWidget(QLabel):
 
 
 class GCImageViewer(QMainWindow):
+    """
+    Main window of GCViewer qt gui.
+    Provides overall layout and menus to access basic functionality.
+    """
+
     def __init__(self):
         super(GCImageViewer, self).__init__()
 
@@ -229,9 +244,9 @@ class GCImageViewer(QMainWindow):
 
     def load_scene(self):
         file_name = QFileDialog.getOpenFileName(self,
-                                                   "Open File",
-                                                   QDir.currentPath(),
-                                                   )
+                                                "Open File",
+                                                QDir.currentPath(),
+                                                )
         if file_name:
             with codecs.open(file_name, 'r', 'utf8') as in_file:
                 scene = gcviewer.gcio.read_file(in_file)
@@ -267,14 +282,19 @@ class GCImageViewer(QMainWindow):
 
 
 def run_qt_gui():
-    import sys
+    """
+    Set up example configuration to run qt gui with eyex and save log files.
+    """
+    import sys, os
 
     logging.basicConfig(filename='log.debug', level=logging.DEBUG)
 
     app = QApplication(sys.argv)
     imageViewer = GCImageViewer()
 
-    eye_x = eyex.api.EyeXInterface()
+    lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
+                            'Tobii.EyeX.Client.dll')
+    eye_x = eyex.api.EyeXInterface(lib_path)
     eye_x.on_event.append(
         lambda sample: imageViewer.render_area.gaze_change.emit(sample))
 
@@ -286,4 +306,5 @@ if __name__ == '__main__':
     try:
         run_qt_gui()
     except Exception as e:
+        print(e)
         logging.exception('Program terminated with an exception.')

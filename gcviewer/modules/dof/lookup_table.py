@@ -1,9 +1,8 @@
-from __future__ import unicode_literals, division
+from __future__ import unicode_literals, division, print_function
 
 from abc import ABCMeta
 import numpy as np
-# from scipy import ndimage
-# import scipy
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -89,11 +88,11 @@ class LytroLookupTable(LookupTable):
         y = pos[1] / self._image_dimensions[1]
 
         try:
-            depth = self._depth_data[int(x * (self._dimensions[0] - 1)), int(y * (self._dimensions[1] - 1))]
+            depth = self._depth_data[int(x * (self._dimensions[0] - 1)), int(
+                y * (self._dimensions[1] - 1))]
             return depth
         except IndexError:
             return None
-
 
 # class PerspectiveCorrectedLookupTable(ImageLookupTable):
 #     def __init__(self, path, fov):
