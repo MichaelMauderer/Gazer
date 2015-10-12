@@ -285,14 +285,16 @@ def run_qt_gui():
     """
     Set up example configuration to run qt gui with eyex and save log files.
     """
-    import sys
+    import sys, os
 
     logging.basicConfig(filename='log.debug', level=logging.DEBUG)
 
     app = QApplication(sys.argv)
     imageViewer = GCImageViewer()
 
-    eye_x = eyex.api.EyeXInterface()
+    lib_path = os.path.join(os.getenv('EYEXLIB_PATH', ''),
+                            'Tobii.EyeX.Client.dll')
+    eye_x = eyex.api.EyeXInterface(lib_path)
     eye_x.on_event.append(
         lambda sample: imageViewer.render_area.gaze_change.emit(sample))
 
