@@ -7,6 +7,8 @@ from bson import BSON
 import bson.json_util
 import numpy as np
 
+import bz2
+
 logger = logging.getLogger(__name__)
 
 
