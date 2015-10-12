@@ -24,6 +24,17 @@ class Scene():
         """
         self.gaze_pos = pos
 
+    def tick(self, delta_time):
+        """
+        Advance internal scene logic by specified time.
+
+        Parameters
+        ----------
+        delta_time : float
+            Time passed since last call.
+        """
+        pass
+
     @abstractmethod
     def get_image(self):
         """
