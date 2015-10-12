@@ -7,10 +7,14 @@ depth-of-field created from Lytro images.
 Features
 --------
 
-Supports ... eye trackers.
+Supports EyeX eye tracker.
 
 Usage
 -----
+
+Running the gui requires the Tobii.EyeX.Client.dll to be specified in the
+EYEX_LIB_PATH env variable. We recommend setting it to '../lib' and putting the
+dll into the corresponding top level lib folder.
 
 Installation instructions
 -------------------------
