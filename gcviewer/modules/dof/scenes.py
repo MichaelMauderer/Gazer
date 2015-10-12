@@ -12,6 +12,15 @@ from gcviewer.scene import Scene
 
 
 class ImageStackScene(Scene):
+    """
+    Scene object based on a list of images and a depth map.
+
+    The current image to be displayed is chosen based on correspondence between
+    the value in the depth map at the gaze position and the index position in the
+    image array.
+
+    Todo: More detail about algorithm, e.g. interpolation.
+    """
     scene_type = 'simple_array_stack'
 
     def __init__(self, image_manager, lookup_table,
@@ -55,6 +64,9 @@ class ImageStackScene(Scene):
 
 
 class SimpleArrayStackDecoder(DataDecoder):
+    """
+    Naive implementation of a decoder for an ImageStackScene object.
+    """
     def scene_from_data(self, data):
         bson_data = BSON(data)
         data_dict = bson_data.decode()
@@ -74,6 +86,9 @@ class SimpleArrayStackDecoder(DataDecoder):
 
 
 class SimpleArrayStackEncoder(DataEncoder):
+    """
+    Naive implementation of a encoder for an ImageStackScene object.
+    """
     def data_from_scene(self, scene):
         lut_array = scene.lookup_table.array
 

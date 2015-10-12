@@ -11,6 +11,10 @@ EyeData = collections.namedtuple('EyeData',
 
 
 class EyetrackingAPIBase:
+    """
+    Base class for eye tracking data sources.
+    Specifies common functionality that needs to be supplied.
+    """
     __metaclass__ = ABCMeta
 
     @abstractmethod
@@ -29,4 +33,7 @@ class EyetrackingAPIBase:
 
     @abstractmethod
     def get_newest_sample(self):
+        """
+        Returns newest available EyeData sample.
+        """
         pass

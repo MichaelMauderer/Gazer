@@ -8,6 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 class ImageManager():
+    """
+    Object that manages a collection of images.
+    Specifies common functionality for different implementations.
+    """
     __metaclass__ = ABCMeta
 
     def preload(self, keys):

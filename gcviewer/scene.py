@@ -4,6 +4,10 @@ from abc import ABCMeta, abstractmethod
 
 
 class Scene():
+    """
+    Base class for gaze-contingent scenes that can be displayed.
+    Provide frames based on current gaze state.
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self):
@@ -11,10 +15,19 @@ class Scene():
 
     def update_gaze(self, pos):
         """
-        :param pos: Gaze position normalized to image.
+        Set current gaze position.
+
+        Parameters
+        ----------
+        pos : tuple
+            Gaze position normalized to image coordinates (0,1).
         """
         self.gaze_pos = pos
 
     @abstractmethod
     def get_image(self):
+        """
+        Return frame for current state.
+        Type might depend on rendering engine used.
+        """
         pass

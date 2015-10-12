@@ -19,6 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 class QtSceneWrapper(gcviewer.scene.Scene):
+    """
+    Wrapper for generic scenes to provide conversion from raw data to qt
+    specific data types.
+    """
     def __init__(self, scene):
         super(QtSceneWrapper, self).__init__()
         self._scene = scene
@@ -53,6 +57,11 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
 
 class GCImageWidget(QLabel):
+    """
+    QtLabel that draws gaze contingent scenes based on current gaze position.
+
+    Gaze updates are retrieved through the qt event system.
+    """
     gaze_change = pyqtSignal(eyex.api.Sample)
 
     @property
@@ -156,6 +165,10 @@ class GCImageWidget(QLabel):
 
 
 class GCImageViewer(QMainWindow):
+    """
+    Main window of GCViewer qt gui.
+    Provides overall layout and menus to access basic functionality.
+    """
     def __init__(self):
         super(GCImageViewer, self).__init__()
 
@@ -267,6 +280,9 @@ class GCImageViewer(QMainWindow):
 
 
 def run_qt_gui():
+    """
+    Set up example configuration to run qt gui with eyex and save log files.
+    """
     import sys
 
     logging.basicConfig(filename='log.debug', level=logging.DEBUG)

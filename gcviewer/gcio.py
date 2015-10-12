@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class DataDecoder(object):
     """
-    Class responsible for deserializing Scene.Scene objects.
+    Class responsible for deserializing gcviewer.scene.Scene objects.
     """
 
     def scene_from_data(self, data):
@@ -21,20 +21,46 @@ class DataDecoder(object):
 
 class DataEncoder(object):
     """
-    Class responsible for serialising Scene.Scene objects.
+    Class responsible for serialising gcviewer.scene.Scene objects.
     """
 
-    def data_from_scene(cls, scene):
+    def data_from_scene(self, scene):
         pass
 
 
 def array_to_bytes(array):
+    """
+    Convert numpy array to byte string.
+
+    Parameters
+    ----------
+    array : ndarray
+        Array to covnert.
+
+    Returns
+    -------
+    str
+        Array encodes as string.
+    """
     stream = io.BytesIO()
     np.save(stream, array)
     return stream.getvalue()
 
 
 def bytes_to_array(string):
+    """
+    Convert byte string to numpy array.
+
+    Parameters
+    ----------
+    array : str
+        Byte string covnert.
+
+    Returns
+    -------
+    ndarray
+        Decoded array.
+    """
     stream = io.BytesIO(string)
     array = np.load(stream)
     array = np.require(array, requirements=['C'])
@@ -43,6 +69,20 @@ def bytes_to_array(string):
 
 
 def read_file(file):
+    """
+    Read a gc file and decode the encoded scene object.
+    Uses the decoder object specified in the gcviwer.settings.
+
+    Parameters
+    ----------
+    file : file like stream
+        File that contains an encoded scene.
+
+    Returns
+    -------
+    gcviewer.scene.Scene
+        Scene object encoded in the file or None if no valid Scene was encoded.
+    """
     logger.debug('Reading file')
     try:
         contents = file.read()
@@ -65,6 +105,18 @@ def read_file(file):
 
 
 def write_file(file, scene):
+    """
+    Write a scene to a file.
+    Uses the Encoder object specified in the gcviwer.settings.
+
+    Parameters
+    ----------
+    file : file like stream
+        File that contains an encoded scene.
+    scene : gcviewer.scene.Scene
+        Scene object to be saved.
+    """
+
     from settings import ENCODERS
     encoder = ENCODERS.get(scene.scene_id)
     wrapper = {'encoder': 'gcviewer',
