@@ -7,10 +7,6 @@ import os
 
 from subprocess import check_output
 
-hidden_imports = [
-    'gcviewer'
-]
-
 project_root = '.\\'
 pyinstaller_path = os.getenv('PYINSTALLER_PATH', 'pyinstaller')
 lib_path = '.\\lib'
@@ -24,8 +20,6 @@ opts = '--clean ' \
        '--paths={lib_path} ' \
        '--additional-hooks-dir={hook_path} ' \
        '-y '
-
-opts += ' '.join(['--hidden-import=' + s for s in hidden_imports])
 
 opts = opts.format(project_root=project_root,
                    lib_path=lib_path,
