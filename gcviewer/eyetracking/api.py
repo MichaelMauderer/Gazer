@@ -1,4 +1,4 @@
-from __future__ import unicode_literals, division
+from __future__ import unicode_literals, division, print_function
 
 from abc import ABCMeta, abstractmethod
 import collections
@@ -30,25 +30,3 @@ class EyetrackingAPIBase:
     @abstractmethod
     def get_newest_sample(self):
         pass
-
-
-class PygameMouseDummy(EyetrackingAPIBase):
-    def _get_sample(self):
-        import pygame
-
-        pos = pygame.mouse.get_pos()
-
-        posX = pos[0] / pygame.display.Info().current_w
-        posY = pos[1] / pygame.display.Info().current_h
-        return EyeData(None,
-                       (posX, posY),
-                       None)
-
-    def pop_sample(self):
-        return self._get_sample()
-
-    def pop_all_samples(self):
-        return [self.pop_sample()]
-
-    def get_newest_sample(self):
-        return self._get_sample()

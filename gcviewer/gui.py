@@ -1,4 +1,4 @@
-from __future__ import unicode_literals, division
+from __future__ import unicode_literals, division, print_function
 
 import logging
 import codecs
