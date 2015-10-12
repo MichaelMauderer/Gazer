@@ -6,10 +6,10 @@ import codecs
 import numpy as np
 
 from PyQt4 import QtGui
-from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QString, QPointF
+from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
 from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
-                             QMainWindow, QMenu, QSizePolicy)
+                         QMainWindow, QMenu, QSizePolicy)
 import gcviewer.gcio
 import gcviewer.scene
 
@@ -23,14 +23,15 @@ class QtSceneWrapper(gcviewer.scene.Scene):
     Wrapper for generic scenes to provide conversion from raw data to qt
     specific data types.
     """
+
     def __init__(self, scene):
         super(QtSceneWrapper, self).__init__()
         self._scene = scene
 
     @staticmethod
     def array_to_pixmap(array):
-        #array = np.require(array, dtype=np.int8, requirements=['C'])
-        #array.flags.writeable = False
+        # array = np.require(array, dtype=np.int8, requirements=['C'])
+        # array.flags.writeable = False
         q_image = QImage(array.data,
                          array.shape[1],
                          array.shape[0],
@@ -146,7 +147,7 @@ class GCImageWidget(QLabel):
         painter = QtGui.QPainter(self)
         painter.setBrush(QtGui.QColor(0, 255, 0))
         if self.memo_pixmap is not None:
-               painter.drawPixmap(QPointF(0.0, 0.0), self.memo_pixmap)
+            painter.drawPixmap(QPointF(0.0, 0.0), self.memo_pixmap)
         if self.show_cursor:
             size = 10
             painter.drawEllipse(self._gaze.x() - size / 2,
@@ -169,6 +170,7 @@ class GCImageViewer(QMainWindow):
     Main window of GCViewer qt gui.
     Provides overall layout and menus to access basic functionality.
     """
+
     def __init__(self):
         super(GCImageViewer, self).__init__()
 
@@ -242,9 +244,9 @@ class GCImageViewer(QMainWindow):
 
     def load_scene(self):
         file_name = QFileDialog.getOpenFileName(self,
-                                                   "Open File",
-                                                   QDir.currentPath(),
-                                                   )
+                                                "Open File",
+                                                QDir.currentPath(),
+                                                )
         if file_name:
             with codecs.open(file_name, 'r', 'utf8') as in_file:
                 scene = gcviewer.gcio.read_file(in_file)
