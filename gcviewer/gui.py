@@ -10,8 +10,8 @@ from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
 from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
+
 import gcviewer.gcio
-from gcviewer.modules.color.scenes import SimpleArrayDecoder
 import gcviewer.scene
 
 import eyex.api
