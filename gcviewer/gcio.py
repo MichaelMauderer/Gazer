@@ -83,7 +83,8 @@ def read_file(in_file):
     Returns
     -------
     gcviewer.scene.Scene
-        Scene object encoded in the in_file or None if no valid Scene was encoded.
+        Scene object encoded in the in_file or None if no valid Scene
+        was encoded.
     """
     logger.debug('Reading in_file')
     try:

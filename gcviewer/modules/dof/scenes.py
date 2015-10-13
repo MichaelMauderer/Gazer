@@ -16,8 +16,8 @@ class ImageStackScene(Scene):
     Scene object based on a list of images and a depth map.
 
     The current image to be displayed is chosen based on correspondence between
-    the value in the depth map at the gaze position and the index position in the
-    image array.
+    the value in the depth map at the gaze position and the index position in
+    the image array.
 
     Todo: More detail about algorithm, e.g. interpolation.
     """
@@ -67,6 +67,7 @@ class SimpleArrayStackDecoder(DataDecoder):
     """
     Naive implementation of a decoder for an ImageStackScene object.
     """
+
     def scene_from_data(self, data):
         bson_data = BSON(data)
         data_dict = bson_data.decode()
@@ -89,6 +90,7 @@ class SimpleArrayStackEncoder(DataEncoder):
     """
     Naive implementation of a encoder for an ImageStackScene object.
     """
+
     def data_from_scene(self, scene):
         lut_array = scene.lookup_table.array
 
@@ -99,9 +101,11 @@ class SimpleArrayStackEncoder(DataEncoder):
 
         stream = io.BytesIO()
 
+        frames = {str(key): self._encode_array(array) for key, array in
+                  enumerate(frame_iterator())}
+
         data = {'lookup_table': self._encode_array(lut_array),
-                'frames': {str(key): self._encode_array(array) for key, array in
-                           enumerate(frame_iterator())}
+                'frames': frames
                 }
 
         stream.write(BSON.encode(data))

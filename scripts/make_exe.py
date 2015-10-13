@@ -32,7 +32,7 @@ opts = opts.format(project_root=project_root,
                    hook_path=hook_path,
                    )
 
-command = pyinstaller_path + ' '+ opts + ' ' + target
+command = pyinstaller_path + ' ' + opts + ' ' + target
 print(command)
 print(check_output(command, shell=True))
 

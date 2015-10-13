@@ -113,10 +113,14 @@ class GCImageWidget(QLabel):
         self._gaze = local_pos_pixmap
         local_pos_pixmap = QPoint(local_pos_pixmap.x() - x_offset,
                                   local_pos_pixmap.y() - y_offset)
-        norm_pos_pixmap = (local_pos_pixmap.x() / (
-            self.size().width() - (2 * x_offset))), \
-                          (local_pos_pixmap.y() / (
-                              self.size().height() - (2 * y_offset)))
+        norm_pos_pixmap_x = local_pos_pixmap.x()
+        norm_pos_pixmap_x /= (self.size().width() - (2 * x_offset))
+
+        norm_pos_pixmap_y = local_pos_pixmap.y()
+        norm_pos_pixmap_y /= (self.size().height() - (2 * y_offset))
+
+        norm_pos_pixmap = norm_pos_pixmap_x, norm_pos_pixmap_y
+
         self.gc_scene.update_gaze(tuple(np.clip(norm_pos_pixmap, 0, 1)))
         if self._show_depthmap:
             image = self.gc_scene.get_depth_image()
@@ -175,7 +179,8 @@ class GCImageViewer(QMainWindow):
         super(GCImageViewer, self).__init__()
 
         self.render_area = GCImageWidget(None)
-        self.render_area.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.render_area.setSizePolicy(QSizePolicy.Ignored,
+                                       QSizePolicy.Ignored)
         self.render_area.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(self.render_area)
 
@@ -285,7 +290,8 @@ def run_qt_gui():
     """
     Set up example configuration to run qt gui with eyex and save log files.
     """
-    import sys, os
+    import sys
+    import os
 
     logging.basicConfig(filename='log.debug', level=logging.DEBUG)
 

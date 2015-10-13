@@ -1,8 +1,10 @@
 from __future__ import unicode_literals, division, print_function
 
+
 class Interpolator(object):
     """
-    A Interpolator provides stepwise interpolation between a start and a target value.
+    A Interpolator provides stepwise interpolation between a start and a
+    target value.
     """
 
     def __init__(self, start=0, target=0):
@@ -51,7 +53,8 @@ class LinearInterpolator(Interpolator):
 
 class ExponentialInterpolator(Interpolator):
     """
-    Every step will half the distance towards the target (using integer division).
+    Every step will half the distance towards the target (using integer
+    division).
     """
     def make_step(self):
         diff = self.target - self.current_value

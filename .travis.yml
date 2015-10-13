@@ -1,0 +1,31 @@
+sudo: false
+language: python
+
+matrix:
+  fast_finish: true
+  include:
+  - python: 3.5
+  - python: 3.4
+  - python: 2.7
+
+before_install:
+  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b
+  - export PATH=/home/travis/miniconda/bin:$PATH
+  - conda update --yes --quiet conda
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
+install:
+  - conda create --yes --quiet -n gcviewer-test pip setuptools nose pyqt numpy=1.10.1 pymongo=3.0.3
+  - source activate gcviewer-test
+  - pip install coverage coveralls flake8 mock==1.0.1
+  - pip install -e git://github.com/MichaelMauderer/python-eyex.git@874b390af27da8869816ee5f56ef131844a824ea#egg=python_eyex-dev
+
+script:
+  - flake8 gcviewer
+  - nosetests --nocapture --with-doctest --doctest-options=+ELLIPSIS,+NORMALIZE_WHITESPACE --with-coverage --cover-package=gcviewer ./tests ./gcviewer
+
+after_success:
+  - coveralls
