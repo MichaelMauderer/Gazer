@@ -1,20 +1,17 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
-import codecs
 
 import numpy as np
-
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
 from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
-
-import gcviewer.gcio
-import gcviewer.scene
-
 import eyex.api
+
+from gcviewer import gcio
+import gcviewer.scene
 
 logger = logging.getLogger(__name__)
 
@@ -254,16 +251,9 @@ class GCImageViewer(QMainWindow):
                                                 QDir.currentPath(),
                                                 )
         if file_name:
-            with codecs.open(file_name, 'rb') as in_file:
-                if file_name[-2:] == 'gc':
-                    scene = gcviewer.gcio.read_file(in_file)
-                elif file_name[-4:] == 'fits':
-                    scene = scene = gcviewer.gcio.read_fits(in_file)
-                else:
-                    scene = scene = gcviewer.gcio.read_image(in_file)
-
-                self.render_area.gc_scene = scene
-                self.render_area.update()
+            scene = gcio.load_scene(str(file_name))
+            self.render_area.gc_scene = scene
+            self.render_area.update()
 
     def save_scene(self):
         file_name, _ = QFileDialog.getSaveFileName(self,
@@ -273,7 +263,7 @@ class GCImageViewer(QMainWindow):
         if file_name:
             with open(file_name, 'w') as out_file:
                 scene = self.render_area.gc_scene._scene
-                gcviewer.gcio.write_file(out_file, scene)
+                gcio.write_file(out_file, scene)
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:

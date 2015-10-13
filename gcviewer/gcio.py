@@ -1,13 +1,13 @@
 from __future__ import unicode_literals, division, print_function
 
+import os
 import logging
 import io
+import bz2
 
 from bson import BSON
 import bson.json_util
 import numpy as np
-
-import bz2
 
 logger = logging.getLogger(__name__)
 
@@ -70,14 +70,42 @@ def bytes_to_array(string):
     return array
 
 
-def read_file(in_file):
+def load_scene(path):
+    """
+    Loads the appropriate scene for the file indicated by the path.
+
+    Parameters
+    ----------
+    path : str
+        Path to file to load.
+
+    Returns
+    -------
+    gcviwer.scene.Scene
+        Appropriate scene object to display file.
+        Is None if no suitable scene is found.
+    """
+
+    file_name, file_extension = os.path.splitext(path)
+    logger.debug('Got file to load: {}'.format(path))
+    logger.debug('File extension is {}'.format(file_extension))
+    filetype_loaders = {'.gc': read_gcfile,
+                        '.fits': read_fits,
+                        }
+    loader = filetype_loaders.get(file_extension)
+    if loader is not None:
+        return loader(path)
+    return read_image(path)
+
+
+def read_gcfile(path):
     """
     Read a gc in_file and decode the encoded scene object.
     Uses the decoder object specified in the gcviwer.settings.
 
     Parameters
     ----------
-    in_file : in_file like stream
+    path : in_file like stream
         File that contains an encoded scene.
 
     Returns
@@ -86,85 +114,79 @@ def read_file(in_file):
         Scene object encoded in the in_file or None if no valid Scene
         was encoded.
     """
-    logger.debug('Reading in_file')
+    logger.debug('Reading file as gcfile {}'.format(path))
 
-    scene = None
-    try:
-        contents = in_file.read()
-        loaded = bson.json_util.loads(contents)
-        bson_obj = BSON(loaded)
-        wrapper = bson_obj.decode()
-        from gcviewer.settings import DECODERS
-        decoder = DECODERS.get(wrapper['type'])
-        if decoder is None:
-            raise ValueError('Decoder {} not found'.format(wrapper['type']))
-        body = wrapper['data']
-        if wrapper['compression'] == 'bz2':
-            body = bz2.decompress(body)
-        scene = decoder.scene_from_data(body)
-
-    except Exception as e:
-        logger.exception('Failed to read file.' + e.message)
-
-    return scene
+    with open(path, 'rb') as in_file:
+        try:
+            contents = in_file.read()
+            loaded = bson.json_util.loads(contents)
+            bson_obj = BSON(loaded)
+            wrapper = bson_obj.decode()
+            from gcviewer.settings import DECODERS
+            decoder = DECODERS.get(wrapper['type'])
+            if decoder is None:
+                raise ValueError('Decoder {} not found'.format(wrapper['type']))
+            body = wrapper['data']
+            if wrapper['compression'] == 'bz2':
+                body = bz2.decompress(body)
+            scene = decoder.scene_from_data(body)
+            return scene
+        except Exception as e:
+            logger.exception('Failed to read file.' + e.message)
 
 
-def read_image(in_file):
+def read_image(path):
     """
-    Read a gc in_file and decode the encoded scene object.
-    Uses the decoder object specified in the gcviwer.settings.
+    Read an image create a scene object.
 
     Parameters
     ----------
-    in_file : in_file like stream
-        File that contains an encoded scene.
+    path : in_file like stream
+        File that contains an image scene.
 
     Returns
     -------
     gcviewer.scene.Scene
-        Scene object encoded in the in_file or None if no valid Scene
-        was encoded.
+        Scene object
     """
-    logger.debug('Reading in_file as image')
-    scene = None
+    logger.debug('Reading file as image: {}'.format(path))
     try:
         from gcviewer.modules.color.scenes import SimpleArrayDecoder
-        scene = SimpleArrayDecoder().scene_from_data(in_file)
+        import skimage.data
+        image = skimage.data.imread(path)
+        scene = SimpleArrayDecoder().scene_from_array(image)
+        return scene
     except Exception as e:
         logger.exception('Failed to read file as image.' + e.message)
-    return scene
 
 
-def read_fits(in_file):
+def read_fits(path):
     """
-    Read a gc in_file and decode the encoded scene object.
-    Uses the decoder object specified in the gcviwer.settings.
+    Read a fits file and create a scene object.
 
     Parameters
     ----------
-    in_file : in_file like stream
+    path : in_file like stream
         File that contains an encoded scene.
 
     Returns
     -------
     gcviewer.scene.Scene
-        Scene object encoded in the in_file or None if no valid Scene
-        was encoded.
+        Scene object
     """
     logger.debug('Reading in_file as fits file')
-    scene = None
     try:
         from gcviewer.modules.color.scenes import SimpleArrayDecoder
         from astropy.io import fits
-        hdu_list = fits.open(in_file)
+        hdu_list = fits.open(path)
         image_data = hdu_list[0].data
         logger.debug('Retrieved {}'.format(type(image_data)))
         logger.debug('Has shape {}'.format(image_data.shape))
         image_data = np.dstack([image_data, image_data, image_data])
         scene = SimpleArrayDecoder().scene_from_array(image_data)
+        return scene
     except Exception as e:
         logger.exception('Failed to read file as image.' + e.message)
-    return scene
 
 
 def write_file(out_file, scene):
