@@ -106,14 +106,64 @@ def read_file(in_file):
     except Exception as e:
         logger.exception('Failed to read file.' + e.message)
 
-    if scene is None:
-        logger.debug('Trying to load file as image')
-        try:
-            from gcviewer.modules.color.scenes import SimpleArrayDecoder
-            scene = SimpleArrayDecoder().scene_from_data(in_file)
-        except Exception as e:
-            logger.exception('Failed to read file as image.' + e.message)
-            logger.debug('Giving up on trying to load file')
+    return scene
+
+
+def read_image(in_file):
+    """
+    Read a gc in_file and decode the encoded scene object.
+    Uses the decoder object specified in the gcviwer.settings.
+
+    Parameters
+    ----------
+    in_file : in_file like stream
+        File that contains an encoded scene.
+
+    Returns
+    -------
+    gcviewer.scene.Scene
+        Scene object encoded in the in_file or None if no valid Scene
+        was encoded.
+    """
+    logger.debug('Reading in_file as image')
+    scene = None
+    try:
+        from gcviewer.modules.color.scenes import SimpleArrayDecoder
+        scene = SimpleArrayDecoder().scene_from_data(in_file)
+    except Exception as e:
+        logger.exception('Failed to read file as image.' + e.message)
+    return scene
+
+
+def read_fits(in_file):
+    """
+    Read a gc in_file and decode the encoded scene object.
+    Uses the decoder object specified in the gcviwer.settings.
+
+    Parameters
+    ----------
+    in_file : in_file like stream
+        File that contains an encoded scene.
+
+    Returns
+    -------
+    gcviewer.scene.Scene
+        Scene object encoded in the in_file or None if no valid Scene
+        was encoded.
+    """
+    logger.debug('Reading in_file as fits file')
+    scene = None
+    try:
+        from gcviewer.modules.color.scenes import SimpleArrayDecoder
+        from astropy.io import fits
+        hdu_list = fits.open(in_file)
+        image_data = hdu_list[0].data
+        logger.debug('Retrieved {}'.format(type(image_data)))
+        logger.debug('Has shape {}'.format(image_data.shape))
+        image_data = np.dstack([image_data, image_data, image_data])
+        scene = SimpleArrayDecoder().scene_from_array(image_data)
+    except Exception as e:
+        logger.exception('Failed to read file as image.' + e.message)
     return scene
 
 

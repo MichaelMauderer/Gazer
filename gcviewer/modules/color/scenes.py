@@ -56,3 +56,6 @@ class SimpleArrayDecoder(DataDecoder):
         import skimage.data
         image = skimage.data.imread(data)
         return HistogramEqualisationScene(image)
+
+    def scene_from_array(self, array):
+        return HistogramEqualisationScene(array)

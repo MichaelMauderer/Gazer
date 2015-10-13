@@ -255,7 +255,13 @@ class GCImageViewer(QMainWindow):
                                                 )
         if file_name:
             with codecs.open(file_name, 'rb') as in_file:
-                scene = gcviewer.gcio.read_file(in_file)
+                if file_name[-2:] == 'gc':
+                    scene = gcviewer.gcio.read_file(in_file)
+                elif file_name[-4:] == 'fits':
+                    scene = scene = gcviewer.gcio.read_fits(in_file)
+                else:
+                    scene = scene = gcviewer.gcio.read_image(in_file)
+
                 self.render_area.gc_scene = scene
                 self.render_area.update()
 
