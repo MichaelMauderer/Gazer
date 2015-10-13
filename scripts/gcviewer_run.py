@@ -23,7 +23,7 @@ def run_qt_gui():
         eye_x = eyex.api.EyeXInterface(lib_path)
         eye_x.on_event.append(
             lambda sample: imageViewer.render_area.gaze_change.emit(sample))
-    except Exception as e:
+    except Exception:
         logging.exception('Could not load EyeX. ')
 
     imageViewer.show()
@@ -33,5 +33,5 @@ def run_qt_gui():
 if __name__ == '__main__':
     try:
         run_qt_gui()
-    except Exception as e:
+    except Exception:
         logging.exception('Program terminated with an exception. ')

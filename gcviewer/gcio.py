@@ -132,7 +132,7 @@ def read_gcfile(path):
                 body = bz2.decompress(body)
             scene = decoder.scene_from_data(body)
             return scene
-        except Exception as e:
+        except Exception:
             logger.exception('Failed to read file.')
 
 
@@ -157,7 +157,7 @@ def read_image(path):
         image = skimage.data.imread(path)
         scene = SimpleArrayDecoder().scene_from_array(image)
         return scene
-    except Exception as e:
+    except Exception:
         logger.exception('Failed to read file as image.')
 
 
@@ -186,7 +186,7 @@ def read_fits(path):
         image_data = np.dstack([image_data, image_data, image_data])
         scene = SimpleArrayDecoder().scene_from_array(image_data)
         return scene
-    except Exception as e:
+    except Exception:
         logger.exception('Failed to read file as image.')
 
 
