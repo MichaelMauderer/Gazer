@@ -123,9 +123,10 @@ def read_gcfile(path):
             bson_obj = BSON(loaded)
             wrapper = bson_obj.decode()
             from gcviewer.settings import DECODERS
-            decoder = DECODERS.get(wrapper['type'])
+            wrapper_type = wrapper['type']
+            decoder = DECODERS.get(wrapper_type)
             if decoder is None:
-                raise ValueError('Decoder {} not found'.format(wrapper['type']))
+                raise ValueError('Decoder {} not found'.format(wrapper_type))
             body = wrapper['data']
             if wrapper['compression'] == 'bz2':
                 body = bz2.decompress(body)
