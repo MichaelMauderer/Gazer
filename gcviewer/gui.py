@@ -1,19 +1,17 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
-import codecs
 
 import numpy as np
-
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
-from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
+from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
-import gcviewer.gcio
-import gcviewer.scene
-
 import eyex.api
+
+from gcviewer import gcio
+import gcviewer.scene
 
 logger = logging.getLogger(__name__)
 
@@ -30,8 +28,8 @@ class QtSceneWrapper(gcviewer.scene.Scene):
 
     @staticmethod
     def array_to_pixmap(array):
-        # array = np.require(array, dtype=np.int8, requirements=['C'])
-        # array.flags.writeable = False
+        array = np.require(array, dtype=np.int8, requirements=['C'])
+        array.flags.writeable = False
         q_image = QImage(array.data,
                          array.shape[1],
                          array.shape[0],
@@ -253,10 +251,9 @@ class GCImageViewer(QMainWindow):
                                                 QDir.currentPath(),
                                                 )
         if file_name:
-            with codecs.open(file_name, 'r', 'utf8') as in_file:
-                scene = gcviewer.gcio.read_file(in_file)
-                self.render_area.gc_scene = scene
-                self.render_area.update()
+            scene = gcio.load_scene(str(file_name))
+            self.render_area.gc_scene = scene
+            self.render_area.update()
 
     def save_scene(self):
         file_name, _ = QFileDialog.getSaveFileName(self,
@@ -266,7 +263,7 @@ class GCImageViewer(QMainWindow):
         if file_name:
             with open(file_name, 'w') as out_file:
                 scene = self.render_area.gc_scene._scene
-                gcviewer.gcio.write_file(out_file, scene)
+                gcio.write_file(out_file, scene)
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:
@@ -284,33 +281,3 @@ class GCImageViewer(QMainWindow):
     def update(self, *__args):
         super(GCImageViewer, self).update()
         self.render_area.update()
-
-
-def run_qt_gui():
-    """
-    Set up example configuration to run qt gui with eyex and save log files.
-    """
-    import sys
-    import os
-
-    logging.basicConfig(filename='log.debug', level=logging.DEBUG)
-
-    app = QApplication(sys.argv)
-    imageViewer = GCImageViewer()
-
-    lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
-                            'Tobii.EyeX.Client.dll')
-    eye_x = eyex.api.EyeXInterface(lib_path)
-    eye_x.on_event.append(
-        lambda sample: imageViewer.render_area.gaze_change.emit(sample))
-
-    imageViewer.show()
-    sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    try:
-        run_qt_gui()
-    except Exception as e:
-        print(e)
-        logging.exception('Program terminated with an exception.')
