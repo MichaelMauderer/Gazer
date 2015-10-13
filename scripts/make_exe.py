@@ -11,7 +11,7 @@ project_root = '.\\'
 pyinstaller_path = os.getenv('PYINSTALLER_PATH', 'pyinstaller')
 lib_path = '.\\lib'
 hook_path = os.path.join(project_root, 'hooks')
-target = os.path.join(project_root, 'gcviewer', 'gui.py')
+target = os.path.join(project_root, 'scripts', 'gcviewer_run.py')
 
 opts = '--clean ' \
        '--onefile ' \

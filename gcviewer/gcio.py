@@ -133,7 +133,7 @@ def read_gcfile(path):
             scene = decoder.scene_from_data(body)
             return scene
         except Exception as e:
-            logger.exception('Failed to read file.' + e.message)
+            logger.exception('Failed to read file.')
 
 
 def read_image(path):
@@ -158,7 +158,7 @@ def read_image(path):
         scene = SimpleArrayDecoder().scene_from_array(image)
         return scene
     except Exception as e:
-        logger.exception('Failed to read file as image.' + e.message)
+        logger.exception('Failed to read file as image.')
 
 
 def read_fits(path):
@@ -187,7 +187,7 @@ def read_fits(path):
         scene = SimpleArrayDecoder().scene_from_array(image_data)
         return scene
     except Exception as e:
-        logger.exception('Failed to read file as image.' + e.message)
+        logger.exception('Failed to read file as image.')
 
 
 def write_file(out_file, scene):

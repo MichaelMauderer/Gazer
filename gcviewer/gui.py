@@ -6,7 +6,7 @@ import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
-from PyQt4.QtGui import (QAction, QApplication, QFileDialog, QLabel,
+from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
 import eyex.api
 
@@ -281,33 +281,3 @@ class GCImageViewer(QMainWindow):
     def update(self, *__args):
         super(GCImageViewer, self).update()
         self.render_area.update()
-
-
-def run_qt_gui():
-    """
-    Set up example configuration to run qt gui with eyex and save log files.
-    """
-    import sys
-    import os
-
-    logging.basicConfig(filename='log.debug', level=logging.DEBUG)
-
-    app = QApplication(sys.argv)
-    imageViewer = GCImageViewer()
-
-    lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
-                            'Tobii.EyeX.Client.dll')
-    eye_x = eyex.api.EyeXInterface(lib_path)
-    eye_x.on_event.append(
-        lambda sample: imageViewer.render_area.gaze_change.emit(sample))
-
-    imageViewer.show()
-    sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    try:
-        run_qt_gui()
-    except Exception as e:
-        print(e)
-        logging.exception('Program terminated with an exception.')
