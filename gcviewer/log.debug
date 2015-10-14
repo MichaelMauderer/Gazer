@@ -1,0 +1,35 @@
+ERROR:root:Program terminated with an exception.
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 325, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 315, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Program terminated with an exception.
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 325, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 315, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Program terminated with an exception.
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 325, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 315, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Program terminated with an exception.
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 325, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 315, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Program terminated with an exception.
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 313, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/gcviewer/gui.py", line 303, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
