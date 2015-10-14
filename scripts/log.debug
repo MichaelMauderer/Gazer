@@ -1,0 +1,78 @@
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Program terminated with an exception. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 35, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 17, in run_qt_gui
+    imageViewer = GCImageViewer()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gui.py", line 197, in __init__
+    triggered=self.import_ifr)
+AttributeError: 'GCImageViewer' object has no attribute 'import_ifr'
+ERROR:root:Program terminated with an exception. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 35, in <module>
+    run_qt_gui()
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 17, in run_qt_gui
+    imageViewer = GCImageViewer()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gui.py", line 197, in __init__
+    triggered=self.import_ifr)
+AttributeError: 'GCImageViewer' object has no attribute 'import_ifr'
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
