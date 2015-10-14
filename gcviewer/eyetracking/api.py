@@ -1,7 +1,13 @@
 from __future__ import unicode_literals, division, print_function
 
-from abc import ABCMeta, abstractmethod
+import os
 import collections
+import logging
+
+from abc import ABCMeta, abstractmethod
+
+
+logger = logging.getLogger(__name__)
 
 EyeData = collections.namedtuple('EyeData',
                                  ['timestamp',
@@ -37,3 +43,20 @@ class EyetrackingAPIBase:
         Returns newest available EyeData sample.
         """
         pass
+
+
+def get_available():
+    apis = {}
+    try:
+        import eyex
+        lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
+                                'Tobii.EyeX.Client.dll')
+        eye_x = eyex.api.EyeXInterface(lib_path)
+        apis['eyex'] = eye_x
+    except:
+        logger.warn('Could not load EyeX api.')
+
+    if not apis:
+        logger.warn('No valid eye tracking apis could be loaded')
+
+    return apis
