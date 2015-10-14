@@ -4,40 +4,28 @@ import os
 import collections
 import logging
 
-from abc import ABCMeta, abstractmethod
-
 
 logger = logging.getLogger(__name__)
 
 EyeData = collections.namedtuple('EyeData',
                                  ['timestamp',
                                   'pos',
-                                  'norm_pos',
                                   ])
 
 
-class EyetrackingAPIBase:
+class EyetrackingAPIBase(object):
     """
     Base class for eye tracking data sources.
     Specifies common functionality that needs to be supplied.
     """
-    __metaclass__ = ABCMeta
 
-    @abstractmethod
-    def pop_sample(self):
-        """
-        Returns oldest available EyeData sample.
-        """
-        return NotImplemented
+    def __init__(self):
+        self.on_event = []
 
-    @abstractmethod
-    def pop_all_samples(self):
-        """
-        Returns all available EyeData samples.
-        """
-        return NotImplemented
+    def _on_event(self, event):
+        for cb in self.on_event:
+            cb(event)
 
-    @abstractmethod
     def get_newest_sample(self):
         """
         Returns newest available EyeData sample.
@@ -48,13 +36,17 @@ class EyetrackingAPIBase:
 def get_available():
     apis = {}
     try:
-        import eyex
-        lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
-                                'Tobii.EyeX.Client.dll')
-        eye_x = eyex.api.EyeXInterface(lib_path)
+        from gcviewer.eyetracking.tobii import EyeXWrapper
+        eye_x = EyeXWrapper()
         apis['eyex'] = eye_x
     except:
-        logger.warn('Could not load EyeX api.')
+        logger.exception('Could not load EyeX api.')
+
+    try:
+        from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+        apis['eyetribe'] = EyeTribeWrapper()
+    except:
+        logger.exception('Could not load Eyetribe api.')
 
     if not apis:
         logger.warn('No valid eye tracking apis could be loaded')

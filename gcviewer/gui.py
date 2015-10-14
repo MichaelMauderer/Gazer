@@ -8,9 +8,8 @@ from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap
 from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
-import eyex.api
 
-from gcviewer import gcio
+from gcviewer import gcio, eyetracking
 import gcviewer.scene
 
 logger = logging.getLogger(__name__)
@@ -61,7 +60,7 @@ class GCImageWidget(QLabel):
 
     Gaze updates are retrieved through the qt event system.
     """
-    gaze_change = pyqtSignal(eyex.api.Sample)
+    gaze_change = pyqtSignal(eyetracking.api.EyeData)
 
     @property
     def gc_scene(self):
@@ -96,8 +95,7 @@ class GCImageWidget(QLabel):
 
     def update_gaze(self, sample):
         self._last_sample = sample
-        if sample is None:
-            sample = eyex.api.Sample(-1, -1, 0, 0)
+
         if self.gc_scene is None:
             return
         if self.pixmap():
@@ -107,7 +105,11 @@ class GCImageWidget(QLabel):
         x_offset = (self.size().width() - pixmap_size.width()) / 2
         y_offset = (self.size().height() - pixmap_size.height()) / 2
 
-        local_pos_pixmap = self.mapFromGlobal(QPoint(sample.x, sample.y))
+        if sample is None:
+            x, y = 0, 0
+        else:
+            x, y = sample.pos
+        local_pos_pixmap = self.mapFromGlobal(QPoint(x, y))
         self._gaze = local_pos_pixmap
         local_pos_pixmap = QPoint(local_pos_pixmap.x() - x_offset,
                                   local_pos_pixmap.y() - y_offset)
@@ -134,10 +136,9 @@ class GCImageWidget(QLabel):
 
     @staticmethod
     def mouse_event_to_gaze_sample(QMouseEvent):
-        return eyex.api.Sample(-1,
-                               0.0,
-                               float(QMouseEvent.globalX()),
-                               float(QMouseEvent.globalY()))
+        return eyetracking.api.EyeData(-1,
+                                       (float(QMouseEvent.globalX()),
+                                        float(QMouseEvent.globalY())))
 
     def mouseMoveEvent(self, QMouseEvent):
         if self.mouse_mode:
