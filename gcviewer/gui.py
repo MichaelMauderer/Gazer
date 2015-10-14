@@ -13,7 +13,7 @@ import eyex.api
 from gcviewer import gcio
 import gcviewer.scene
 
-from modules.dof.lytro_import import read_ifr
+from modules.dof.lytro_import import read_ifp
 
 logger = logging.getLogger(__name__)
 
@@ -193,10 +193,10 @@ class GCImageViewer(QMainWindow):
                                    self,
                                    shortcut="Ctrl+S",
                                    triggered=self.save_scene)
-        self.import_ifr_action = QAction("&Import Lytro Camera Raw Image file (.ifr)",
+        self.import_ifp_action = QAction("&Import Lytro file",
                                    self,
                                    shortcut="Ctrl+I",
-                                   triggered=self.import_ifr)
+                                   triggered=self.import_ifp)
         self.exit_action = QAction("E&xit",
                                    self,
                                    shortcut="Ctrl+Q",
@@ -226,7 +226,7 @@ class GCImageViewer(QMainWindow):
         self.file_menu = QMenu("&File", self)
         self.file_menu.addAction(self.open_action)
         self.file_menu.addAction(self.save_action)
-        self.file_menu.addAction(self.import_ifr_action)
+        self.file_menu.addAction(self.import_ifp_action)
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.exit_action)
 
@@ -272,13 +272,13 @@ class GCImageViewer(QMainWindow):
                 scene = self.render_area.gc_scene._scene
                 gcio.write_file(out_file, scene)
 
-    def import_ifr(self):
+    def import_ifp(self):
         file_name = QFileDialog.getOpenFileName(self,
                                                 "Import File",
                                                 QDir.currentPath(),
                                                 )
         if file_name:
-            read_ifr(file_name)
+            read_ifp(file_name)
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:

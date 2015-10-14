@@ -76,3 +76,33 @@ Traceback (most recent call last):
   File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
     eye_x = eyex.api.EyeXInterface(lib_path)
 TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
