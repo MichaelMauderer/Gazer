@@ -6,5 +6,5 @@ scipy==0.16.0
 PyQt4==4.11.4
 astropy==1.0.5
 -e git://github.com/MichaelMauderer/python-eyex.git@874b390af27da8869816ee5f56ef131844a824ea#egg=python_eyex-dev
--e git@github.com:esdalmaijer/PyTribe.git#egg=pytribe-dev
+-e git://github.com/sdalmaijer/PyTribe.git#egg=pytribe-dev
 
