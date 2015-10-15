@@ -7,12 +7,12 @@ import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap, QActionGroup
+
 from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
 
 from gcviewer import gcio, eyetracking
 import gcviewer.scene
-
 from modules.dof.lytro_import import read_ifp
 
 logger = logging.getLogger(__name__)
@@ -199,9 +199,9 @@ class GCImageViewer(QMainWindow):
                                    shortcut="Ctrl+S",
                                    triggered=self.save_scene)
         self.import_ifp_action = QAction("&Import Lytro file",
-                                   self,
-                                   shortcut="Ctrl+I",
-                                   triggered=self.import_ifp)
+                                         self,
+                                         shortcut="Ctrl+I",
+                                         triggered=self.import_ifp)
         self.exit_action = QAction("E&xit",
                                    self,
                                    shortcut="Ctrl+Q",
