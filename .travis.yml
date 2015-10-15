@@ -25,6 +25,8 @@ install:
   - source activate gcviewer-test
   - pip install coverage coveralls flake8 mock==1.0.1
   - pip install -e git://github.com/MichaelMauderer/python-eyex.git@874b390af27da8869816ee5f56ef131844a824ea#egg=python_eyex-dev
+  - pip install -e git://github.com/MichaelMauderer/PyTribe@3de123848d876d96d9cd42a81d802d69c865e697#egg=pytribe-master
+
 
 script:
   - flake8 gcviewer
