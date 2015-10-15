@@ -30,7 +30,7 @@ install:
 
 script:
   - flake8 gcviewer
-  - nosetests --nocapture --with-doctest --doctest-options=+ELLIPSIS,+NORMALIZE_WHITESPACE --with-coverage --cover-package=gcviewer ./tests ./gcviewer
+  - nosetests --nocapture --with-coverage --cover-package=gcviewer ./tests
 
 after_success:
   - coveralls
