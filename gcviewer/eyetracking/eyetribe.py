@@ -24,5 +24,4 @@ class EyeTribeWrapper(EyetrackingAPIBase, pytribe.EyeTribe):
         return self._convert_sample(eyetribe_sample)
 
     def _log_sample(self, sample):
-        logger.debug('SAMPLE: {}'.format(str(sample)))
         self._on_event(self._convert_sample(sample))

@@ -1,11 +1,12 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
+from functools import partial
 
 import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
-from PyQt4.QtGui import QImage, QPixmap
+from PyQt4.QtGui import QImage, QPixmap, QActionGroup
 from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
 
@@ -174,8 +175,11 @@ class GCImageViewer(QMainWindow):
     Provides overall layout and menus to access basic functionality.
     """
 
-    def __init__(self):
+    def __init__(self, tracking_apis={}):
         super(GCImageViewer, self).__init__()
+
+        self.tracking_apis = tracking_apis
+        self.tracker = None
 
         self.render_area = GCImageWidget(None)
         self.render_area.setSizePolicy(QSizePolicy.Ignored,
@@ -217,6 +221,8 @@ class GCImageViewer(QMainWindow):
                                               checked=False,
                                               )
 
+        self._make_tracker_select_menu()
+
         # Create Menues
         self.file_menu = QMenu("&File", self)
         self.file_menu.addAction(self.open_action)
@@ -230,11 +236,34 @@ class GCImageViewer(QMainWindow):
         self.options_menu.addAction(self.cursor_toggle_action)
         self.options_menu.addAction(self.toggle_depthmap_action)
 
+        tracker_Menu = self.options_menu.addMenu('Select Tracker')
+        tracker_Menu.addActions(self.select_tracker_action_group.actions())
+
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
 
         self.setWindowTitle("GC Image Viewer")
         self.resize(800, 600)
+
+    def _make_tracker_select_menu(self):
+        self.select_tracker_action_group = QActionGroup(self)
+        self.select_tracker_action_group.setExclusive(True)
+
+        for name, api in self.tracking_apis.items():
+            action = QAction(name,
+                             self,
+                             triggered=partial(self.select_eye_tracker, name),
+                             checkable=True,
+                             )
+            self.select_tracker_action_group.addAction(action)
+
+    def select_eye_tracker(self, tracker_api_key):
+        logger.debug('Selecting tracker {}'.format(tracker_api_key))
+        if self.tracker:
+            self.tracker.on_event = []
+        self.tracker = self.tracking_apis.get(tracker_api_key)
+        self.tracker.on_event.append(
+            lambda sample: self.render_area.gaze_change.emit(sample))
 
     def toggle_mouse_mode(self):
         self.render_area.mouse_mode = not self.render_area.mouse_mode
