@@ -7,54 +7,27 @@ import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap, QActionGroup
-
 from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
 
 from gcviewer import gcio, eyetracking
-import gcviewer.scene
-from modules.dof.lytro_import import read_ifp
+
+
+# from modules.dof.lytro_import import read_ifp
+from gcviewer.eyetracking.api import EyeData
 
 logger = logging.getLogger(__name__)
 
 
-class QtSceneWrapper(gcviewer.scene.Scene):
-    """
-    Wrapper for generic scenes to provide conversion from raw data to qt
-    specific data types.
-    """
-
-    def __init__(self, scene):
-        super(QtSceneWrapper, self).__init__()
-        self._scene = scene
-
-    @staticmethod
-    def array_to_pixmap(array):
-        array = np.require(array, dtype=np.int8, requirements=['C'])
-        array.flags.writeable = False
-        q_image = QImage(array.data,
-                         array.shape[1],
-                         array.shape[0],
-                         3 * array.shape[1],
-                         QImage.Format_RGB888)
-        return QPixmap.fromImage(q_image)
-
-    def _get_pixmap(self):
-        image = self._scene.get_image()
-        if image is None:
-            return None
-        return self.array_to_pixmap(image)
-
-    def update_gaze(self, pos):
-        super(QtSceneWrapper, self).update_gaze(pos)
-        self._scene.update_gaze(pos)
-
-    def get_image(self):
-        return self._get_pixmap()
-
-    def get_depth_image(self):
-        array = self._scene.get_depth_image()
-        return self.array_to_pixmap(array)
+def array_to_pixmap(array):
+    array = np.require(array, dtype=np.int8, requirements=['C'])
+    array.flags.writeable = False
+    q_image = QImage(array.data,
+                     array.shape[1],
+                     array.shape[0],
+                     3 * array.shape[1],
+                     QImage.Format_RGB888)
+    return QPixmap.fromImage(q_image)
 
 
 class GCImageWidget(QLabel):
@@ -63,18 +36,7 @@ class GCImageWidget(QLabel):
 
     Gaze updates are retrieved through the qt event system.
     """
-    gaze_change = pyqtSignal(eyetracking.api.EyeData)
-
-    @property
-    def gc_scene(self):
-        return self._gc_scene
-
-    @gc_scene.setter
-    def gc_scene(self, value):
-        if value is not None:
-            self._gc_scene = QtSceneWrapper(value)
-        else:
-            self._gc_scene = None
+    gaze_change = pyqtSignal(EyeData)
 
     def __init__(self, gc_scene, *args, **kwargs):
         super(GCImageWidget, self).__init__(*args, **kwargs)
@@ -96,46 +58,69 @@ class GCImageWidget(QLabel):
     def toggle_depthmap(self):
         self._show_depthmap = not self._show_depthmap
 
+    def local_to_image_norm_coordinates(self, local_pos):
+        """
+        Converts local coordinates to normalised coordinates relative to the
+        current image array.
+
+        Parameters
+        ----------
+        local_pos : tuple
+            Local position.
+
+        Returns
+        -------
+        tuple of float
+            Normalised coordinates in (0,1), relative to current image/pixmap.
+            If no pixmap is set returns (0,0).
+        """
+
+        pixmap = self.pixmap()
+        if pixmap is None:
+            return 0, 0
+        pixmap_size = pixmap.size()
+
+        norm_pos_x = np.clip(local_pos[0] / pixmap_size.width(), 0, 1)
+        norm_pos_y = np.clip(local_pos[1] / pixmap_size.height(), 0, 1)
+
+        return norm_pos_x, norm_pos_y
+
     def update_gaze(self, sample):
         self._last_sample = sample
 
         if self.gc_scene is None:
             return
-        if self.pixmap():
-            pixmap_size = self.pixmap().size()
-        else:
-            pixmap_size = self.size()
-        x_offset = (self.size().width() - pixmap_size.width()) / 2
-        y_offset = (self.size().height() - pixmap_size.height()) / 2
 
         if sample is None:
             x, y = 0, 0
         else:
             x, y = sample.pos
-        local_pos_pixmap = self.mapFromGlobal(QPoint(x, y))
-        self._gaze = local_pos_pixmap
-        local_pos_pixmap = QPoint(local_pos_pixmap.x() - x_offset,
-                                  local_pos_pixmap.y() - y_offset)
-        norm_pos_pixmap_x = local_pos_pixmap.x()
-        norm_pos_pixmap_x /= (self.size().width() - (2 * x_offset))
+        local_pos = self.mapFromGlobal(QPoint(x, y))
 
-        norm_pos_pixmap_y = local_pos_pixmap.y()
-        norm_pos_pixmap_y /= (self.size().height() - (2 * y_offset))
+        image_norm_pos = self.local_to_image_norm_coordinates((local_pos.x(),
+                                                               local_pos.y()))
 
-        norm_pos_pixmap = norm_pos_pixmap_x, norm_pos_pixmap_y
+        self._gaze = local_pos
+        self.gc_scene.update_gaze(tuple(np.clip(image_norm_pos, 0, 1)))
 
-        self.gc_scene.update_gaze(tuple(np.clip(norm_pos_pixmap, 0, 1)))
+        self.repaint()
+
+    def get_current_image(self):
+        if self.gc_scene is None:
+            return None
+
         if self._show_depthmap:
             image = self.gc_scene.get_depth_image()
         else:
             image = self.gc_scene.get_image()
+        return image
 
-        if image is not None:
-            size = self.size()
-            image = image.scaled(size, Qt.KeepAspectRatio)
-            self.memo_pixmap = image
-
-        self.repaint()
+    def get_scaled_pixmap(self):
+        image = self.get_current_image()
+        if image is None:
+            return None
+        pixmap = array_to_pixmap(image)
+        return pixmap.scaled(self.size(), Qt.KeepAspectRatio)
 
     @staticmethod
     def mouse_event_to_gaze_sample(QMouseEvent):
@@ -152,8 +137,10 @@ class GCImageWidget(QLabel):
         super(QLabel, self).paintEvent(QPaintEvent)
         painter = QtGui.QPainter(self)
         painter.setBrush(QtGui.QColor(0, 255, 0))
-        if self.memo_pixmap is not None:
-            painter.drawPixmap(QPointF(0.0, 0.0), self.memo_pixmap)
+        pixmap = self.get_scaled_pixmap()
+        if pixmap is not None:
+            self.setPixmap(pixmap)
+            painter.drawPixmap(QPointF(0.0, 0.0), pixmap)
         if self.show_cursor:
             size = 10
             painter.drawEllipse(self._gaze.x() - size / 2,
