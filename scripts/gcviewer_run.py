@@ -1,3 +1,9 @@
+from __future__ import unicode_literals, division, print_function
+from PyQt4 import QtGui
+
+import gcviewer.eyetracking.api
+from gcviewer.gui import GCImageViewer
+
 import logging
 import sys
 
@@ -10,12 +16,7 @@ def run_qt_gui():
     Set up example configuration to run qt gui with eyex and save log files.
     """
 
-    from PyQt4.QtGui import QApplication
-
-    import gcviewer.eyetracking.api
-    from gcviewer.gui import GCImageViewer
-
-    app = QApplication(sys.argv)
+    app = QtGui.QApplication(sys.argv)
     tracking_apis = gcviewer.eyetracking.api.get_available()
     logger.debug(
         'Available tracking apis: {}'.format(str(tracking_apis.keys())))

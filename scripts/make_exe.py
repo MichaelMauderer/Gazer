@@ -15,7 +15,6 @@ target = os.path.join(project_root, 'scripts', 'gcviewer_run.py')
 
 opts = '--clean ' \
        '--onefile ' \
-       'gcviewer\gui.py ' \
        '-p {project_root} ' \
        '--paths={lib_path} ' \
        '--additional-hooks-dir={hook_path} ' \
