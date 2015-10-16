@@ -7,13 +7,11 @@ import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
 from PyQt4.QtGui import QImage, QPixmap, QActionGroup
+
 from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
                          QMainWindow, QMenu, QSizePolicy)
 
 from gcviewer import gcio, eyetracking
-
-
-# from modules.dof.lytro_import import read_ifp
 from gcviewer.eyetracking.api import EyeData
 
 logger = logging.getLogger(__name__)
@@ -290,12 +288,17 @@ class GCImageViewer(QMainWindow):
                 gcio.write_file(out_file, scene)
 
     def import_ifp(self):
-        file_name = QFileDialog.getOpenFileName(self,
-                                                "Import File",
-                                                QDir.currentPath(),
-                                                )
-        if file_name:
-            read_ifp(file_name)
+        try:
+            from modules.dof.lytro_import import read_ifp
+            file_name = QFileDialog.getOpenFileName(self,
+                                                    "Import File",
+                                                    QDir.currentPath(),
+                                                    )
+            if file_name:
+                read_ifp(file_name)
+        except ImportError:
+            logger.exception('Could not import Lytro Power Tools.')
+            return None
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:
