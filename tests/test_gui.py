@@ -9,7 +9,6 @@ import unittest
 
 import mock
 import numpy as np
-
 from PyQt4.QtGui import QApplication
 import PyQt4.QtCore as qt
 
@@ -46,7 +45,7 @@ class TestCoordinateConversion(unittest.TestCase):
 
     def test_local_to_pixmap_conversion(self):
         self.gc_image_widget.setFixedSize(1000, 2000)
-        self.gc_image_widget.setPixmap(self.gc_image_widget.get_scaled_pixmap())
+        self.gc_image_widget.active_pixmap_size = qt.QSize(1000, 1000)
 
         convert = self.gc_image_widget.local_to_image_norm_coordinates
 

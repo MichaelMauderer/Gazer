@@ -3,12 +3,16 @@ from __future__ import unicode_literals, division, print_function
 import logging
 from functools import partial
 
+from PyQt4.QtOpenGL import QGLWidget
 import numpy as np
+
 from PyQt4 import QtGui
-from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF
+
+from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF, QSize
+
 from PyQt4.QtGui import QImage, QPixmap, QActionGroup
 
-from PyQt4.QtGui import (QAction, QFileDialog, QLabel,
+from PyQt4.QtGui import (QAction, QFileDialog,
                          QMainWindow, QMenu, QSizePolicy)
 
 from gcviewer import gcio, eyetracking
@@ -28,9 +32,9 @@ def array_to_pixmap(array):
     return QPixmap.fromImage(q_image)
 
 
-class GCImageWidget(QLabel):
+class GCImageWidget(QGLWidget):
     """
-    QtLabel that draws gaze contingent scenes based on current gaze position.
+    Widget that draws gaze contingent scenes based on current gaze position.
 
     Gaze updates are retrieved through the qt event system.
     """
@@ -51,7 +55,7 @@ class GCImageWidget(QLabel):
 
         self._last_sample = None
 
-        self.memo_pixmap = None
+        self.active_pixmap_size = QSize(0, 0)
 
     def toggle_depthmap(self):
         self._show_depthmap = not self._show_depthmap
@@ -73,13 +77,14 @@ class GCImageWidget(QLabel):
             If no pixmap is set returns (0,0).
         """
 
-        pixmap = self.pixmap()
-        if pixmap is None:
-            return 0, 0
-        pixmap_size = pixmap.size()
+        size = self.active_pixmap_size
 
-        norm_pos_x = np.clip(local_pos[0] / pixmap_size.width(), 0, 1)
-        norm_pos_y = np.clip(local_pos[1] / pixmap_size.height(), 0, 1)
+        try:
+
+            norm_pos_x = np.clip(local_pos[0] / size.width(), 0, 1)
+            norm_pos_y = np.clip(local_pos[1] / size.height(), 0, 1)
+        except ZeroDivisionError:
+            return 0, 0
 
         return norm_pos_x, norm_pos_y
 
@@ -93,15 +98,15 @@ class GCImageWidget(QLabel):
             x, y = 0, 0
         else:
             x, y = sample.pos
-        local_pos = self.mapFromGlobal(QPoint(x, y))
 
+        local_pos = self.mapFromGlobal(QPoint(x, y))
         image_norm_pos = self.local_to_image_norm_coordinates((local_pos.x(),
                                                                local_pos.y()))
 
         self._gaze = local_pos
         self.gc_scene.update_gaze(tuple(np.clip(image_norm_pos, 0, 1)))
 
-        self.repaint()
+        self.update()
 
     def get_current_image(self):
         if self.gc_scene is None:
@@ -115,8 +120,10 @@ class GCImageWidget(QLabel):
 
     def get_scaled_pixmap(self):
         image = self.get_current_image()
+
         if image is None:
             return None
+
         pixmap = array_to_pixmap(image)
         return pixmap.scaled(self.size(), Qt.KeepAspectRatio)
 
@@ -132,28 +139,28 @@ class GCImageWidget(QLabel):
             self.gaze_change.emit(sample)
 
     def paintEvent(self, QPaintEvent):
-        super(QLabel, self).paintEvent(QPaintEvent)
+
         painter = QtGui.QPainter(self)
-        painter.setBrush(QtGui.QColor(0, 255, 0))
+        painter.setRenderHint(painter.Antialiasing)
+
         pixmap = self.get_scaled_pixmap()
         if pixmap is not None:
-            self.setPixmap(pixmap)
+            self.active_pixmap_size = pixmap.size()
             painter.drawPixmap(QPointF(0.0, 0.0), pixmap)
+            print(self.active_pixmap_size)
+
         if self.show_cursor:
-            size = 10
+            size = 20
+            painter.setBrush(QtGui.QColor(0, 255, 0))
             painter.drawEllipse(self._gaze.x() - size / 2,
                                 self._gaze.y() - size / 2,
                                 size, size)
-            painter.end()
+        painter.end()
 
     def heightForWidth(self, p_int):
         width = self.self.gc_scene.get_image().size().width()
         height = self.self.gc_scene.get_image().size().height()
         return (p_int / width) * height
-
-    def update(self, *__args):
-        super(GCImageWidget, self).update()
-        self.update_gaze(self._last_sample)
 
 
 class GCImageViewer(QMainWindow):
@@ -171,7 +178,6 @@ class GCImageViewer(QMainWindow):
         self.render_area = GCImageWidget(None)
         self.render_area.setSizePolicy(QSizePolicy.Ignored,
                                        QSizePolicy.Ignored)
-        self.render_area.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(self.render_area)
 
         # Create Actions
