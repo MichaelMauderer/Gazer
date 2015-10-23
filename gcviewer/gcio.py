@@ -89,7 +89,7 @@ def load_scene(path):
     file_name, file_extension = os.path.splitext(path)
     logger.debug('Got file to load: {}'.format(path))
     logger.debug('File extension is {}'.format(file_extension))
-    filetype_loaders = {'.gc': read_gcfile,
+    filetype_loaders = {
                         '.fits': read_fits,
                         }
     loader = filetype_loaders.get(file_extension)

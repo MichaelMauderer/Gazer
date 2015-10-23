@@ -41,13 +41,4 @@ def get_available():
     except:
         logger.exception('Could not load EyeX api.')
 
-    try:
-        from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
-        apis['eyetribe'] = EyeTribeWrapper()
-    except:
-        logger.exception('Could not load Eyetribe api.')
-
-    if not apis:
-        logger.warn('No valid eye tracking apis could be loaded')
-
     return apis
