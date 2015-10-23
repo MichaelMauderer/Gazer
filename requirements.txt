@@ -1,11 +1,5 @@
 numpy==1.10.1
 PyInstaller==3.0
 pymongo==3.0.3
-scikit-image==0.11.3
-scipy==0.16.0
 PyQt4==4.11.4
-astropy==1.0.5
-colour-science=0.3.6
 -e git://github.com/MichaelMauderer/python-eyex.git@874b390af27da8869816ee5f56ef131844a824ea#egg=python_eyex-dev
--e git://github.com/MichaelMauderer/PyTribe@3de123848d876d96d9cd42a81d802d69c865e697#egg=pytribe-master
-
