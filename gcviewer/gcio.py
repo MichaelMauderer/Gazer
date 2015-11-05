@@ -90,7 +90,7 @@ def load_scene(path):
     logger.debug('Got file to load: {}'.format(path))
     logger.debug('File extension is {}'.format(file_extension))
     filetype_loaders = {
-        '.fits': read_fits,
+        '.gc': read_gcfile,
     }
     loader = filetype_loaders.get(file_extension)
     if loader is not None:
