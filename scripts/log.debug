@@ -1471,3 +1471,343 @@ Traceback (most recent call last):
     import eyex.api
 ImportError: No module named eyex.api
 DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:root:Error loading ifp file C:/Users/David Morrison/Documents/gc images/IMG_0007.lfp
+ERROR:root:[Errno 2] No such file or directory: u'c:\\users\\davidm~1\\appdata\\local\\temp\\tmpn3xbdh\\depth.bmp'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:root:Error loading ifp file C:/Users/David Morrison/Documents/gc images/IMG_0007.lfp
+ERROR:root:[Errno 2] No such file or directory: u'c:\\users\\davidm~1\\appdata\\local\\temp\\tmpdg1rqz\\depth.bmp'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []

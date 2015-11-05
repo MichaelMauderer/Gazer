@@ -4,6 +4,7 @@ import logging
 from functools import partial
 
 from PyQt4.QtOpenGL import QGLWidget
+from PyQt4 import QtCore
 import numpy as np
 
 from PyQt4 import QtGui
@@ -18,7 +19,7 @@ from PyQt4.QtGui import (QAction, QFileDialog,
 from gcviewer import gcio, eyetracking
 from gcviewer.eyetracking.api import EyeData
 
-import config
+import preferences
 
 logger = logging.getLogger(__name__)
 
@@ -195,6 +196,10 @@ class GCImageViewer(QMainWindow):
                                          self,
                                          shortcut="Ctrl+I",
                                          triggered=self.import_ifp)
+        self.preferences_action = QAction("&Preferences",
+                                         self,
+                                         shortcut="Ctrl+P",
+                                         triggered=self.open_preferences)
         self.exit_action = QAction("E&xit",
                                    self,
                                    shortcut="Ctrl+Q",
@@ -227,6 +232,8 @@ class GCImageViewer(QMainWindow):
         self.file_menu.addAction(self.open_action)
         self.file_menu.addAction(self.save_action)
         self.file_menu.addAction(self.import_ifp_action)
+        self.file_menu.addSeparator()
+        self.file_menu.addAction(self.preferences_action)
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.exit_action)
 
@@ -303,14 +310,19 @@ class GCImageViewer(QMainWindow):
                                                     QDir.currentPath(),
                                                     )
             if file_name:
-                current_config = config.load_config()
-                scene = read_ifp(file_name, current_config)
+                current_preferences = preferences.load_preferences()
+                scene = read_ifp(file_name, current_preferences)
                 self.render_area.gc_scene = scene
                 self.render_area.update()
 
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
             return None
+
+    def open_preferences(self):
+        # print("Open Preferences!")
+        dialog = PreferencesDialog()
+        dialog.exec_()
 
     def event(self, event):
         if event.type() == QEvent.KeyPress:
@@ -328,3 +340,74 @@ class GCImageViewer(QMainWindow):
     def update(self, *__args):
         super(GCImageViewer, self).update()
         self.render_area.update()
+
+
+class PreferencesDialog(QtGui.QDialog):
+    def __init__(self, parent=None):
+        super(PreferencesDialog, self).__init__(parent)
+        # add the line edit
+        label = QtGui.QLabel()
+        label.setText('Path to camera calibration file:')
+
+        self.line_edit = QtGui.QLineEdit()
+        self.calibration_path = preferences.get_calibration_path()
+        self.line_edit.setText(self.calibration_path)
+
+        edit_layout = QtGui.QHBoxLayout()
+        edit_layout.addWidget(self.line_edit)
+        select_button = QtGui.QPushButton("Select")
+        select_button.clicked.connect(self.open_file_picker)
+        edit_layout.addWidget(select_button)
+
+        # buttons
+        ok_button = QtGui.QPushButton("OK")
+        cancel_button = QtGui.QPushButton("Cancel")
+
+        ok_button.clicked.connect(self.ok_clicked)
+        cancel_button.clicked.connect(self.cancel_clicked)
+
+        # layout
+        hbox = QtGui.QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(ok_button)
+        hbox.addWidget(cancel_button)
+
+        vbox = QtGui.QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addWidget(label)
+        vbox.addLayout(edit_layout)
+        vbox.addLayout(hbox)
+        self.setLayout(vbox)
+
+        # show the window
+        # self.setGeometry(300, 300, 300, 150)
+        self.setFixedWidth(400)
+        self.setWindowTitle("Preferences")
+        self.show()
+
+    def ok_clicked(self):
+        preferences.set_calibration_path(self.calibration_path)
+        self.close()
+
+    def cancel_clicked(self):
+        self.close()
+
+    def open_file_picker(self):
+        file_name = QFileDialog.getOpenFileName(self,
+                                                   "Pick calibration file.",
+                                                   QDir.currentPath(),
+                                                   )
+        if file_name:
+            self.calibration_path = file_name
+            self.line_edit.setText(file_name)
+
+
+
+
+
+
+
+
+
+
+
