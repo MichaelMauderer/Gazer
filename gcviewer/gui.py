@@ -18,6 +18,8 @@ from PyQt4.QtGui import (QAction, QFileDialog,
 from gcviewer import gcio, eyetracking
 from gcviewer.eyetracking.api import EyeData
 
+import config
+
 logger = logging.getLogger(__name__)
 
 
@@ -301,7 +303,11 @@ class GCImageViewer(QMainWindow):
                                                     QDir.currentPath(),
                                                     )
             if file_name:
-                read_ifp(file_name)
+                current_config = config.load_config()
+                scene = read_ifp(file_name, current_config)
+                self.render_area.gc_scene = scene
+                self.render_area.update()
+
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
             return None

@@ -8,6 +8,7 @@ import logging
 import sys
 
 logging.basicConfig(filename='log.debug', level=logging.DEBUG)
+
 logger = logging.getLogger(__name__)
 
 

@@ -106,3 +106,1368 @@ Traceback (most recent call last):
   File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
     eye_x = eyex.api.EyeXInterface(lib_path)
 TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:gcviewer.gcio:File extension is .lfr
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Documents/IMG_0003.lfr'
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:root:Could not load EyeX. 
+Traceback (most recent call last):
+  File "C:/Users/project/PycharmProjects/gcviewer/scripts/gcviewer_run.py", line 23, in run_qt_gui
+    eye_x = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as gcfile C:/Users/project/Downloads/example_image.gc
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:gcviewer.gcio:File extension is .lfr
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Documents/IMG_0003.lfr'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as gcfile C:/Users/project/Downloads/example_image.gc
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+ERROR:gcviewer.eyetracking.api:Could not load Eyetribe api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 45, in get_available
+    from gcviewer.eyetracking.eyetribe import EyeTribeWrapper
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\eyetribe.py", line 6, in <module>
+    import pytribe
+ImportError: No module named pytribe
+WARNING:gcviewer.eyetracking.api:No valid eye tracking apis could be loaded
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:gcviewer.gcio:File extension is .lfr
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Documents/IMG_0003.lfr'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:gcviewer.gcio:File extension is .lfr
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Documents/IMG_0003.lfr'
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Downloads/example_image.gc
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Downloads/example_image.gc'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Downloads/example_image.gc
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Downloads/example_image.gc'
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Downloads/example_image.gc
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Downloads/example_image.gc'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:gcviewer.gcio:File extension is .lfr
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Documents/IMG_0003.lfr'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Downloads/example_image.gc
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Downloads/example_image.gc'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:gcviewer.gcio:File extension is .lfr
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/project/Documents/IMG_0003.lfr
+DEBUG:PIL.Image:Importing BmpImagePlugin
+DEBUG:PIL.Image:Importing BufrStubImagePlugin
+DEBUG:PIL.Image:Importing CurImagePlugin
+DEBUG:PIL.Image:Importing DcxImagePlugin
+DEBUG:PIL.Image:Importing EpsImagePlugin
+DEBUG:PIL.Image:Importing FitsStubImagePlugin
+DEBUG:PIL.Image:Importing FliImagePlugin
+DEBUG:PIL.Image:Importing FpxImagePlugin
+DEBUG:PIL.Image:Importing GbrImagePlugin
+DEBUG:PIL.Image:Importing GifImagePlugin
+DEBUG:PIL.Image:Importing GribStubImagePlugin
+DEBUG:PIL.Image:Importing Hdf5StubImagePlugin
+DEBUG:PIL.Image:Importing IcnsImagePlugin
+DEBUG:PIL.Image:Importing IcoImagePlugin
+DEBUG:PIL.Image:Importing ImImagePlugin
+DEBUG:PIL.Image:Importing ImtImagePlugin
+DEBUG:PIL.Image:Importing IptcImagePlugin
+DEBUG:PIL.Image:Importing JpegImagePlugin
+DEBUG:PIL.Image:Importing Jpeg2KImagePlugin
+DEBUG:PIL.Image:Importing McIdasImagePlugin
+DEBUG:PIL.Image:Importing MicImagePlugin
+DEBUG:PIL.Image:Importing MpegImagePlugin
+DEBUG:PIL.Image:Importing MpoImagePlugin
+DEBUG:PIL.Image:Importing MspImagePlugin
+DEBUG:PIL.Image:Importing PalmImagePlugin
+DEBUG:PIL.Image:Importing PcdImagePlugin
+DEBUG:PIL.Image:Importing PcxImagePlugin
+DEBUG:PIL.Image:Importing PdfImagePlugin
+DEBUG:PIL.Image:Importing PixarImagePlugin
+DEBUG:PIL.Image:Importing PngImagePlugin
+DEBUG:PIL.Image:Importing PpmImagePlugin
+DEBUG:PIL.Image:Importing PsdImagePlugin
+DEBUG:PIL.Image:Importing SgiImagePlugin
+DEBUG:PIL.Image:Importing SpiderImagePlugin
+DEBUG:PIL.Image:Importing SunImagePlugin
+DEBUG:PIL.Image:Importing TgaImagePlugin
+DEBUG:PIL.Image:Importing TiffImagePlugin
+DEBUG:PIL.Image:Importing WebPImagePlugin
+DEBUG:PIL.Image:Importing WmfImagePlugin
+DEBUG:PIL.Image:Importing XbmImagePlugin
+DEBUG:PIL.Image:Importing XpmImagePlugin
+DEBUG:PIL.Image:Importing XVThumbImagePlugin
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\gcio.py", line 157, in read_image
+    image = skimage.data.imread(path)
+  File "C:\Python27\lib\site-packages\skimage\io\_io.py", line 100, in imread
+    img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+  File "C:\Python27\lib\site-packages\skimage\io\manage_plugins.py", line 207, in call_plugin
+    return func(*args, **kwargs)
+  File "C:\Python27\lib\site-packages\skimage\io\_plugins\pil_plugin.py", line 46, in imread
+    im = Image.open(fname)
+  File "C:\Python27\lib\site-packages\PIL\Image.py", line 2286, in open
+    % (filename if filename else fp))
+IOError: cannot identify image file 'C:/Users/project/Documents/IMG_0003.lfr'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 39, in get_available
+    eye_x = EyeXWrapper()
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 17, in __init__
+    self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+TypeError: __init__() takes exactly 1 argument (2 given)
+DEBUG:__main__:Available tracking apis: []
+ERROR:root:Error loading ifp file C:\Users\project\Documents\IMG_0003.lfr
+ERROR:root:'in <string>' requires string as left operand, not QString
+Traceback (most recent call last):
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 153, in read_ifp
+    skip_existing=True)
+  File "C:\Users\project\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 114, in make_stack
+    file_name = os.path.basename(lfp_in).split('.')[0] + '_f_{}.jpg'
+  File "C:\Python27\lib\ntpath.py", line 208, in basename
+    return split(p)[1]
+  File "C:\Python27\lib\ntpath.py", line 183, in split
+    while i and p[i-1] not in '/\\':
+TypeError: 'in <string>' requires string as left operand, not QString
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/David Morrison/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/David Morrison/Downloads/example_image.gc
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gcio.py", line 155, in read_image
+    from gcviewer.modules.color.scenes import SimpleArrayDecoder
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\color\scenes.py", line 4, in <module>
+    import skimage.exposure
+ImportError: No module named skimage.exposure
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/David Morrison/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/David Morrison/Downloads/example_image.gc
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gcio.py", line 155, in read_image
+    from gcviewer.modules.color.scenes import SimpleArrayDecoder
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\color\scenes.py", line 4, in <module>
+    import skimage.exposure
+ImportError: No module named skimage.exposure
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/David Morrison/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as image: C:/Users/David Morrison/Downloads/example_image.gc
+ERROR:gcviewer.gcio:Failed to read file as image.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gcio.py", line 155, in read_image
+    from gcviewer.modules.color.scenes import SimpleArrayDecoder
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\color\scenes.py", line 4, in <module>
+    import skimage.exposure
+ImportError: No module named skimage.exposure
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/David Morrison/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as gcfile C:/Users/David Morrison/Downloads/example_image.gc
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/David Morrison/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as gcfile C:/Users/David Morrison/Downloads/example_image.gc
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+DEBUG:gcviewer.gcio:Got file to load: C:/Users/David Morrison/Downloads/example_image.gc
+DEBUG:gcviewer.gcio:File extension is .gc
+DEBUG:gcviewer.gcio:Reading file as gcfile C:/Users/David Morrison/Downloads/example_image.gc
+WARNING:gcviewer.modules.dof.image_manager:None not a valid key
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 10, in <module>
+    from scipy import misc
+ImportError: No module named scipy
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 10, in <module>
+    from scipy import misc
+ImportError: No module named scipy
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 10, in <module>
+    from scipy import misc
+ImportError: No module named scipy
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 10, in <module>
+    from scipy import misc
+ImportError: No module named scipy
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 10, in <module>
+    from scipy import misc
+ImportError: No module named scipy
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 19, in <module>
+    from lpt.lfp.tnt import Tnt
+ImportError: No module named lpt.lfp.tnt
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:root:Error loading ifp file C:/Users/David Morrison/Documents/gc images/IMG_0007.lfp
+ERROR:root:'module' object has no attribute 'imread'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:root:Error loading ifp file C:/Users/David Morrison/Documents/gc images/IMG_0007.lfp
+ERROR:root:'module' object has no attribute 'imread'
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.gui:Could not import Lytro Power Tools.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\gui.py", line 298, in import_ifp
+    from modules.dof.lytro_import import read_ifp
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\modules\dof\lytro_import.py", line 12, in <module>
+    import config
+ImportError: No module named config
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
+ERROR:gcviewer.eyetracking.api:Could not load EyeX api.
+Traceback (most recent call last):
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\api.py", line 38, in get_available
+    from gcviewer.eyetracking.tobii import EyeXWrapper
+  File "C:\Users\David Morrison\PycharmProjects\gcviewer\gcviewer\eyetracking\tobii.py", line 7, in <module>
+    import eyex.api
+ImportError: No module named eyex.api
+DEBUG:__main__:Available tracking apis: []
