@@ -298,7 +298,7 @@ class GCImageViewer(QMainWindow):
                                                    QDir.currentPath(),
                                                    )
         if file_name:
-            with open(file_name, 'w') as out_file:
+            with open(file_name, 'wb') as out_file:
                 scene = self.render_area.gc_scene._scene
                 gcio.write_file(out_file, scene)
 
@@ -312,11 +312,16 @@ class GCImageViewer(QMainWindow):
             if file_name:
                 current_preferences = preferences.load_preferences()
                 scene = read_ifp(file_name, current_preferences)
-                self.render_area.gc_scene = scene
-                self.render_area.update()
+                with open(str(file_name.split('.')[0] + '_out.gc'), 'wb') as out_file:
+                    gcio.write_file(out_file, scene)  # TODO: Make this step manual
+                    self.render_area.gc_scene = scene
+                    self.render_area.update()
 
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
+            return None
+        except Exception:
+            logger.exception('Failed to load Lytro file.')
             return None
 
     def open_preferences(self):
@@ -347,7 +352,7 @@ class PreferencesDialog(QtGui.QDialog):
         super(PreferencesDialog, self).__init__(parent)
         # add the line edit
         label = QtGui.QLabel()
-        label.setText('Path to camera calibration file:')
+        label.setText('Path to camera calibration directory:')
 
         self.line_edit = QtGui.QLineEdit()
         self.calibration_path = preferences.get_calibration_path()
@@ -393,13 +398,11 @@ class PreferencesDialog(QtGui.QDialog):
         self.close()
 
     def open_file_picker(self):
-        file_name = QFileDialog.getOpenFileName(self,
-                                                   "Pick calibration file.",
-                                                   QDir.currentPath(),
-                                                   )
-        if file_name:
-            self.calibration_path = file_name
-            self.line_edit.setText(file_name)
+        dir_name = QFileDialog.getExistingDirectory(self, 'Select calibration directory')
+
+        if dir_name:
+            self.calibration_path = dir_name
+            self.line_edit.setText(dir_name)
 
 
 

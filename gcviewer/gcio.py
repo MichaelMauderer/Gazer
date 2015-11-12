@@ -119,8 +119,7 @@ def read_gcfile(path):
     with open(path, 'rb') as in_file:
         try:
             contents = in_file.read()
-            loaded = bson.json_util.loads(contents)
-            bson_obj = BSON(loaded)
+            bson_obj = BSON(contents)
             wrapper = bson_obj.decode()
             from gcviewer.settings import DECODERS
             wrapper_type = wrapper['type']
@@ -204,11 +203,12 @@ def write_file(out_file, scene):
     """
 
     from settings import ENCODERS
-    encoder = ENCODERS.get(scene.scene_id)
+    encoder = ENCODERS.get(scene.scene_type)
     wrapper = {'encoder': 'gcviewer',
                'version': '0.1',
                'compression': 'none',
-               'type': scene.scene_id,
+               'type': scene.scene_type,
                'data': encoder.data_from_scene(scene)
                }
-    out_file.write(bson.json_util.dumps(BSON.encode(wrapper)))
+    enoded_bson = BSON.encode(wrapper)
+    out_file.write(enoded_bson)

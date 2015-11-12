@@ -1,6 +1,7 @@
 from __future__ import unicode_literals, division, print_function
 
 import io
+import bson
 from bson import BSON
 import numpy as np
 from gcviewer.gcio import DataDecoder, array_to_bytes, bytes_to_array, \
@@ -110,7 +111,8 @@ class SimpleArrayStackEncoder(DataEncoder):
 
         stream.write(BSON.encode(data))
         stream.seek(0)
-        return stream.getvalue()
+        return bson.Binary(stream.getvalue())
 
     def _encode_array(self, array):
-        return array_to_bytes(array)
+        bytes_str = array_to_bytes(array)
+        return bson.Binary(bytes_str)

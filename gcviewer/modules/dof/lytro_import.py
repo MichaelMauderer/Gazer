@@ -93,6 +93,8 @@ def depth_map_to_index(lambda_map, focus_array):
 
 def make_stack(lfp_in, calibration, out_path, verbose=False,
                skip_existing=False):
+    # print(out_path)
+
     depth_map, depth_meta = get_depth_data(lfp_in)
     depth_planes = np.array(get_main_depth_planes(depth_map))
 
@@ -107,12 +109,12 @@ def make_stack(lfp_in, calibration, out_path, verbose=False,
                                        depth_meta['LambdaMax'])
 
     depth_map_to_index(depth_map, focal_planes)
-    depth_map_path = os.path.join(out_path, 'depth_map.npy')
-    np.save(depth_map_path, lambda_map)
+    ## depth_map_path = os.path.join(out_path, 'depth_map.npy')
+    # np.save(depth_map_path, lambda_map)
 
     unique_focal_planes = np.unique(focal_planes)
 
-    file_name = os.path.basename(lfp_in).split('.')[0] + '_f_{}.jpg'
+    file_name = os.path.basename(str(lfp_in)).split('.')[0] + '_f_{}.jpg'
     stack_images = []
     for num, focus in enumerate(unique_focal_planes):
         out_image = os.path.join(out_path, file_name.format(focus))
@@ -133,7 +135,9 @@ def make_stack(lfp_in, calibration, out_path, verbose=False,
                                                                     num + 1,
                                                                     unique_focal_planes.size))
         make_focus_image(lfp_in, out_image, focus, calibration)
-    return depth_map_path, stack_images
+    stack_images = [misc.imread(img_path) for img_path in stack_images]
+    # depth_map = np.load(depth_map_path)
+    return depth_map, stack_images
 
 
 def read_ifp(file_name, config):
@@ -141,7 +145,7 @@ def read_ifp(file_name, config):
 
     calibration = config['calibration_path']
 
-    verbose = False
+    verbose = True
 
     scene = None
 
