@@ -157,3 +157,5 @@ docs/_build/
 # PyBuilder
 target/
 
+# Debug file from gcviewer
+log.debug

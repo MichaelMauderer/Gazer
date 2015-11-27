@@ -125,6 +125,7 @@ def make_stack(lfp_in, calibration, out_path, verbose=False,
         np.save(depth_map_path, lambda_map)
 
     file_name = os.path.basename(str(lfp_in)).split('.')[0] + '_f_{}.jpg'
+
     stack_images = []
     for num, focus in enumerate(unique_focal_planes):
         out_image = os.path.join(out_path, file_name.format(focus))

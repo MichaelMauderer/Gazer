@@ -105,10 +105,8 @@ class GCImageWidget(QGLWidget):
         local_pos = self.mapFromGlobal(QPoint(x, y))
         image_norm_pos = self.local_to_image_norm_coordinates((local_pos.x(),
                                                                local_pos.y()))
-
         self._gaze = local_pos
         self.gc_scene.update_gaze(tuple(np.clip(image_norm_pos, 0, 1)))
-
         self.update()
 
     def get_current_image(self):
@@ -312,6 +310,7 @@ class GCImageViewer(QMainWindow):
             if file_name:
                 current_preferences = preferences.load_preferences()
                 scene = read_ifp(file_name, current_preferences)
+
                 with open(str(file_name.split('.')[0] + '_out.gc'), 'wb') as out_file:
                     gcio.write_file(out_file, scene)  # TODO: Make this step manual
                     self.render_area.gc_scene = scene
@@ -320,9 +319,7 @@ class GCImageViewer(QMainWindow):
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
             return None
-        except Exception:
-            logger.exception('Failed to load Lytro file.')
-            return None
+
 
     def open_preferences(self):
         # print("Open Preferences!")
@@ -403,6 +400,7 @@ class PreferencesDialog(QtGui.QDialog):
         if dir_name:
             self.calibration_path = dir_name
             self.line_edit.setText(dir_name)
+
 
 
 
