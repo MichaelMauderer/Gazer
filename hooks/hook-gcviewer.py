@@ -1,7 +1,8 @@
 from PyInstaller.utils.hooks import collect_submodules
+import os
 
 datas = [
-    ('.\\lib\\Tobii.EyeX.Client.dll', '.\\'),
+    (os.path.join(os.getenv('EYEX_LIB_PATH'), 'Tobii.EyeX.Client.dll'), '..\\'),
 ]
 
 hiddenimports = ['gcviewer',

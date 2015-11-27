@@ -46,6 +46,7 @@ def read_depth_data(depth_dir, name):
     depth_map_path = os.path.join(depth_dir, '{}.bmp'.format(name))
     depth_meta_data_path = os.path.join(depth_dir, '{}.jsn'.format(name))
     depth_map = misc.imread(depth_map_path)
+    # depth_map = depth_map[..., ..., 0] # TODO: Reduce depth map to one value per pixel
     with open(depth_meta_data_path) as meta_data_file:
         depth_meta = json.load(meta_data_file)
     return depth_map, depth_meta
@@ -80,23 +81,30 @@ def get_main_depth_planes(depth_map, threshold=0.005):
 
 
 def depth_value_to_lambda(pixel_value, pixel_value_max, lambda_min, lambda_max):
-    pixel_norm = pixel_value / pixel_value_max
+    pixel_norm = pixel_value / float(pixel_value_max)
     lambda_range = lambda_max - lambda_min
     lambda_values = (pixel_norm * lambda_range) + lambda_min
     return np.rint(lambda_values).astype(int)
 
 
-def depth_map_to_index(lambda_map, focus_array):
-    for x in np.nditer(lambda_map, op_flags=['readwrite']):
-        x[...] = (np.abs(focus_array-x)).argmin()
+def value_map_to_index_map(value_map, index_list):
+    """
+    Replace every value in the value_map with the index of the closest value from the index_list (in place).
+    """
+    for x in np.nditer(value_map, op_flags=['readwrite']):
+        x[...] = (np.abs(index_list - x)).argmin()
 
 
 def make_stack(lfp_in, calibration, out_path, verbose=False,
-               skip_existing=False):
+               skip_existing=False, save_intermediate_files=False, use_threshold=True):
     # print(out_path)
 
     depth_map, depth_meta = get_depth_data(lfp_in)
-    depth_planes = np.array(get_main_depth_planes(depth_map))
+
+    if use_threshold:
+        depth_planes = np.array(get_main_depth_planes(depth_map))
+    else:
+        depth_planes = np.unique(depth_map)
 
     focal_planes = depth_value_to_lambda(depth_planes,
                                          depth_map.max(),
@@ -108,11 +116,13 @@ def make_stack(lfp_in, calibration, out_path, verbose=False,
                                        depth_meta['LambdaMin'],
                                        depth_meta['LambdaMax'])
 
-    depth_map_to_index(depth_map, focal_planes)
-    ## depth_map_path = os.path.join(out_path, 'depth_map.npy')
-    # np.save(depth_map_path, lambda_map)
+    unique_focal_planes = sorted(np.unique(focal_planes))
 
-    unique_focal_planes = np.unique(focal_planes)
+    value_map_to_index_map(lambda_map, unique_focal_planes)
+
+    if save_intermediate_files:
+        depth_map_path = os.path.join(out_path, 'depth_map.npy')
+        np.save(depth_map_path, lambda_map)
 
     file_name = os.path.basename(str(lfp_in)).split('.')[0] + '_f_{}.jpg'
     stack_images = []
@@ -133,11 +143,11 @@ def make_stack(lfp_in, calibration, out_path, verbose=False,
             print('Creating focal plane f={} as {} ({}/{}).'.format(focus,
                                                                     out_image,
                                                                     num + 1,
-                                                                    unique_focal_planes.size))
+                                                                    len(unique_focal_planes)))
         make_focus_image(lfp_in, out_image, focus, calibration)
     stack_images = [misc.imread(img_path) for img_path in stack_images]
     # depth_map = np.load(depth_map_path)
-    return depth_map, stack_images
+    return lambda_map, stack_images
 
 
 def read_ifp(file_name, config):
@@ -155,7 +165,9 @@ def read_ifp(file_name, config):
                                                    calibration,
                                                    tmp_dir,
                                                    verbose=verbose,
-                                                   skip_existing=True)
+                                                   skip_existing=True,
+                                                   save_intermediate_files=True,
+                                                   use_threshold=False)
         lut = ArrayLookupTable(depth_map)
         manager = ArrayStackImageManager(focus_stack_images)
         scene = ImageStackScene(manager, lut)
