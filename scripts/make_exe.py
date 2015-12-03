@@ -17,6 +17,7 @@ build_path = os.path.join('..', 'build')
 
 opts = '--clean ' \
        '--onefile ' \
+       '--noconsole ' \
        '-p {project_root} ' \
        '--paths={lib_path} ' \
        '--additional-hooks-dir={hook_path} ' \

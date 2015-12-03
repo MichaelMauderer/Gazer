@@ -4,6 +4,8 @@ import os
 import logging
 import io
 import bz2
+import skimage
+import skimage.io
 
 from bson import BSON
 import bson.json_util
@@ -152,7 +154,6 @@ def read_image(path):
     logger.debug('Reading file as image: {}'.format(path))
     try:
         from gcviewer.modules.color.scenes import SimpleArrayDecoder
-        import skimage.data
         image = skimage.data.imread(path)
         scene = SimpleArrayDecoder().scene_from_array(image)
         return scene
@@ -212,3 +213,14 @@ def write_file(out_file, scene):
                }
     enoded_bson = BSON.encode(wrapper)
     out_file.write(enoded_bson)
+
+
+def extract_file_to_stack(in_file, out_folder):
+    scene = read_gcfile(in_file)
+    extract_scene_to_stack(scene, out_folder)
+
+
+def extract_scene_to_stack(scene, out_folder):
+    for idx, image in enumerate(scene.iter_images):
+        out_filename = os.path.join(str(out_folder), str(idx) + ".jpg")
+        skimage.io.imsave(out_filename, image)

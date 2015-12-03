@@ -32,6 +32,10 @@ class ImageManager():
     def keys(self):
         pass
 
+    @abstractproperty
+    def iter_images(self):
+        pass
+
 
 class ArrayStackImageManager(ImageManager):
     def __init__(self, arrays):
@@ -58,3 +62,7 @@ class ArrayStackImageManager(ImageManager):
     @property
     def keys(self):
         return range(len(self._arrays))
+
+    @property
+    def iter_images(self):
+        return iter(self._arrays)

@@ -14,6 +14,8 @@ import yaml
 
 from lpt.lfp.tnt import Tnt
 
+from gcviewer.modules.temp_folder_manager import TempFolderManager
+from gcviewer.modules.dof.dof_data import DOFData
 from gcviewer.modules.dof.image_manager import ArrayStackImageManager
 # from gcviewer.gcio import write_file
 from gcviewer.modules.dof.lookup_table import ArrayLookupTable
@@ -53,13 +55,10 @@ def read_depth_data(depth_dir, name):
 
 
 def get_depth_data(lfp_in):
-    tmp_dir = tempfile.mkdtemp()
-    depth_out_file_fame = 'depth'
-    try:
+    with TempFolderManager() as tmp_dir:
+        depth_out_file_fame = 'depth'
         make_depth_map(lfp_in, tmp_dir, depth_out_file_fame)
         return read_depth_data(tmp_dir, depth_out_file_fame)
-    finally:
-        shutil.rmtree(tmp_dir)
 
 
 @tnt_command_sequence
@@ -67,10 +66,12 @@ def make_focus_image(tnt, lfp_in, image_out, focus, calibration):
     tnt.calibration_in(calibration)
     tnt.lfp_in(lfp_in)
     tnt.image_out(image_out)
+    tnt.width(256)
+    tnt.height(256)
     tnt.focus(str(focus))
 
 
-def get_main_depth_planes(depth_map, threshold=0.005):
+def get_main_depth_planes(depth_map, threshold=0.02):
     overall_count = depth_map.size
     counts = Counter(depth_map.flat)
     main_depth_planes = []
@@ -80,75 +81,62 @@ def get_main_depth_planes(depth_map, threshold=0.005):
     return main_depth_planes
 
 
-def depth_value_to_lambda(pixel_value, pixel_value_max, lambda_min, lambda_max):
-    pixel_norm = pixel_value / float(pixel_value_max)
-    lambda_range = lambda_max - lambda_min
-    lambda_values = (pixel_norm * lambda_range) + lambda_min
-    return np.rint(lambda_values).astype(int)
+def remap(value, from_range, to_range):
+    from_start, from_end = from_range
+    assert np.all(from_start <= value <= from_end), \
+        "Value {} not between {}, {}".format(value, from_start, from_end)
+    from_range_len = from_end - from_start
+    normalized_value = (value - from_start) / from_range_len
+    to_start, to_end = to_range
+    assert to_start < to_end
+    to_range_len = to_end - to_start
+    remapped_value = (normalized_value * to_range_len) + to_start
+    return remapped_value
 
 
 def value_map_to_index_map(value_map, index_list):
     """
-    Replace every value in the value_map with the index of the closest value from the index_list (in place).
+    Return every value in the value_map with the index of the closest value from the index_list.
+
+    Parameters
+    ----------
+    value_map : ndarray
+    index_list : list
     """
-    for x in np.nditer(value_map, op_flags=['readwrite']):
-        x[...] = (np.abs(index_list - x)).argmin()
+    index_array = np.array(index_list)
+
+    def indexify(val):
+        dist = index_array - val
+        abs_dist = np.abs(dist)
+        return abs_dist.argmin()
+
+    result = [indexify(x) for x in value_map.flat]
+    result = np.array(result).reshape(value_map.shape)
+    return result
 
 
-def make_stack(lfp_in, calibration, out_path, verbose=False,
-               skip_existing=False, save_intermediate_files=False, use_threshold=True):
-    # print(out_path)
-
+def ifp_to_dof_data(lfp_in, calibration, out_path, verbose=False):
     depth_map, depth_meta = get_depth_data(lfp_in)
+    depth_range = depth_map.min(), depth_map.max()
+    lambda_range = depth_meta['LambdaMin'], depth_meta['LambdaMax']
 
-    if use_threshold:
-        depth_planes = np.array(get_main_depth_planes(depth_map))
-    else:
-        depth_planes = np.unique(depth_map)
+    def remap_lambda(value):
+        return remap(value, depth_range, lambda_range)
 
-    focal_planes = depth_value_to_lambda(depth_planes,
-                                         depth_map.max(),
-                                         depth_meta['LambdaMin'],
-                                         depth_meta['LambdaMax'])
+    frame_mapping = {}
+    file_name_template = os.path.basename(str(lfp_in)).split('.')[0] + '_f_{}.jpg'
+    unique_depth_values = np.unique(depth_map)
+    for num, depth in enumerate(unique_depth_values):
+        lambda_value = remap_lambda(depth)
+        out_image = os.path.join(out_path, file_name_template.format(lambda_value))
+        logging.debug("Processing image {} - {}/{}".format(out_image, num, len(unique_depth_values)))
+        if not os.path.exists(out_image):
+            make_focus_image(lfp_in, out_image, lambda_value, calibration)
+        if depth not in frame_mapping:
+            image = misc.imread(out_image)
+            frame_mapping[depth] = image
 
-    lambda_map = depth_value_to_lambda(depth_map,
-                                       depth_map.max(),
-                                       depth_meta['LambdaMin'],
-                                       depth_meta['LambdaMax'])
-
-    unique_focal_planes = sorted(np.unique(focal_planes))
-
-    value_map_to_index_map(lambda_map, unique_focal_planes)
-
-    if save_intermediate_files:
-        depth_map_path = os.path.join(out_path, 'depth_map.npy')
-        np.save(depth_map_path, lambda_map)
-
-    file_name = os.path.basename(str(lfp_in)).split('.')[0] + '_f_{}.jpg'
-
-    stack_images = []
-    for num, focus in enumerate(unique_focal_planes):
-        out_image = os.path.join(out_path, file_name.format(focus))
-        stack_images.append(out_image)
-        if skip_existing and os.path.exists(out_image):
-            if verbose:
-                print(
-                    'Skipping focal plane f={} becasue {} already exists ({}/{}).'.format(
-                        focus,
-                        out_image,
-                        num + 1,
-                        unique_focal_planes.size)
-                )
-            continue
-        if verbose:
-            print('Creating focal plane f={} as {} ({}/{}).'.format(focus,
-                                                                    out_image,
-                                                                    num + 1,
-                                                                    len(unique_focal_planes)))
-        make_focus_image(lfp_in, out_image, focus, calibration)
-    stack_images = [misc.imread(img_path) for img_path in stack_images]
-    # depth_map = np.load(depth_map_path)
-    return lambda_map, stack_images
+    return DOFData(depth_map, frame_mapping)
 
 
 def read_ifp(file_name, config):
@@ -160,25 +148,13 @@ def read_ifp(file_name, config):
 
     scene = None
 
-    tmp_dir = tempfile.mkdtemp()
-    try:
-        depth_map, focus_stack_images = make_stack(file_name,
-                                                   calibration,
-                                                   tmp_dir,
-                                                   verbose=verbose,
-                                                   skip_existing=True,
-                                                   save_intermediate_files=True,
-                                                   use_threshold=False)
-        lut = ArrayLookupTable(depth_map)
-        manager = ArrayStackImageManager(focus_stack_images)
-        scene = ImageStackScene(manager, lut)
+    with TempFolderManager() as tmp_dir:
+        try:
+            dof_data = ifp_to_dof_data(file_name, calibration, tmp_dir, verbose)
+            scene = ImageStackScene.from_dof_data(dof_data)
 
-    except Exception as e:
-        logging.error("Error loading ifp file " + file_name)
-        logging.error(e)
-
-    finally:
-        shutil.rmtree(tmp_dir)
+        except Exception:
+            logging.exception("Error loading ifp file " + file_name)
 
     print('Finished Loading.')
 

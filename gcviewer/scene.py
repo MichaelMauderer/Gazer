@@ -3,7 +3,7 @@ from __future__ import unicode_literals, division, print_function
 from abc import ABCMeta, abstractmethod
 
 
-class Scene():
+class Scene(object):
     """
     Base class for gaze-contingent scenes that can be displayed.
     Provide frames based on current gaze state.

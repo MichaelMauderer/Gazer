@@ -25,7 +25,8 @@ class ArrayLookupTable(LookupTable):
 
     def sample_position(self, pos):
         try:
-            x, y, _ = self.array.shape
+            x = self.array.shape[0]
+            y = self.array.shape[1]
             color = self.array[int(x * pos[1]), int(y * pos[0])]
             # Avoid issues with RGB images
             result = np.average(color)

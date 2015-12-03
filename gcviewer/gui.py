@@ -114,7 +114,7 @@ class GCImageWidget(QGLWidget):
             return None
 
         if self._show_depthmap:
-            image = self.gc_scene.get_depth_image()
+            image = self.gc_scene.get_indices_image()
         else:
             image = self.gc_scene.get_image()
         return image
@@ -156,6 +156,9 @@ class GCImageWidget(QGLWidget):
             painter.drawEllipse(self._gaze.x() - size / 2,
                                 self._gaze.y() - size / 2,
                                 size, size)
+            painter.drawText(self._gaze.x() - size / 2,
+                             self._gaze.y() - size / 2,
+                             str(self.gc_scene.current_index))
         painter.end()
 
     def heightForWidth(self, p_int):
@@ -194,6 +197,10 @@ class GCImageViewer(QMainWindow):
                                          self,
                                          shortcut="Ctrl+I",
                                          triggered=self.import_ifp)
+        self.export_image_stack_action = QAction("&Export as Image Stack",
+                                         self,
+                                         shortcut="Ctrl+E",
+                                         triggered=self.export_image_stack)
         self.preferences_action = QAction("&Preferences",
                                          self,
                                          shortcut="Ctrl+P",
@@ -230,6 +237,7 @@ class GCImageViewer(QMainWindow):
         self.file_menu.addAction(self.open_action)
         self.file_menu.addAction(self.save_action)
         self.file_menu.addAction(self.import_ifp_action)
+        self.file_menu.addAction(self.export_image_stack_action)
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.preferences_action)
         self.file_menu.addSeparator()
@@ -291,13 +299,13 @@ class GCImageViewer(QMainWindow):
             self.render_area.update()
 
     def save_scene(self):
-        file_name, _ = QFileDialog.getSaveFileName(self,
-                                                   "Save File",
-                                                   QDir.currentPath(),
-                                                   )
+        file_name = QFileDialog.getSaveFileName(self,
+                                                "Save File",
+                                                QDir.currentPath(),
+                                                )
         if file_name:
             with open(file_name, 'wb') as out_file:
-                scene = self.render_area.gc_scene._scene
+                scene = self.render_area.gc_scene
                 gcio.write_file(out_file, scene)
 
     def import_ifp(self):
@@ -310,16 +318,21 @@ class GCImageViewer(QMainWindow):
             if file_name:
                 current_preferences = preferences.load_preferences()
                 scene = read_ifp(file_name, current_preferences)
-
-                with open(str(file_name.split('.')[0] + '_out.gc'), 'wb') as out_file:
-                    gcio.write_file(out_file, scene)  # TODO: Make this step manual
-                    self.render_area.gc_scene = scene
-                    self.render_area.update()
+                self.render_area.gc_scene = scene
+                self.render_area.update()
 
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
             return None
 
+    def export_image_stack(self):
+        folder_name = QFileDialog.getExistingDirectory(self,
+                                                       "Open Directory",
+                                                       QDir.currentPath(),
+                                                       QFileDialog.ShowDirsOnly |
+                                                       QFileDialog.DontResolveSymlinks)
+        if folder_name:
+            gcio.extract_scene_to_stack(self.render_area.gc_scene, folder_name)
 
     def open_preferences(self):
         # print("Open Preferences!")
