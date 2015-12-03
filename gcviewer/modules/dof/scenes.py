@@ -55,14 +55,13 @@ class ImageStackScene(Scene):
         sampled_index = self.lookup_table.sample_position(self.gaze_pos)
         if sampled_index is not None:
             self.interpolator.target = sampled_index
-        self._current_index = self.interpolator.make_step()
+        self._current_index = self.interpolator.make_step() # TODO: remove side-effect
         return self._current_index
 
     def render(self):
         self.image_manager.draw_image(self.current_index)
 
     def get_image(self):
-        print(str(self.current_index))
         return self.image_manager.load_image(self.current_index)
 
     def get_indices_image(self):

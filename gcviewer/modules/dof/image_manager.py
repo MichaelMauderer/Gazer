@@ -1,6 +1,7 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
+import numpy as np
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 
@@ -44,7 +45,7 @@ class ArrayStackImageManager(ImageManager):
 
     def _get_array(self, key):
         try:
-            return self._arrays[int(key)]
+            return self._arrays[int(np.round(key))]
         except IndexError:
             logger.warn('Image {} not found'.format(key))
             return None

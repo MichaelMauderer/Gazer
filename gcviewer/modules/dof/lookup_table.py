@@ -32,6 +32,7 @@ class ArrayLookupTable(LookupTable):
             result = np.average(color)
             return result
         except IndexError:
+            logger.warning("Index Error with position x:{}, y:{} in ArrayLookupTable.".format(pos[0], pos[1]))
             return None
 
 
