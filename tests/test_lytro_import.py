@@ -47,3 +47,5 @@ def test_remap():
     to_range = 10, 20
     mapped = remap(0.5, from_range, to_range)
     np.testing.assert_allclose(mapped, 15)
+
+

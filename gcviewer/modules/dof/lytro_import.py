@@ -66,8 +66,8 @@ def make_focus_image(tnt, lfp_in, image_out, focus, calibration):
     tnt.calibration_in(calibration)
     tnt.lfp_in(lfp_in)
     tnt.image_out(image_out)
-    tnt.width(256)
-    tnt.height(256)
+    tnt.width(338)
+    tnt.height(221)
     tnt.focus(str(focus))
 
 

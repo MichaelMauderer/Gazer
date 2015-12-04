@@ -18,6 +18,7 @@ from PyQt4.QtGui import (QAction, QFileDialog,
 
 from gcviewer import gcio, eyetracking
 from gcviewer.eyetracking.api import EyeData
+import gcviewer.modules.dof.directory_of_images_import as dir_import
 
 import preferences
 
@@ -197,6 +198,10 @@ class GCImageViewer(QMainWindow):
                                          self,
                                          shortcut="Ctrl+I",
                                          triggered=self.import_ifp)
+        self.import_directory_of_images_action = QAction("&Import directory of images",
+                                         self,
+                                         shortcut="Ctrl+D",
+                                         triggered=self.import_directory_of_images)
         self.export_image_stack_action = QAction("&Export as Image Stack",
                                          self,
                                          shortcut="Ctrl+E",
@@ -238,6 +243,7 @@ class GCImageViewer(QMainWindow):
         self.file_menu.addAction(self.save_action)
         self.file_menu.addAction(self.import_ifp_action)
         self.file_menu.addAction(self.export_image_stack_action)
+        self.file_menu.addAction(self.import_directory_of_images_action)
         self.file_menu.addSeparator()
         self.file_menu.addAction(self.preferences_action)
         self.file_menu.addSeparator()
@@ -325,12 +331,17 @@ class GCImageViewer(QMainWindow):
             logger.exception('Could not import Lytro Power Tools.')
             return None
 
-    def export_image_stack(self):
+    def import_directory_of_images(self):
         folder_name = QFileDialog.getExistingDirectory(self,
                                                        "Open Directory",
                                                        QDir.currentPath(),
                                                        QFileDialog.ShowDirsOnly |
                                                        QFileDialog.DontResolveSymlinks)
+        if folder_name:
+            dir_import.dir_to_dof_data(str(folder_name))
+
+    def export_image_stack(self):
+        folder_name = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
         if folder_name:
             gcio.extract_scene_to_stack(self.render_area.gc_scene, folder_name)
 

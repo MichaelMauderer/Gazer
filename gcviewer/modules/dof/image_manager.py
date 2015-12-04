@@ -45,7 +45,7 @@ class ArrayStackImageManager(ImageManager):
 
     def _get_array(self, key):
         try:
-            return self._arrays[int(np.round(key))]
+            return self._arrays[int(key)]
         except IndexError:
             logger.warn('Image {} not found'.format(key))
             return None

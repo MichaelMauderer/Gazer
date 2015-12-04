@@ -71,7 +71,7 @@ class TestImageStackManager(unittest.TestCase):
         np.testing.assert_almost_equal(self.image_manager.load_image(2), self.frames[2])
 
     def test_load_image_fraction(self):
-        np.testing.assert_almost_equal(self.image_manager.load_image(1.7), self.frames[2])
+        np.testing.assert_almost_equal(self.image_manager.load_image(1.7), self.frames[1])
 
 
 class TestLookupTable(unittest.TestCase):
