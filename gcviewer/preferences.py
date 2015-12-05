@@ -17,7 +17,7 @@ def save_preferences(full_path, prefs):
 
 def write_default_preferences(full_path):
     default = {'calibration_path': ''}
-    save_preferences(default)
+    save_preferences(full_path, default)
 
 
 def ensure_preferences_exists(dir_path, file_name):
