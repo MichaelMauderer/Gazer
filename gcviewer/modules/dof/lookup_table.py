@@ -32,7 +32,8 @@ class ArrayLookupTable(LookupTable):
             result = np.average(color)
             return result
         except IndexError:
-            logger.warning("Index Error with position x:{}, y:{} in ArrayLookupTable.".format(pos[0], pos[1]))
+            msg = "Index Error with position x:{}, y:{} in ArrayLookupTable."
+            logger.warning(msg.format(pos[0], pos[1]))
             return None
 
 
@@ -54,8 +55,9 @@ class LytroLookupTable(LookupTable):
         y = pos[1] / self._image_dimensions[1]
 
         try:
-            depth = self._depth_data[int(x * (self._dimensions[0] - 1)), int(
-                y * (self._dimensions[1] - 1))]
+            index_x = int(x * (self._dimensions[0] - 1))
+            index_y = int(y * (self._dimensions[1] - 1))
+            depth = self._depth_data[(index_x, index_y)]
             return depth
         except IndexError:
             return None

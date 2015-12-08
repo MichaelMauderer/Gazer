@@ -8,7 +8,6 @@ import skimage
 import skimage.io
 
 from bson import BSON
-import bson.json_util
 import numpy as np
 
 logger = logging.getLogger(__name__)
@@ -57,8 +56,8 @@ def bytes_to_array(string):
 
     Parameters
     ----------
-    array : str
-        Byte string covnert.
+    string : str
+        Byte string convert.
 
     Returns
     -------

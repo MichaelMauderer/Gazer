@@ -1,5 +1,6 @@
 """
-This module provides functionality to import a set of images from the file system.
+This module provides functionality to import a set of images from
+the file system.
 """
 
 import math
@@ -20,7 +21,8 @@ def dir_to_dof_data(dir_in):
     image_plane_format = "bmp"
 
     # load the depth image into an np.array
-    depth_map_path = os.path.join(dir_in, "depthmap.{}".format(depth_map_img_format))
+    depth_map_filename = "depthmap.{}".format(depth_map_img_format)
+    depth_map_path = os.path.join(dir_in, depth_map_filename)
     depth_map = misc.imread(depth_map_path)
 
     # create an ordered list of all the image plane files in the directory
@@ -31,13 +33,14 @@ def dir_to_dof_data(dir_in):
 
     # for each unique value in the depth array, load the image
     unique_depth_values = np.unique(depth_map)
-    print unique_depth_values
 
     indices = [depth_to_index(depth) for depth in unique_depth_values]
 
     frame_mapping = []
     for num, depth in enumerate(unique_depth_values):
         index = depth_to_index(depth)
+        print(index)
         # image_filename =
-        #image =
-        #frame_mapping[depth] =
+        # image =
+        # frame_mapping[depth] =
+    print(indices, frame_mapping)

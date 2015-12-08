@@ -1,7 +1,6 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
-import numpy as np
 
 from abc import ABCMeta, abstractmethod, abstractproperty
 
