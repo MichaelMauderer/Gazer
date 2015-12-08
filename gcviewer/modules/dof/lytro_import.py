@@ -5,19 +5,13 @@ import json
 import os
 from functools import wraps
 import logging
-import shutil
-import tempfile
 from scipy import misc
 import numpy as np
-import yaml
 
 from lpt.lfp.tnt import Tnt
 
 from gcviewer.modules.temp_folder_manager import TempFolderManager
 from gcviewer.modules.dof.dof_data import DOFData
-from gcviewer.modules.dof.image_manager import ArrayStackImageManager
-# from gcviewer.gcio import write_file
-from gcviewer.modules.dof.lookup_table import ArrayLookupTable
 from gcviewer.modules.dof.scenes import ImageStackScene
 
 
