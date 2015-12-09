@@ -8,6 +8,7 @@ import logging
 from scipy import misc
 import numpy as np
 
+
 from lpt.lfp.tnt import Tnt
 
 from gcviewer.modules.temp_folder_manager import TempFolderManager
@@ -42,7 +43,8 @@ def read_depth_data(depth_dir, name):
     depth_map_path = os.path.join(depth_dir, '{}.bmp'.format(name))
     depth_meta_data_path = os.path.join(depth_dir, '{}.jsn'.format(name))
     depth_map = misc.imread(depth_map_path)
-    # depth_map = depth_map[..., ..., 0] # TODO: Reduce depth map to one value per pixel
+    # TODO: Reduce depth map to one value per pixel
+    # depth_map = depth_map[..., ..., 0]
     with open(depth_meta_data_path) as meta_data_file:
         depth_meta = json.load(meta_data_file)
     return depth_map, depth_meta
@@ -88,7 +90,8 @@ def remap(value, from_range, to_range):
 
 def value_map_to_index_map(value_map, index_list):
     """
-    Return every value in the value_map with the index of the closest value from the index_list.
+    Return every value in the value_map with the index of
+    the closest value from the index_list.
 
     Parameters
     ----------
@@ -124,8 +127,10 @@ def lambda_from_depth(value, depth_meta):
 
     """
 
-    # The values from the depth map need be considered as normalised values in the range 0...255
-    # And will be linearly transformed to the lambda range indicated by the metadata
+    # The values from the depth map need be considered as normalised values
+    # in the range 0...255
+    # And will be linearly transformed to the lambda range
+    # indicated by the metadata
     depth_range = 0, 255
     lambda_range = depth_meta['LambdaMin'], depth_meta['LambdaMax']
     lambda_value = remap(value, depth_range, lambda_range)
@@ -136,12 +141,17 @@ def ifp_to_dof_data(lfp_in, calibration, out_path, verbose=False):
     depth_map, depth_meta = get_depth_data(lfp_in)
 
     frame_mapping = {}
-    file_name_template = os.path.basename(str(lfp_in)).split('.')[0] + '_f_{}.jpg'
+    file_basename = os.path.basename(str(lfp_in)).split('.')[0]
+    file_name_template = file_basename + '_f_{}.jpg'
     unique_depth_values = np.unique(depth_map)
     for num, depth in enumerate(unique_depth_values):
         lambda_value = lambda_from_depth(depth, depth_meta)
-        out_image = os.path.join(out_path, file_name_template.format(lambda_value))
-        logging.debug("Processing image {} - {}/{}".format(out_image, num, len(unique_depth_values)))
+        out_image = os.path.join(out_path,
+                                 file_name_template.format(lambda_value))
+        debug_msg = "Processing image {} - {}/{}"
+        logging.debug(debug_msg.format(out_image,
+                                       num,
+                                       len(unique_depth_values)))
         if not os.path.exists(out_image):
             make_focus_image(lfp_in, out_image, lambda_value, calibration)
         if depth not in frame_mapping:
@@ -160,7 +170,10 @@ def read_ifp(file_name, config):
 
     with TempFolderManager() as tmp_dir:
         try:
-            dof_data = ifp_to_dof_data(file_name, calibration, tmp_dir, verbose)
+            dof_data = ifp_to_dof_data(file_name,
+                                       calibration,
+                                       tmp_dir,
+                                       verbose)
             scene = ImageStackScene.from_dof_data(dof_data)
 
         except Exception:

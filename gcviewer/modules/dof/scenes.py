@@ -17,8 +17,9 @@ class ImageStackScene(Scene):
     """
     Scene object based on a list of images and a lookup table.
 
-    The current image to be displayed is chosen based on correspondence between
-    the value in the lookup table at the position and the index in the image array.
+    The current image to be displayed is chosen based on correspondence
+    between the value in the lookup table at the position and the
+    index in the image array.
 
     Todo: More detail about algorithm, e.g. interpolation.
     """
@@ -26,7 +27,8 @@ class ImageStackScene(Scene):
 
     @classmethod
     def from_dof_data(cls, dof_data, interpolator=LinearInterpolator()):
-        depth_values, indices = np.unique(dof_data.depth_array, return_inverse=True)
+        depth_values, indices = np.unique(dof_data.depth_array,
+                                          return_inverse=True)
         image_array = [dof_data.frame_mapping.get(val) for val in depth_values]
         image_manager = ArrayStackImageManager(image_array)
         indices = indices.reshape(dof_data.depth_array.shape)
@@ -55,7 +57,10 @@ class ImageStackScene(Scene):
         sampled_index = self.lookup_table.sample_position(self.gaze_pos)
         if sampled_index is not None:
             self.interpolator.target = sampled_index
-        self._current_index = self.interpolator.make_step() # TODO: remove side-effect
+
+        # TODO: remove side-effect
+        self._current_index = self.interpolator.make_step()
+
         return self._current_index
 
     def render(self):

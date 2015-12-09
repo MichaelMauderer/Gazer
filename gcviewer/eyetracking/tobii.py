@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 class EyeXWrapper(EyetrackingAPIBase):
     def __init__(self):
         EyetrackingAPIBase.__init__(self)
-        lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''), 'Tobii.EyeX.Client.dll')
+        lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
+                                'Tobii.EyeX.Client.dll'
+                                )
         self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
         self._eye_x_interface.on_event += [self._update_sample]
 

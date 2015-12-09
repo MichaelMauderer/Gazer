@@ -3,16 +3,12 @@ from __future__ import unicode_literals, division, print_function
 import logging
 from functools import partial
 
-from PyQt4.QtOpenGL import QGLWidget
-from PyQt4 import QtCore
 import numpy as np
 
+from PyQt4.QtOpenGL import QGLWidget
 from PyQt4 import QtGui
-
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF, QSize
-
 from PyQt4.QtGui import QImage, QPixmap, QActionGroup
-
 from PyQt4.QtGui import (QAction, QFileDialog,
                          QMainWindow, QMenu, QSizePolicy)
 
@@ -198,22 +194,26 @@ class GCImageViewer(QMainWindow):
                                          self,
                                          shortcut="Ctrl+I",
                                          triggered=self.import_ifp)
-        self.import_directory_of_images_action = QAction("&Import directory of images",
-                                         self,
-                                         shortcut="Ctrl+D",
-                                         triggered=self.import_directory_of_images)
-        self.export_image_stack_action = QAction("&Export as Image Stack",
-                                         self,
-                                         shortcut="Ctrl+E",
-                                         triggered=self.export_image_stack)
+        self.import_directory_of_images_action = QAction(
+            "&Import directory of images",
+            self,
+            shortcut="Ctrl+D",
+            triggered=self.import_directory_of_images)
+        self.export_image_stack_action = QAction(
+            "&Export as Image Stack",
+            self,
+            shortcut="Ctrl+E",
+            triggered=self.export_image_stack)
         self.preferences_action = QAction("&Preferences",
-                                         self,
-                                         shortcut="Ctrl+P",
-                                         triggered=self.open_preferences)
+                                          self,
+                                          shortcut="Ctrl+P",
+                                          triggered=self.open_preferences
+                                          )
         self.exit_action = QAction("E&xit",
                                    self,
                                    shortcut="Ctrl+Q",
-                                   triggered=self.close)
+                                   triggered=self.close
+                                   )
 
         self.mouse_toggle_action = QAction("Toggle mouse mode",
                                            self,
@@ -332,16 +332,18 @@ class GCImageViewer(QMainWindow):
             return None
 
     def import_directory_of_images(self):
+        param = QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
         folder_name = QFileDialog.getExistingDirectory(self,
                                                        "Open Directory",
                                                        QDir.currentPath(),
-                                                       QFileDialog.ShowDirsOnly |
-                                                       QFileDialog.DontResolveSymlinks)
+                                                       param
+                                                       )
         if folder_name:
             dir_import.dir_to_dof_data(str(folder_name))
 
     def export_image_stack(self):
-        folder_name = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+        folder_name = str(QFileDialog.getExistingDirectory(self,
+                                                           "Select Directory"))
         if folder_name:
             gcio.extract_scene_to_stack(self.render_area.gc_scene, folder_name)
 
@@ -419,20 +421,9 @@ class PreferencesDialog(QtGui.QDialog):
         self.close()
 
     def open_file_picker(self):
-        dir_name = QFileDialog.getExistingDirectory(self, 'Select calibration directory')
+        msg = 'Select calibration directory'
+        dir_name = QFileDialog.getExistingDirectory(self, msg)
 
         if dir_name:
             self.calibration_path = dir_name
             self.line_edit.setText(dir_name)
-
-
-
-
-
-
-
-
-
-
-
-
