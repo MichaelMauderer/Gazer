@@ -127,8 +127,10 @@ def lambda_from_depth(value, depth_meta):
 
     """
 
-    # The values from the depth map need be considered as normalised values in the range 0...255
-    # And will be linearly transformed to the lambda range indicated by the metadata
+    # The values from the depth map need be considered as normalised values
+    # in the range 0...255
+    # And will be linearly transformed to the lambda range
+    # indicated by the metadata
     depth_range = 0, 255
     lambda_range = depth_meta['LambdaMin'], depth_meta['LambdaMax']
     lambda_value = remap(value, depth_range, lambda_range)
@@ -143,7 +145,7 @@ def ifp_to_dof_data(lfp_in, calibration, out_path, verbose=False):
     file_name_template = file_basename + '_f_{}.jpg'
     unique_depth_values = np.unique(depth_map)
     for num, depth in enumerate(unique_depth_values):
-        lambda_value = remap_lambda(depth)
+        lambda_value = lambda_from_depth(depth, depth_meta)
         out_image = os.path.join(out_path,
                                  file_name_template.format(lambda_value))
         debug_msg = "Processing image {} - {}/{}"
