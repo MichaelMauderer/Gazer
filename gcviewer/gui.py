@@ -7,12 +7,13 @@ import numpy as np
 
 from PyQt4.QtOpenGL import QGLWidget
 from PyQt4 import QtGui
-from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF, QSize
+from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF, QSize, \
+    QThread
 from PyQt4.QtGui import QImage, QPixmap, QActionGroup
 from PyQt4.QtGui import (QAction, QFileDialog,
                          QMainWindow, QMenu, QSizePolicy)
 
-from gcviewer import gcio, eyetracking
+from gcviewer import gcio, eyetracking, scene
 from gcviewer.eyetracking.api import EyeData
 import gcviewer.modules.dof.directory_of_images_import as dir_import
 
@@ -170,18 +171,24 @@ class GCImageViewer(QMainWindow):
     Provides overall layout and menus to access basic functionality.
     """
 
+    scene_update = pyqtSignal(scene.Scene)
+
     def __init__(self, tracking_apis={}):
         super(GCImageViewer, self).__init__()
 
+        # Ete tracking setup
         self.tracking_apis = tracking_apis
         self.tracker = None
 
+        # Main layout
         self.render_area = GCImageWidget(None)
         self.render_area.setSizePolicy(QSizePolicy.Ignored,
                                        QSizePolicy.Ignored)
         self.setCentralWidget(self.render_area)
 
-        # Create Actions
+        self.statusBar().showMessage("Hello!")
+
+        # Create actions
         self.open_action = QAction("&Open...",
                                    self,
                                    shortcut="Ctrl+O",
@@ -195,15 +202,15 @@ class GCImageViewer(QMainWindow):
                                          shortcut="Ctrl+I",
                                          triggered=self.import_ifp)
         self.import_directory_of_images_action = QAction(
-            "&Import directory of images",
-            self,
-            shortcut="Ctrl+D",
-            triggered=self.import_directory_of_images)
+                "&Import directory of images",  # NOQA
+                self,
+                shortcut="Ctrl+D",
+                triggered=self.import_directory_of_images)
         self.export_image_stack_action = QAction(
-            "&Export as Image Stack",
-            self,
-            shortcut="Ctrl+E",
-            triggered=self.export_image_stack)
+                "&Export as Image Stack",  # NOQA
+                self,
+                shortcut="Ctrl+E",
+                triggered=self.export_image_stack)
         self.preferences_action = QAction("&Preferences",
                                           self,
                                           shortcut="Ctrl+P",
@@ -261,6 +268,8 @@ class GCImageViewer(QMainWindow):
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
 
+        self.scene_update.connect(self.update_Scene)
+
         self.setWindowTitle("GC Image Viewer")
         self.resize(800, 600)
 
@@ -281,8 +290,8 @@ class GCImageViewer(QMainWindow):
         if self.tracker:
             self.tracker.on_event = []
         self.tracker = self.tracking_apis.get(tracker_api_key)
-        self.tracker.on_event.append(
-            lambda sample: self.render_area.gaze_change.emit(sample))
+
+        self.tracker.on_event.append(self.render_area.gaze_change.emit)
 
     def toggle_mouse_mode(self):
         self.render_area.mouse_mode = not self.render_area.mouse_mode
@@ -293,6 +302,10 @@ class GCImageViewer(QMainWindow):
     def toggle_depthmap(self):
         self.render_area.toggle_depthmap()
         self.update()
+
+    def update_Scene(self, scene):
+        self.render_area.gc_scene = scene
+        self.render_area.update()
 
     def load_scene(self):
         file_name = QFileDialog.getOpenFileName(self,
@@ -315,21 +328,12 @@ class GCImageViewer(QMainWindow):
                 gcio.write_file(out_file, scene)
 
     def import_ifp(self):
-        try:
-            from modules.dof.lytro_import import read_ifp
-            file_name = QFileDialog.getOpenFileName(self,
-                                                    "Import File",
-                                                    QDir.currentPath(),
-                                                    )
-            if file_name:
-                current_preferences = preferences.load_preferences()
-                scene = read_ifp(file_name, current_preferences)
-                self.render_area.gc_scene = scene
-                self.render_area.update()
-
-        except ImportError:
-            logger.exception('Could not import Lytro Power Tools.')
-            return None
+        file_name = QFileDialog.getOpenFileName(self,
+                                                "Import File",
+                                                QDir.currentPath(),
+                                                )
+        if file_name:
+            LFPLoaderThread(file_name, self).start()
 
     def import_directory_of_images(self):
         param = QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
@@ -427,3 +431,21 @@ class PreferencesDialog(QtGui.QDialog):
         if dir_name:
             self.calibration_path = dir_name
             self.line_edit.setText(dir_name)
+
+
+class LFPLoaderThread(QThread):
+    def __init__(self, file_name, *args, **kwargs):
+        super(LFPLoaderThread, self).__init__(*args, **kwargs)
+        self.file_name = file_name
+        self.scene = None
+
+    def run(self):
+        try:
+            from modules.dof.lytro_import import read_ifp
+            current_preferences = preferences.load_preferences()
+            self.parent().statusBar().showMessage("Importing ...")
+            self.scene = read_ifp(self.file_name, current_preferences)
+            self.parent().scene_update.emit(self.scene)
+            self.parent().statusBar().showMessage("Importing finished.")
+        except ImportError:
+            logger.exception('Could not import Lytro Power Tools.')

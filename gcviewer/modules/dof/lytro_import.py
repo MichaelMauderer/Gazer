@@ -179,6 +179,6 @@ def read_ifp(file_name, config):
         except Exception:
             logging.exception("Error loading ifp file " + file_name)
 
-    print('Finished Loading.')
+    logging.debug('Finished Loading.')
 
     return scene
