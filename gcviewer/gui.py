@@ -1,23 +1,22 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
+import os
 from functools import partial
 
 import numpy as np
-
-from PyQt4.QtOpenGL import QGLWidget
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir, Qt, pyqtSignal, QPoint, QEvent, QPointF, QSize, \
-    QThread
-from PyQt4.QtGui import QImage, QPixmap, QActionGroup
+    QThread, QObject
 from PyQt4.QtGui import (QAction, QFileDialog,
                          QMainWindow, QMenu, QSizePolicy)
+from PyQt4.QtGui import QImage, QPixmap, QActionGroup
+from PyQt4.QtOpenGL import QGLWidget
 
+import gcviewer.modules.dof.directory_of_images_import as dir_import
+import preferences
 from gcviewer import gcio, eyetracking, scene
 from gcviewer.eyetracking.api import EyeData
-import gcviewer.modules.dof.directory_of_images_import as dir_import
-
-import preferences
 
 logger = logging.getLogger(__name__)
 
@@ -186,8 +185,6 @@ class GCImageViewer(QMainWindow):
                                        QSizePolicy.Ignored)
         self.setCentralWidget(self.render_area)
 
-        self.statusBar().showMessage("Hello!")
-
         # Create actions
         self.open_action = QAction("&Open...",
                                    self,
@@ -268,7 +265,7 @@ class GCImageViewer(QMainWindow):
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
 
-        self.scene_update.connect(self.update_Scene)
+        self.scene_update.connect(self.update_scene)
 
         self.setWindowTitle("GC Image Viewer")
         self.resize(800, 600)
@@ -303,7 +300,7 @@ class GCImageViewer(QMainWindow):
         self.render_area.toggle_depthmap()
         self.update()
 
-    def update_Scene(self, scene):
+    def update_scene(self, scene):
         self.render_area.gc_scene = scene
         self.render_area.update()
 
@@ -328,12 +325,9 @@ class GCImageViewer(QMainWindow):
                 gcio.write_file(out_file, scene)
 
     def import_ifp(self):
-        file_name = QFileDialog.getOpenFileName(self,
-                                                "Import File",
-                                                QDir.currentPath(),
-                                                )
-        if file_name:
-            LFPLoaderThread(file_name, self).start()
+        importer = LFPImporter(self.statusBar(), parent=self)
+        importer.load_finished.connect(self.scene_update.emit)
+        importer.start_import()
 
     def import_directory_of_images(self):
         param = QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
@@ -433,19 +427,78 @@ class PreferencesDialog(QtGui.QDialog):
             self.line_edit.setText(dir_name)
 
 
-class LFPLoaderThread(QThread):
-    def __init__(self, file_name, *args, **kwargs):
-        super(LFPLoaderThread, self).__init__(*args, **kwargs)
-        self.file_name = file_name
-        self.scene = None
+class TaskWorker(QThread):
+    task_done = pyqtSignal()
+
+    def __init__(self, task, *args, **kwargs):
+        super(TaskWorker, self).__init__(*args, **kwargs)
+        self.task = task
+        self.result = None
 
     def run(self):
+        self.result = self.task()
+        self.task_done.emit()
+
+
+class LFPImporter(QObject):
+    load_finished = pyqtSignal(scene.Scene)
+
+    def __init__(self, status_bar, *args, **kwargs):
+        super(LFPImporter, self).__init__(*args, **kwargs)
+        self.status_bar = status_bar
+        self.file_path = None
+
+        self.progress_bar = QtGui.QProgressBar()
+        self.progress_bar.setRange(0, 0)
+        self.worker = None
+
+    def start_import(self):
+        self._choose_file()
+        self._async_load()
+
+    def _on_load_finished(self):
+        logger.debug('On load finished')
+        self.scene = self.worker.result
+        self.status_bar.showMessage('Finished importing', 3000)
+        self.status_bar.removeWidget(self.progress_bar)
+        self.load_finished.emit(self.scene)
+
+    def _on_load_start(self):
+        logger.debug('On load start')
+        file_base_name = os.path.basename(str(self.file_path))
+        start_message = 'Importing {}'.format(file_base_name)
+        self.status_bar.showMessage(start_message)
+        self.status_bar.insertPermanentWidget(0, self.progress_bar)
+
+    def _choose_file(self):
+        file_name = QFileDialog.getOpenFileName(self.parent(),
+                                                "Import File",
+                                                QDir.currentPath(),
+                                                filter="LFP Raw File (*.lfr)",
+                                                )
+        self.file_path = file_name
+
+    def _load(self):
         try:
             from modules.dof.lytro_import import read_ifp
-            current_preferences = preferences.load_preferences()
-            self.parent().statusBar().showMessage("Importing ...")
-            self.scene = read_ifp(self.file_name, current_preferences)
-            self.parent().scene_update.emit(self.scene)
-            self.parent().statusBar().showMessage("Importing finished.")
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
+            return
+
+        current_preferences = preferences.load_preferences()
+        result_scene = read_ifp(self.file_path,
+                                current_preferences,
+                                )
+        return result_scene
+
+    def _async_load(self):
+        self._on_load_start()
+        self.worker = TaskWorker(self._load)
+        self.worker.task_done.connect(self._on_load_finished)
+        self.worker.start()
+
+    def _status_update(self, status_message):
+        file_base_name = os.path.basename(str(self.file_path))
+        message = 'Importing {}'.format(file_base_name)
+        message += ' (Frame ' + status_message + ')'
+        self.status_bar.showMessage(message)
