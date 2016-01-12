@@ -1,23 +1,20 @@
+from __future__ import unicode_literals, division, print_function
+
 """
 This module provides functionality to import a set of images from
 the file system.
 """
 
-import math
-import glob
-import numpy as np
 import os
+import logging
 
-import skimage
+import numpy as np
 from scipy import misc
 
 from gcviewer.modules.dof.dof_data import DOFData
 from gcviewer.modules.dof.scenes import ImageStackScene
 
-
-def depth_to_index(depth):
-    offset = 255 / (30 - 1)
-    return int(math.floor(abs(depth - 255) / offset))
+logger = logging.getLogger(__name__)
 
 
 def dir_to_dof_data(dir_in):
@@ -29,21 +26,19 @@ def dir_to_dof_data(dir_in):
     depth_map_path = os.path.join(dir_in, depth_map_filename)
     depth_map = misc.imread(depth_map_path)
 
-    # create an ordered list of all the image plane files in the directory
-    image_pattern = os.path.join(dir_in, '{}.{}')
-
     # for each unique value in the depth array, load the image
     unique_depth_values = np.unique(depth_map)
 
+    image_pattern = os.path.join(dir_in, '{}.{}')
     frame_mapping = {}
     for num, depth in enumerate(unique_depth_values):
-        # index = depth_to_index(depth)
-        # print(index)
         image_filename = image_pattern.format(str(int(depth)),
                                               image_plane_format)
 
-        frame_mapping[depth] = skimage.io.imread(image_filename)
-    print(unique_depth_values, frame_mapping)
+        try:
+            frame_mapping[depth] = misc.imread(image_filename)
+        except IOError:
+            logger.warn('Frame {} not found.'.format(image_filename))
 
     return DOFData(depth_map, frame_mapping)
 
