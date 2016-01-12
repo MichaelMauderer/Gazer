@@ -8,7 +8,6 @@ import logging
 from scipy import misc
 import numpy as np
 
-
 from lpt.lfp.tnt import Tnt
 
 from gcviewer.modules.temp_folder_manager import TempFolderManager
@@ -58,11 +57,15 @@ def get_depth_data(lfp_in):
 
 
 @tnt_command_sequence
-def make_focus_image(tnt, lfp_in, image_out, focus, calibration):
+def make_focus_image(tnt, lfp_in, image_out, focus, calibration,
+                     image_size=None):
     tnt.calibration_in(calibration)
     tnt.lfp_in(lfp_in)
     tnt.image_out(image_out)
     tnt.focus(str(focus))
+    if image_size:
+        tnt.width(image_size[0])
+        tnt.height(image_size[1])
 
 
 def get_main_depth_planes(depth_map, threshold=0.02):
@@ -137,7 +140,7 @@ def lambda_from_depth(value, depth_meta):
     return lambda_value
 
 
-def ifp_to_dof_data(lfp_in, calibration, out_path, verbose=False):
+def ifp_to_dof_data(lfp_in, calibration, out_path, status_callback=None):
     depth_map, depth_meta = get_depth_data(lfp_in)
 
     frame_mapping = {}
@@ -148,10 +151,13 @@ def ifp_to_dof_data(lfp_in, calibration, out_path, verbose=False):
         lambda_value = lambda_from_depth(depth, depth_meta)
         out_image = os.path.join(out_path,
                                  file_name_template.format(lambda_value))
+
         debug_msg = "Processing image {} - {}/{}"
         logging.debug(debug_msg.format(out_image,
-                                       num,
+                                       num + 1,
                                        len(unique_depth_values)))
+        if status_callback:
+            status_callback('{}/{}'.format(num + 1, len(unique_depth_values)))
         if not os.path.exists(out_image):
             make_focus_image(lfp_in, out_image, lambda_value, calibration)
         if depth not in frame_mapping:
@@ -161,11 +167,10 @@ def ifp_to_dof_data(lfp_in, calibration, out_path, verbose=False):
     return DOFData(depth_map, frame_mapping)
 
 
-def read_ifp(file_name, config):
+def read_ifp(file_name, config, status_callback=None):
     logging.debug('Loading IFP or IFR file: ' + file_name)
 
     calibration = config['calibration_path']
-    verbose = True
     scene = None
 
     with TempFolderManager() as tmp_dir:
@@ -173,10 +178,10 @@ def read_ifp(file_name, config):
             dof_data = ifp_to_dof_data(file_name,
                                        calibration,
                                        tmp_dir,
-                                       verbose)
+                                       status_callback)
             scene = ImageStackScene.from_dof_data(dof_data)
 
-        except Exception:
+        except RuntimeError:
             logging.exception("Error loading ifp file " + file_name)
 
     logging.debug('Finished Loading.')

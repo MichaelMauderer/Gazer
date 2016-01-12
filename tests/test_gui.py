@@ -7,12 +7,12 @@ from __future__ import division, unicode_literals, print_function
 import sys
 import unittest
 
+import PyQt4.QtCore as qt
 import mock
 import numpy as np
 from PyQt4.QtGui import QApplication
-import PyQt4.QtCore as qt
 
-from gcviewer.gui import GCImageWidget
+from gcviewer.qt_gui.gcwidget import GCImageWidget
 
 app = QApplication(sys.argv)
 
