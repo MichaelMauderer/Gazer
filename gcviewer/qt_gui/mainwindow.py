@@ -207,7 +207,12 @@ class GCImageViewerMainWindow(QMainWindow):
                                                        param
                                                        )
         if folder_name:
-            dir_import.dir_to_dof_data(str(folder_name))
+            scene_load_func = partial(dir_import.dir_to_scene,
+                                      str(folder_name),
+                                      )
+            loader = SceneLoader(scene_load_func, parent=self)
+            loader.load_finished.connect(self.scene_update.emit)
+            loader.start_import()
 
     def export_image_stack(self):
         folder_name = str(QFileDialog.getExistingDirectory(self,

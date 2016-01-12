@@ -223,3 +223,7 @@ def extract_scene_to_stack(scene, out_folder):
     for idx, image in enumerate(scene.iter_images):
         out_filename = os.path.join(str(out_folder), str(idx) + ".jpg")
         skimage.io.imsave(out_filename, image)
+    depth_path = os.path.join(str(out_folder), 'depthmap.png')
+    depht_array = scene.lookup_table.array
+    depth_image = np.asarray(depht_array, np.uint8)
+    skimage.io.imsave(depth_path, depth_image)
