@@ -21,6 +21,8 @@ class TaskWorker(QThread):
     def run(self):
         try:
             self.result = self.task()
+        except RuntimeError:
+            logger.exception('Task raised an exception.')
         finally:
             self.task_done.emit()
 
@@ -42,7 +44,8 @@ class SceneLoader(QObject):
     def _on_load_finished(self):
         logger.debug('On load finished')
         self.scene = self.worker.result
-        self.load_finished.emit(self.scene)
+        if self.scene is not None:
+            self.load_finished.emit(self.scene)
         self.progress_dialog.hide()
 
     def _on_load_start(self):

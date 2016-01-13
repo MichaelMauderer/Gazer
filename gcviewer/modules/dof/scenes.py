@@ -1,10 +1,16 @@
 from __future__ import unicode_literals, division, print_function
 
+import StringIO
+import base64
 import io
 
 import bson
+import skimage
 from bson import BSON
+
 import numpy as np
+from scipy import misc
+
 from gcviewer.gcio import DataDecoder, array_to_bytes, bytes_to_array, \
     DataEncoder
 from gcviewer.modules.dof.image_manager import ArrayStackImageManager
@@ -66,8 +72,11 @@ class ImageStackScene(Scene):
     def render(self):
         self.image_manager.draw_image(self.current_index)
 
-    def get_image(self):
-        return self.image_manager.load_image(self.current_index)
+    def get_image(self, force_index=None):
+        index = force_index
+        if index is None:
+            index = self.current_index
+        return self.image_manager.load_image(index)
 
     def get_indices_image(self):
         array = self.lookup_table.array
@@ -103,7 +112,8 @@ class SimpleArrayStackDecoder(DataDecoder):
         return scene
 
     def _decode_array(self, data):
-        array = bytes_to_array(data)
+        decoded = base64.b64decode(data)
+        array = misc.imread(StringIO.StringIO(decoded))
         array.flags.writeable = False
         return array
 
@@ -123,10 +133,11 @@ class SimpleArrayStackEncoder(DataEncoder):
 
         stream = io.BytesIO()
 
-        frames = {str(key): self._encode_array(array) for key, array in
+        frames = {str(key): self._encode_array(array, 'jpeg') for key, array in
                   enumerate(frame_iterator())}
 
-        data = {'lookup_table': self._encode_array(lut_array),
+        lut_array = np.asarray(lut_array, np.uint8)
+        data = {'lookup_table': self._encode_array(lut_array, 'bmp'),
                 'frames': frames
                 }
 
@@ -134,6 +145,7 @@ class SimpleArrayStackEncoder(DataEncoder):
         stream.seek(0)
         return bson.Binary(stream.getvalue())
 
-    def _encode_array(self, array):
-        bytes_str = array_to_bytes(array)
-        return bson.Binary(bytes_str)
+    def _encode_array(self, array, file_format):
+        stream = io.BytesIO()
+        misc.imsave(stream, array, file_format)
+        return base64.b64encode(stream.getvalue())
