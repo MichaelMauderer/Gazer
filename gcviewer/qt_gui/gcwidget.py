@@ -123,7 +123,6 @@ class GCImageWidget(QGLWidget):
         if pixmap is not None:
             self.active_pixmap_size = pixmap.size()
             painter.drawPixmap(QPointF(0.0, 0.0), pixmap)
-            print(self.active_pixmap_size)
 
         if self.show_cursor:
             size = 20
