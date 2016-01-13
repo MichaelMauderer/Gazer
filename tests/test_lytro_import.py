@@ -2,7 +2,6 @@ import numpy as np
 
 try:
     from gcviewer.modules.dof.lytro_import import value_map_to_index_map, remap
-    import sadasd
 except ImportError:
     from nose.plugins.skip import SkipTest
 
