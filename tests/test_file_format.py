@@ -2,7 +2,6 @@ from __future__ import division, unicode_literals, print_function
 
 import os
 import shutil
-import sys
 import tempfile
 import unittest
 
@@ -12,25 +11,28 @@ from gcviewer.gcio import read_gcfile, write_file
 from gcviewer.modules.dof.directory_of_images_import import dir_to_scene
 from gcviewer.modules.dof.scenes import SimpleArrayStackEncoder
 
+TEST_DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/')
+IMAGE_STACK_FOLDER = os.path.join(TEST_DATA_FOLDER, 'example_stack')
+EXAMPLE_GC_FILE_PATH = os.path.join(TEST_DATA_FOLDER, 'example.gc')
 
 class TestFileFormatIO(unittest.TestCase):
     def setUp(self):
-        self.scene = dir_to_scene('./data/example_stack')
+        self.scene = dir_to_scene(IMAGE_STACK_FOLDER)
 
     def test_simple_save(self):
         data = SimpleArrayStackEncoder().data_from_scene(self.scene)
         self.assertIsNotNone(data)
 
     def test_simple_load(self):
-        scene = read_gcfile('./data/example.gc')
+        scene = read_gcfile(EXAMPLE_GC_FILE_PATH)
         self.assertIsNotNone(scene)
 
 
 class TestFileFormatIntegrity(unittest.TestCase):
     def setUp(self):
-        self.reference_scene = dir_to_scene('./data/example_stack')
+        self.reference_scene = dir_to_scene(IMAGE_STACK_FOLDER)
         self.tmp_dir = tempfile.mkdtemp()
-        self.test_scene_path = os.path.join(self.tmp_dir, 'test_file.gc')
+        self.test_scene_path = EXAMPLE_GC_FILE_PATH
         with open(self.test_scene_path, 'wb') as tmp_file:
             write_file(tmp_file, self.reference_scene)
         self.test_scene = read_gcfile(self.test_scene_path)
