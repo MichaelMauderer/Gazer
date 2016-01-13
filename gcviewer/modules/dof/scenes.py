@@ -5,14 +5,12 @@ import base64
 import io
 
 import bson
-import skimage
 from bson import BSON
 
 import numpy as np
 from scipy import misc
 
-from gcviewer.gcio import DataDecoder, array_to_bytes, bytes_to_array, \
-    DataEncoder
+from gcviewer.gcio import DataDecoder, DataEncoder
 from gcviewer.modules.dof.image_manager import ArrayStackImageManager
 from gcviewer.modules.dof.interpolator import LinearInterpolator
 from gcviewer.modules.dof.lookup_table import ArrayLookupTable
