@@ -7,6 +7,7 @@ import os
 
 from subprocess import check_output
 
+app_name = 'gcviewer'
 project_root = '..'
 pyinstaller_path = os.getenv('PYINSTALLER_PATH', 'pyinstaller')
 lib_path = os.path.join('..', 'lib')
@@ -23,13 +24,15 @@ opts = '--clean ' \
        '--additional-hooks-dir={hook_path} ' \
        '-y ' \
        '--distpath={out_path} ' \
-       '--workpath={build_path} '
+       '--workpath={build_path} ' \
+       '--name {app_name}'
 
 opts = opts.format(project_root=project_root,
                    lib_path=lib_path,
                    hook_path=hook_path,
                    out_path=out_path,
-                   build_path=build_path
+                   build_path=build_path,
+                   app_name=app_name,
                    )
 
 command = pyinstaller_path + ' ' + opts + ' ' + target

@@ -158,4 +158,5 @@ docs/_build/
 target/
 
 # Debug file from gcviewer
+debug.log
 log.debug
