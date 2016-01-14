@@ -176,9 +176,15 @@ class GCImageViewerMainWindow(QMainWindow):
                                                 QDir.currentPath(),
                                                 )
         if file_name:
-            with open(file_name, 'wb') as out_file:
-                scene = self.render_area.gc_scene
-                gcio.write_file(out_file, scene)
+            def task():
+                with open(file_name, 'wb') as out_file:
+                    scene = self.render_area.gc_scene
+                    gcio.write_file(out_file, scene)
+
+            loader = BlockingTask(task,
+                                  'Saving file.',
+                                  parent=self)
+            loader.start_task()
 
     def import_ifp(self):
         try:
@@ -224,7 +230,15 @@ class GCImageViewerMainWindow(QMainWindow):
         folder_name = str(QFileDialog.getExistingDirectory(self,
                                                            "Select Directory"))
         if folder_name:
-            gcio.extract_scene_to_stack(self.render_area.gc_scene, folder_name)
+            export_function = partial(gcio.extract_scene_to_stack,
+                                      self.render_area.gc_scene,
+                                      folder_name
+                                      )
+            task = BlockingTask(export_function,
+                                'Extracting files.',
+                                parent=self,
+                                )
+            task.start_task()
 
     def open_preferences(self):
         # print("Open Preferences!")
