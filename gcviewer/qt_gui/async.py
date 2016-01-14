@@ -2,7 +2,7 @@ from __future__ import unicode_literals, division, print_function
 
 import logging
 
-from PyQt4.QtCore import QThread, pyqtSignal, QObject
+from PyQt4.QtCore import QThread, pyqtSignal, QObject, Qt
 from PyQt4.QtGui import QProgressBar, QProgressDialog
 
 from gcviewer import scene
@@ -55,8 +55,10 @@ class BlockingTask(QObject):
                                                "Abort",
                                                0,
                                                0,
-                                               self.parent()
+                                               self.parent(),
+                                               flags=Qt.CustomizeWindowHint,
                                                )
+        self.progress_dialog.setWindowModality(Qt.WindowModal)
         self.progress_dialog.canceled.connect(self._abort)
         self.progress_dialog.show()
 
