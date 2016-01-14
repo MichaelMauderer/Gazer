@@ -115,6 +115,12 @@ class GCImageViewerMainWindow(QMainWindow):
         tracker_Menu = self.options_menu.addMenu('Select Tracker')
         tracker_Menu.addActions(self.select_tracker_action_group.actions())
 
+        # Set default gaze input or mouse simulation
+        if self.select_tracker_action_group.actions():
+            self.select_tracker_action_group.actions()[0].trigger()
+        else:
+            self.mouse_toggle_action.trigger()
+
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
 
