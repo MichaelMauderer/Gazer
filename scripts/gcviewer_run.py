@@ -7,6 +7,7 @@ import os
 from PyQt4 import QtGui
 
 import gcviewer.eyetracking.api
+from gcviewer import gcio
 from gcviewer.qt_gui.mainwindow import GCImageViewerMainWindow
 
 DEBUG_LOG_FILE = 'debug.log'
@@ -37,6 +38,8 @@ def run_qt_gui():
             'Available tracking apis: {}'.format(str(tracking_apis.keys())))
     imageviewer = GCImageViewerMainWindow(tracking_apis)
     imageviewer.show()
+    sample_scene = gcio.load_scene('gcviewer/assets/scale.gc')
+    imageviewer.update_scene(sample_scene)
     sys.exit(app.exec_())
 
 
