@@ -161,6 +161,7 @@ class GCImageViewerMainWindow(QMainWindow):
         file_name = QFileDialog.getOpenFileName(self,
                                                 "Open File",
                                                 QDir.currentPath(),
+                                                filter="GC File (*.gc)"
                                                 )
         if file_name:
             scene_load_func = partial(gcio.load_scene, str(file_name))
@@ -174,6 +175,7 @@ class GCImageViewerMainWindow(QMainWindow):
         file_name = QFileDialog.getSaveFileName(self,
                                                 "Save File",
                                                 QDir.currentPath(),
+                                                filter="GC File (*.gc)",
                                                 )
         if file_name:
             def task():
