@@ -38,7 +38,7 @@ def get_available():
         from gcviewer.eyetracking.tobii import EyeXWrapper
         eye_x = EyeXWrapper()
         apis['eyex'] = eye_x
-    except:
+    except RuntimeError:
         logger.exception('Could not load EyeX api.')
 
     return apis

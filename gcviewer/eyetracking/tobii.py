@@ -15,6 +15,7 @@ class EyeXWrapper(EyetrackingAPIBase):
         lib_path = os.path.join(os.getenv('EYEX_LIB_PATH', ''),
                                 'Tobii.EyeX.Client.dll'
                                 )
+        logger.info('Expecting Tobii.EyeX.Client.dll at {}'.format(lib_path))
         self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
         self._eye_x_interface.on_event += [self._update_sample]
 
