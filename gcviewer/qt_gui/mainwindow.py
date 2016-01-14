@@ -10,7 +10,7 @@ from PyQt4.QtGui import QActionGroup
 import gcviewer
 import gcviewer.modules.dof.directory_of_images_import as dir_import
 from gcviewer import gcio, scene
-from gcviewer.qt_gui.async import SceneLoader
+from gcviewer.qt_gui.async import BlockingTask
 from gcviewer.qt_gui.dialogs import PreferencesDialog
 from gcviewer.qt_gui.gcwidget import GCImageWidget
 
@@ -164,9 +164,11 @@ class GCImageViewerMainWindow(QMainWindow):
                                                 )
         if file_name:
             scene_load_func = partial(gcio.load_scene, str(file_name))
-            loader = SceneLoader(scene_load_func, parent=self)
+            loader = BlockingTask(scene_load_func,
+                                  'Loading file.',
+                                  parent=self)
             loader.load_finished.connect(self.scene_update.emit)
-            loader.start_import()
+            loader.start_task()
 
     def save_scene(self):
         file_name = QFileDialog.getSaveFileName(self,
@@ -195,9 +197,11 @@ class GCImageViewerMainWindow(QMainWindow):
             scene_load_func = partial(read_ifp,
                                       str(file_name),
                                       current_preferences)
-            loader = SceneLoader(scene_load_func, parent=self)
+            loader = BlockingTask(scene_load_func,
+                                  'Importing file.',
+                                  parent=self)
             loader.load_finished.connect(self.scene_update.emit)
-            loader.start_import()
+            loader.start_task()
 
     def import_directory_of_images(self):
         param = QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
@@ -210,9 +214,11 @@ class GCImageViewerMainWindow(QMainWindow):
             scene_load_func = partial(dir_import.dir_to_scene,
                                       str(folder_name),
                                       )
-            loader = SceneLoader(scene_load_func, parent=self)
+            loader = BlockingTask(scene_load_func,
+                                  'Importing files.',
+                                  parent=self)
             loader.load_finished.connect(self.scene_update.emit)
-            loader.start_import()
+            loader.start_task()
 
     def export_image_stack(self):
         folder_name = str(QFileDialog.getExistingDirectory(self,

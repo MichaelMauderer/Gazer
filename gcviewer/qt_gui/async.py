@@ -27,31 +27,31 @@ class TaskWorker(QThread):
             self.task_done.emit()
 
 
-class SceneLoader(QObject):
+class BlockingTask(QObject):
     load_finished = pyqtSignal(scene.Scene)
 
-    def __init__(self, scene_load_func, *args, **kwargs):
-        super(SceneLoader, self).__init__(*args, **kwargs)
+    def __init__(self, scene_load_func, message, *args, **kwargs):
+        super(BlockingTask, self).__init__(*args, **kwargs)
         self.scene_load_func = scene_load_func
+        self.message = message
 
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, 0)
         self.worker = None
 
-    def start_import(self):
-        self._async_load()
+    def start_task(self):
+        self._async_execute()
 
     def _on_load_finished(self):
-        logger.debug('On load finished')
+        logger.debug('On task finished')
         self.scene = self.worker.result
         if self.scene is not None:
             self.load_finished.emit(self.scene)
         self.progress_dialog.hide()
 
     def _on_load_start(self):
-        logger.debug('On load start')
-        start_message = 'Loading scene'
-        self.progress_dialog = QProgressDialog(start_message,
+        logger.debug('On task start')
+        self.progress_dialog = QProgressDialog(self.message,
                                                "Abort",
                                                0,
                                                0,
@@ -63,7 +63,7 @@ class SceneLoader(QObject):
     def _abort(self):
         self.worker.terminate()
 
-    def _async_load(self):
+    def _async_execute(self):
         self._on_load_start()
         self.worker = TaskWorker(self.scene_load_func)
         self.worker.task_done.connect(self._on_load_finished)
