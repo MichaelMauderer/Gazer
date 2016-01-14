@@ -3,6 +3,7 @@ from __future__ import unicode_literals, division, print_function
 import logging
 import sys
 import os
+import pkgutil
 
 from PyQt4 import QtGui
 
@@ -38,8 +39,18 @@ def run_qt_gui():
             'Available tracking apis: {}'.format(str(tracking_apis.keys())))
     imageviewer = GCImageViewerMainWindow(tracking_apis)
     imageviewer.show()
-    sample_scene = gcio.load_scene('gcviewer/assets/scale.gc')
-    imageviewer.update_scene(sample_scene)
+
+    try:
+        if getattr(sys, 'frozen', False):
+            base_path = sys._MEIPASS
+        else:
+            base_path = './'
+        rel_path = 'gcviewer/assets/scale.gc'
+        sample_scene = gcio.load_scene(os.path.join(base_path, rel_path))
+        imageviewer.update_scene(sample_scene)
+    except RuntimeError:
+        logger.exception('Could not load sample scene.')
+
     sys.exit(app.exec_())
 
 
