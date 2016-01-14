@@ -21,10 +21,6 @@ class GCImageWidget(QGLWidget):
     def __init__(self, gc_scene, *args, **kwargs):
         super(GCImageWidget, self).__init__(*args, **kwargs)
 
-        self._gc_scene = None
-        self.gc_scene = gc_scene
-
-        self._gaze = QPoint(0, 0)
         self.gaze_change.connect(self.update_gaze)
 
         self.mouse_mode = False
@@ -34,6 +30,18 @@ class GCImageWidget(QGLWidget):
         self._last_sample = None
 
         self.active_pixmap_size = QSize(0, 0)
+
+        self._gc_scene = None
+        self.gc_scene = gc_scene
+
+    @property
+    def gc_scene(self):
+        return self._gc_scene
+
+    @gc_scene.setter
+    def gc_scene(self, scene):
+        self._gc_scene = scene
+        self.update_gaze(self._last_sample)
 
     def toggle_depthmap(self):
         self._show_depthmap = not self._show_depthmap
