@@ -134,12 +134,16 @@ class GCImageWidget(QGLWidget):
 
         if self.show_cursor:
             size = 20
-            painter.setBrush(QColor(0, 255, 0))
-            painter.drawEllipse(self._gaze.x() - size / 2,
-                                self._gaze.y() - size / 2,
+            painter.setPen(QColor(0, 0, 0))
+            x_origin = self._gaze.x() - size / 2
+            y_origin = self._gaze.y() - size / 2
+            painter.drawEllipse(x_origin,
+                                y_origin,
                                 size, size)
-            painter.drawText(self._gaze.x() - size / 2,
-                             self._gaze.y() - size / 2,
+            painter.drawText(x_origin,
+                             y_origin,
+                             size, size,
+                             Qt.AlignCenter,
                              str(self.gc_scene.current_index))
         painter.end()
 
