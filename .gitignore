@@ -157,6 +157,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# Debug file from gcviewer
+# Debug file from gazer
 debug.log
 log.debug

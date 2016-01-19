@@ -10,11 +10,11 @@ from bson import BSON
 import numpy as np
 from scipy import misc
 
-from gcviewer.gcio import DataDecoder, DataEncoder
-from gcviewer.modules.dof.image_manager import ArrayStackImageManager
-from gcviewer.modules.dof.interpolator import LinearInterpolator
-from gcviewer.modules.dof.lookup_table import ArrayLookupTable
-from gcviewer.scene import Scene
+from gazer.gcio import DataDecoder, DataEncoder
+from gazer.modules.dof.image_manager import ArrayStackImageManager
+from gazer.modules.dof.interpolator import LinearInterpolator
+from gazer.modules.dof.lookup_table import ArrayLookupTable
+from gazer.scene import Scene
 
 
 class ImageStackScene(Scene):

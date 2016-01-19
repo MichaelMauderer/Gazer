@@ -12,7 +12,7 @@ import mock
 import numpy as np
 from PyQt4.QtGui import QApplication
 
-from gcviewer.qt_gui.gcwidget import GCImageWidget
+from gazer.qt_gui.gcwidget import GCImageWidget
 
 app = QApplication(sys.argv)
 

@@ -35,7 +35,7 @@ class EyetrackingAPIBase(object):
 def get_available():
     apis = {}
     try:
-        from gcviewer.eyetracking.tobii import EyeXWrapper
+        from gazer.eyetracking.tobii import EyeXWrapper
         eye_x = EyeXWrapper()
         apis['eyex'] = eye_x
     except RuntimeError:

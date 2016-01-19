@@ -7,12 +7,12 @@ import os
 
 from subprocess import check_output
 
-app_name = 'gcviewer'
+app_name = 'gazer'
 project_root = '..'
 pyinstaller_path = os.getenv('PYINSTALLER_PATH', 'pyinstaller')
 lib_path = os.path.join('..', 'lib')
 hook_path = os.path.join(project_root, 'hooks')
-target = os.path.join(project_root, 'scripts', 'gcviewer_run.py')
+target = os.path.join(project_root, 'scripts', 'gazer_run.py')
 out_path = os.path.join('..', 'dist')
 build_path = os.path.join('..', 'build')
 

@@ -7,12 +7,12 @@ from PyQt4.QtCore import QDir, Qt, pyqtSignal, QEvent
 from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, QSizePolicy
 from PyQt4.QtGui import QActionGroup
 
-import gcviewer
-import gcviewer.modules.dof.directory_of_images_import as dir_import
-from gcviewer import gcio, scene
-from gcviewer.qt_gui.async import BlockingTask
-from gcviewer.qt_gui.dialogs import PreferencesDialog
-from gcviewer.qt_gui.gcwidget import GCImageWidget
+import gazer
+import gazer.modules.dof.directory_of_images_import as dir_import
+from gazer import gcio, scene
+from gazer.qt_gui.async import BlockingTask
+from gazer.qt_gui.dialogs import PreferencesDialog
+from gazer.qt_gui.gcwidget import GCImageWidget
 
 logger = logging.getLogger(__name__)
 
@@ -201,7 +201,7 @@ class GCImageViewerMainWindow(QMainWindow):
 
     def import_ifp(self):
         try:
-            from gcviewer.modules.dof.lytro_import import read_ifp
+            from gazer.modules.dof.lytro_import import read_ifp
         except ImportError:
             logger.exception('Could not import Lytro Power Tools.')
             return
@@ -212,7 +212,7 @@ class GCImageViewerMainWindow(QMainWindow):
                                                 filter="LFP Raw File (*.lfr)",
                                                 )
         if file_name:
-            current_preferences = gcviewer.preferences.load_preferences()
+            current_preferences = gazer.preferences.load_preferences()
             scene_load_func = partial(read_ifp,
                                       str(file_name),
                                       current_preferences)

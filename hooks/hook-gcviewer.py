@@ -3,10 +3,10 @@ import os
 
 datas = [
     (os.path.join(os.getenv('EYEX_LIB_PATH'), 'Tobii.EyeX.Client.dll'), '.\\'),
-    ('../gcviewer/assets', './gcviewer/assets'),
+    ('../gazer/assets', './gazer/assets'),
 ]
 
-hiddenimports = ['gcviewer',
+hiddenimports = ['gazer',
                  'scipy',
                  'skimage.io',
                  ]

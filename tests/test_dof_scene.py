@@ -8,11 +8,11 @@ import numpy as np
 
 import unittest
 
-from gcviewer.modules.dof.dof_data import DOFData
-from gcviewer.modules.dof.image_manager import ArrayStackImageManager
-from gcviewer.modules.dof.interpolator import InstantInterpolator
-from gcviewer.modules.dof.lookup_table import ArrayLookupTable
-from gcviewer.modules.dof.scenes import ImageStackScene
+from gazer.modules.dof.dof_data import DOFData
+from gazer.modules.dof.image_manager import ArrayStackImageManager
+from gazer.modules.dof.interpolator import InstantInterpolator
+from gazer.modules.dof.lookup_table import ArrayLookupTable
+from gazer.modules.dof.scenes import ImageStackScene
 
 
 class TestBasicDOFScene(unittest.TestCase):

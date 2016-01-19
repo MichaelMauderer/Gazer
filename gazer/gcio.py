@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class DataDecoder(object):
     """
-    Class responsible for deserializing gcviewer.scene.Scene objects.
+    Class responsible for deserializing gazer.scene.Scene objects.
     """
 
     def scene_from_data(self, data):
@@ -24,7 +24,7 @@ class DataDecoder(object):
 
 class DataEncoder(object):
     """
-    Class responsible for serialising gcviewer.scene.Scene objects.
+    Class responsible for serialising gazer.scene.Scene objects.
     """
 
     def data_from_scene(self, scene):
@@ -122,7 +122,7 @@ def read_gcfile(path):
             contents = in_file.read()
             bson_obj = BSON(contents)
             wrapper = bson_obj.decode()
-            from gcviewer.settings import DECODERS
+            from gazer.settings import DECODERS
             wrapper_type = wrapper['type']
             decoder = DECODERS.get(wrapper_type)
             if decoder is None:
@@ -152,7 +152,7 @@ def read_image(path):
     """
     logger.debug('Reading file as image: {}'.format(path))
     try:
-        from gcviewer.modules.color.scenes import SimpleArrayDecoder
+        from gazer.modules.color.scenes import SimpleArrayDecoder
         image = skimage.data.imread(path)
         scene = SimpleArrayDecoder().scene_from_array(image)
         return scene
@@ -176,7 +176,7 @@ def read_fits(path):
     """
     logger.debug('Reading in_file as fits file')
     try:
-        from gcviewer.modules.color.scenes import SimpleArrayDecoder
+        from gazer.modules.color.scenes import SimpleArrayDecoder
         from astropy.io import fits
         hdu_list = fits.open(path)
         image_data = hdu_list[0].data
@@ -204,7 +204,7 @@ def write_file(out_file, scene):
 
     from settings import ENCODERS
     encoder = ENCODERS.get(scene.scene_type)
-    wrapper = {'encoder': 'gcviewer',
+    wrapper = {'encoder': 'gazer',
                'version': '0.1',
                'compression': 'none',
                'type': scene.scene_type,

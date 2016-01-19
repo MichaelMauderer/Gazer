@@ -5,7 +5,7 @@ import logging
 from PyQt4.QtGui import QFileDialog, QDialog, QLabel, QHBoxLayout, QLineEdit, \
     QPushButton, QVBoxLayout
 
-import gcviewer.preferences
+import gazer.preferences
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class PreferencesDialog(QDialog):
         label.setText('Path to camera calibration directory:')
 
         self.line_edit = QLineEdit()
-        self.calibration_path = gcviewer.preferences.get_calibration_path()
+        self.calibration_path = gazer.preferences.get_calibration_path()
         self.line_edit.setText(self.calibration_path)
 
         edit_layout = QHBoxLayout()
@@ -54,7 +54,7 @@ class PreferencesDialog(QDialog):
         self.show()
 
     def ok_clicked(self):
-        gcviewer.preferences.set_calibration_path(self.calibration_path)
+        gazer.preferences.set_calibration_path(self.calibration_path)
         self.close()
 
     def cancel_clicked(self):

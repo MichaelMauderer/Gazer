@@ -5,7 +5,7 @@ import logging
 from PyQt4.QtCore import QThread, pyqtSignal, QObject, Qt
 from PyQt4.QtGui import QProgressBar, QProgressDialog
 
-from gcviewer import scene
+from gazer import scene
 
 logger = logging.getLogger(__name__)
 

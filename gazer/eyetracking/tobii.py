@@ -3,7 +3,7 @@ from __future__ import unicode_literals, division, print_function
 import os
 import logging
 
-from gcviewer.eyetracking.api import EyetrackingAPIBase, EyeData
+from gazer.eyetracking.api import EyetrackingAPIBase, EyeData
 import eyex.api
 
 logger = logging.getLogger(__name__)

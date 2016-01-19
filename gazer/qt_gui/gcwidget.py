@@ -6,8 +6,8 @@ from PyQt4.QtCore import pyqtSignal, QPoint, QSize, Qt, QPointF
 from PyQt4.QtGui import QImage, QPixmap, QPainter, QColor
 from PyQt4.QtOpenGL import QGLWidget
 
-from gcviewer import eyetracking
-from gcviewer.eyetracking.api import EyeData
+from gazer import eyetracking
+from gazer.eyetracking.api import EyeData
 
 
 class GCImageWidget(QGLWidget):

@@ -11,8 +11,8 @@ import logging
 import numpy as np
 from scipy import misc
 
-from gcviewer.modules.dof.dof_data import DOFData
-from gcviewer.modules.dof.scenes import ImageStackScene
+from gazer.modules.dof.dof_data import DOFData
+from gazer.modules.dof.scenes import ImageStackScene
 
 logger = logging.getLogger(__name__)
 

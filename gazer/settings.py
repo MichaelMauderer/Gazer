@@ -1,5 +1,5 @@
 from __future__ import unicode_literals, division, print_function
-from gcviewer.modules.dof.scenes import SimpleArrayStackDecoder, \
+from gazer.modules.dof.scenes import SimpleArrayStackDecoder, \
     ImageStackScene, \
     SimpleArrayStackEncoder
 
