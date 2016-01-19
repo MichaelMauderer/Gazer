@@ -72,13 +72,6 @@ class GCImageViewerMainWindow(QMainWindow):
                                    triggered=self.close
                                    )
 
-        self.mouse_toggle_action = QAction("Toggle mouse mode",
-                                           self,
-                                           triggered=self.toggle_mouse_mode,
-                                           checkable=True,
-                                           checked=False,
-                                           )
-
         self.cursor_toggle_action = QAction("Toggle debug cursor",
                                             self,
                                             triggered=self.toggle_cursor,
@@ -108,7 +101,6 @@ class GCImageViewerMainWindow(QMainWindow):
 
         # Create Option Menu
         self.options_menu = QMenu("&Options", self)
-        self.options_menu.addAction(self.mouse_toggle_action)
         self.options_menu.addAction(self.cursor_toggle_action)
         self.options_menu.addAction(self.toggle_depthmap_action)
 
@@ -133,6 +125,7 @@ class GCImageViewerMainWindow(QMainWindow):
         self.select_tracker_action_group = QActionGroup(self)
         self.select_tracker_action_group.setExclusive(True)
 
+        # Add detected eye trackers
         for name, api in self.tracking_apis.items():
             action = QAction(name,
                              self,
@@ -141,7 +134,16 @@ class GCImageViewerMainWindow(QMainWindow):
                              )
             self.select_tracker_action_group.addAction(action)
 
+        # Add mouse input as fallback
+        mouse_mode = QAction("Mouse",
+                             self,
+                             triggered=self.toggle_mouse_mode,
+                             checkable=True,
+                             )
+        self.select_tracker_action_group.addAction(mouse_mode)
+
     def select_eye_tracker(self, tracker_api_key):
+        self.disable_mouse_mode()
         logger.debug('Selecting tracker {}'.format(tracker_api_key))
         if self.tracker:
             self.tracker.on_event = []
@@ -151,6 +153,9 @@ class GCImageViewerMainWindow(QMainWindow):
 
     def toggle_mouse_mode(self):
         self.render_area.mouse_mode = not self.render_area.mouse_mode
+
+    def disable_mouse_mode(self):
+        self.render_area.mouse_mode = False
 
     def toggle_cursor(self):
         self.render_area.show_cursor = not self.render_area.show_cursor
