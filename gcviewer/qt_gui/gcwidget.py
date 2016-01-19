@@ -34,6 +34,8 @@ class GCImageWidget(QGLWidget):
         self._gc_scene = None
         self.gc_scene = gc_scene
 
+        self.setMouseTracking(True)
+
     @property
     def gc_scene(self):
         return self._gc_scene
