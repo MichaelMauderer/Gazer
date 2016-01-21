@@ -23,8 +23,6 @@ class GCImageViewerMainWindow(QMainWindow):
     Provides overall layout and menus to access basic functionality.
     """
 
-    scene_update = pyqtSignal(scene.Scene)
-
     def __init__(self, tracking_apis={}):
         super(GCImageViewerMainWindow, self).__init__()
 
@@ -116,8 +114,6 @@ class GCImageViewerMainWindow(QMainWindow):
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
 
-        self.scene_update.connect(self.update_scene)
-
         self.setWindowTitle("GC Image Viewer")
         self.resize(800, 600)
 
@@ -179,7 +175,7 @@ class GCImageViewerMainWindow(QMainWindow):
             loader = BlockingTask(scene_load_func,
                                   'Loading file.',
                                   parent=self)
-            loader.load_finished.connect(self.scene_update.emit)
+            loader.load_finished.connect(self.self.update_scene)
             loader.start_task()
 
     def save_scene(self):
@@ -219,7 +215,7 @@ class GCImageViewerMainWindow(QMainWindow):
             loader = BlockingTask(scene_load_func,
                                   'Importing file.',
                                   parent=self)
-            loader.load_finished.connect(self.scene_update.emit)
+            loader.load_finished.connect(self.self.update_scene)
             loader.start_task()
 
     def import_directory_of_images(self):
@@ -236,7 +232,7 @@ class GCImageViewerMainWindow(QMainWindow):
             loader = BlockingTask(scene_load_func,
                                   'Importing files.',
                                   parent=self)
-            loader.load_finished.connect(self.scene_update.emit)
+            loader.load_finished.connect(self.self.update_scene)
             loader.start_task()
 
     def export_image_stack(self):
