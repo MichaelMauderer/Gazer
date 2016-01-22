@@ -2,7 +2,7 @@ from __future__ import unicode_literals, division, print_function
 
 import numpy as np
 
-from PyQt4.QtCore import pyqtSignal, QPoint, QSize, Qt, QPointF
+from PyQt4.QtCore import QPoint, QSize, Qt, QPointF
 from PyQt4.QtGui import QImage, QPixmap, QPainter, QColor
 from PyQt4.QtOpenGL import QGLWidget
 
@@ -16,12 +16,9 @@ class GCImageWidget(QGLWidget):
 
     Gaze updates are retrieved through the qt event system.
     """
-    gaze_change = pyqtSignal(EyeData)
 
     def __init__(self, gc_scene, *args, **kwargs):
         super(GCImageWidget, self).__init__(*args, **kwargs)
-
-        self.gaze_change.connect(self.update_gaze)
 
         self.mouse_mode = False
         self.show_cursor = False
@@ -122,7 +119,7 @@ class GCImageWidget(QGLWidget):
     def mouseMoveEvent(self, QMouseEvent):
         if self.mouse_mode:
             sample = self.mouse_event_to_gaze_sample(QMouseEvent)
-            self.gaze_change.emit(sample)
+            self.update_gaze(sample)
 
     def paintEvent(self, QPaintEvent):
 

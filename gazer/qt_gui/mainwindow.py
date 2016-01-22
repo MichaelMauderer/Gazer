@@ -3,13 +3,13 @@ from __future__ import unicode_literals, division, print_function
 import logging
 from functools import partial
 
-from PyQt4.QtCore import QDir, Qt, pyqtSignal, QEvent
+from PyQt4.QtCore import QDir, Qt, QEvent
 from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, QSizePolicy
 from PyQt4.QtGui import QActionGroup
 
 import gazer
 import gazer.modules.dof.directory_of_images_import as dir_import
-from gazer import gcio, scene
+from gazer import gcio
 from gazer.qt_gui.async import BlockingTask
 from gazer.qt_gui.dialogs import PreferencesDialog
 from gazer.qt_gui.gcwidget import GCImageWidget
@@ -145,7 +145,7 @@ class GCImageViewerMainWindow(QMainWindow):
             self.tracker.on_event = []
         self.tracker = self.tracking_apis.get(tracker_api_key)
 
-        self.tracker.on_event.append(self.render_area.gaze_change.emit)
+        self.tracker.on_event.append(self.render_area.update_gaze)
 
     def toggle_mouse_mode(self):
         self.render_area.mouse_mode = not self.render_area.mouse_mode
