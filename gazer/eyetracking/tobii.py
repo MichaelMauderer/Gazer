@@ -3,7 +3,8 @@ from __future__ import unicode_literals, division, print_function
 import os
 import logging
 
-from gazer.eyetracking.api import EyetrackingAPIBase, EyeData
+from gazer.eyetracking.api import EyetrackingAPIBase, EyeData, \
+    TrackerUnavailableError
 import eyex.api
 
 logger = logging.getLogger(__name__)
@@ -17,6 +18,8 @@ class EyeXWrapper(EyetrackingAPIBase):
                                 )
         logger.info('Expecting Tobii.EyeX.Client.dll at {}'.format(lib_path))
         self._eye_x_interface = eyex.api.EyeXInterface(lib_path)
+        if not self._eye_x_interface.eyex_available:
+            raise TrackerUnavailableError()
         self._eye_x_interface.on_event += [self._update_sample]
 
     def _update_sample(self, sample):

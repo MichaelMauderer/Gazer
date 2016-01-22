@@ -3,13 +3,16 @@ from __future__ import unicode_literals, division, print_function
 import collections
 import logging
 
-
 logger = logging.getLogger(__name__)
 
 EyeData = collections.namedtuple('EyeData',
                                  ['timestamp',
                                   'pos',
                                   ])
+
+
+class TrackerUnavailableError(RuntimeError):
+    pass
 
 
 class EyetrackingAPIBase(object):
