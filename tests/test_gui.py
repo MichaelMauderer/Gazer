@@ -26,7 +26,6 @@ class TestCoordinateConversion(unittest.TestCase):
 
         self.gc_image_widget = GCImageWidget(self.mock_scene)
 
-    @unittest.skip
     def test_pixmap_resizing(self):
         self.gc_image_widget.setFixedSize(1000, 2000)
         pixmap = self.gc_image_widget.get_scaled_pixmap()
@@ -44,7 +43,6 @@ class TestCoordinateConversion(unittest.TestCase):
         pixmap = self.gc_image_widget.get_scaled_pixmap()
         self.assertEqual(pixmap.size(), qt.QSize(10, 10))
 
-    @unittest.skip
     def test_local_to_pixmap_conversion(self):
         self.gc_image_widget.setFixedSize(1000, 2000)
         self.gc_image_widget.active_pixmap_size = qt.QSize(1000, 1000)
