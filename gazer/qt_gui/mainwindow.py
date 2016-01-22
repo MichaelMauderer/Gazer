@@ -1,6 +1,9 @@
 from __future__ import unicode_literals, division, print_function
 
 import logging
+import webbrowser
+
+from PyQt4 import QtGui
 from functools import partial
 
 from PyQt4.QtCore import QDir, Qt, QEvent
@@ -102,8 +105,8 @@ class GCImageViewerMainWindow(QMainWindow):
         self.options_menu.addAction(self.cursor_toggle_action)
         self.options_menu.addAction(self.toggle_depthmap_action)
 
-        tracker_Menu = self.options_menu.addMenu('Select Tracker')
-        tracker_Menu.addActions(self.select_tracker_action_group.actions())
+        tracker_menu = self.options_menu.addMenu('Select Tracker')
+        tracker_menu.addActions(self.select_tracker_action_group.actions())
 
         # Set default gaze input or mouse simulation
         if self.select_tracker_action_group.actions():
@@ -111,8 +114,26 @@ class GCImageViewerMainWindow(QMainWindow):
         else:
             self.mouse_toggle_action.trigger()
 
+        # Add menus to menu bar
         self.menuBar().addMenu(self.file_menu)
         self.menuBar().addMenu(self.options_menu)
+
+        # Add help menu
+        help_menu = QMenu("&Help", self)
+        project_url = 'http://deepview.cs.st-andrews.ac.uk'
+        help_menu.addAction(QAction("Project Website",
+                                    self,
+                                    triggered=lambda: webbrowser.open(
+                                            project_url),
+                                    )
+                            )
+
+        help_menu.addAction(QAction("About",
+                                    self,
+                                    triggered=self.show_about,
+                                    )
+                            )
+        self.menuBar().addMenu(help_menu)
 
         self.setWindowTitle("GC Image Viewer")
         self.resize(800, 600)
@@ -270,3 +291,15 @@ class GCImageViewerMainWindow(QMainWindow):
     def update(self, *__args):
         super(GCImageViewerMainWindow, self).update()
         self.render_area.update()
+
+    def show_about(self):
+        info_dict = {'version': '0.1',
+                     'copyright_year': '2016'}
+
+        about_text = """
+        <p><b>Gazer</b>&nbsp;&nbsp;&nbsp;v{version}</p>
+        <br>
+        <p>&copy; {copyright_year}
+        Michael Mauderer and Miguel Nacenta</p>
+        """.format(**info_dict)
+        QtGui.QMessageBox.about(self, 'About', about_text)
