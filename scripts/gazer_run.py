@@ -45,7 +45,7 @@ def run_qt_gui():
             base_path = sys._MEIPASS
         else:
             base_path = './'
-        rel_path = 'gazer/assets/scale.gc'
+        rel_path = 'gazer/assets/sachi_workbench.gc'
         sample_scene = gcio.load_scene(os.path.join(base_path, rel_path))
         imageviewer.update_scene(sample_scene)
     except RuntimeError:
