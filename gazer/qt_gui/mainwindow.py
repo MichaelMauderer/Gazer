@@ -50,7 +50,7 @@ class GCImageViewerMainWindow(QMainWindow):
         self.open_action = QAction("&Open...",
                                    self,
                                    shortcut="Ctrl+O",
-                                   triggered=self.load_scene)
+                                   triggered=self.load_scene_procedure)
         self.save_action = QAction("&Save...",
                                    self,
                                    shortcut="Ctrl+S",
@@ -192,19 +192,34 @@ class GCImageViewerMainWindow(QMainWindow):
         self.render_area.gc_scene = scene
         self.render_area.update()
 
-    def load_scene(self):
+    def load_scene_procedure(self):
+        """
+        Starts UI procedure to load scene form .gc file.
+        """
         file_name = QFileDialog.getOpenFileName(self,
                                                 "Open File",
                                                 QDir.currentPath(),
                                                 filter="GC File (*.gc)"
                                                 )
         if file_name:
-            scene_load_func = partial(gcio.load_scene, str(file_name))
-            loader = BlockingTask(scene_load_func,
-                                  'Loading file.',
-                                  parent=self)
-            loader.load_finished.connect(self.self.update_scene)
-            loader.start_task()
+            self.load_scene_file(str(file_name))
+
+    def load_scene_file(self, path):
+        """
+        Starts asynchronous loading of scene objetc from a .gc file.
+
+        Parameters
+        ----------
+        path: str
+            Path to file that will be loaded.
+        """
+
+        scene_load_func = partial(gcio.load_scene, str(path))
+        loader = BlockingTask(scene_load_func,
+                              'Loading file.',
+                              parent=self)
+        loader.load_finished.connect(self.update_scene)
+        loader.start_task()
 
     def save_scene(self):
         file_name = QFileDialog.getSaveFileName(self,

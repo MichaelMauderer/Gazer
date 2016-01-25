@@ -66,7 +66,14 @@ class TestMainWindowFunctionality(unittest.TestCase):
 
     @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
     @mock.patch('gazer.qt_gui.mainwindow.read_ifp')
-    def test_ifp_import_dialog(self, mock_ifp, task_mock):
+    def test_ifp_file_import(self, mock_ifp, task_mock):
         mock_file_name = './foobar.lfp'
         self.window.import_ifp_file(mock_file_name)
+        self.assert_(task_mock.called)
+
+    @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
+    @mock.patch('gazer.qt_gui.mainwindow.gcio.load_scene')
+    def test_gc_file_import(self, mock_load, task_mock):
+        mock_file_name = './foobar.lfp'
+        self.window.load_scene_file(mock_file_name)
         self.assert_(task_mock.called)
