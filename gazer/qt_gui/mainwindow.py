@@ -7,7 +7,8 @@ from PyQt4 import QtGui
 from functools import partial
 
 from PyQt4.QtCore import QDir, Qt, QEvent
-from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, QSizePolicy
+from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, QSizePolicy, \
+    QErrorMessage
 from PyQt4.QtGui import QActionGroup
 
 import gazer
@@ -18,6 +19,12 @@ from gazer.qt_gui.dialogs import PreferencesDialog
 from gazer.qt_gui.gcwidget import GCImageWidget
 
 logger = logging.getLogger(__name__)
+
+try:
+    from gazer.modules.dof.lytro_import import read_ifp
+except ImportError:
+    logger.exception('Could not import Lytro Power Tools.')
+    read_ifp = None
 
 
 class GCImageViewerMainWindow(QMainWindow):
@@ -217,27 +224,30 @@ class GCImageViewerMainWindow(QMainWindow):
             loader.start_task()
 
     def import_ifp(self):
-        try:
-            from gazer.modules.dof.lytro_import import read_ifp
-        except ImportError:
-            logger.exception('Could not import Lytro Power Tools.')
+        if not read_ifp:
             return
-
         file_name = QFileDialog.getOpenFileName(self.parent(),
                                                 "Import File",
                                                 QDir.currentPath(),
                                                 filter="LFP Raw File (*.lfr)",
                                                 )
         if file_name:
-            current_preferences = gazer.preferences.load_preferences()
-            scene_load_func = partial(read_ifp,
-                                      str(file_name),
-                                      current_preferences)
-            loader = BlockingTask(scene_load_func,
-                                  'Importing file.',
-                                  parent=self)
-            loader.load_finished.connect(self.self.update_scene)
-            loader.start_task()
+            self.import_ifp_file(str(file_name))
+
+    def import_ifp_file(self, path):
+        if not read_ifp:
+            QErrorMessage(self).showMessage('Lytro import unavailable.')
+            return
+
+        current_preferences = gazer.preferences.load_preferences()
+        scene_load_func = partial(read_ifp,
+                                  path,
+                                  current_preferences)
+        loader = BlockingTask(scene_load_func,
+                              'Importing file.',
+                              parent=self)
+        loader.load_finished.connect(self.update_scene)
+        loader.start_task()
 
     def import_directory_of_images(self):
         param = QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks

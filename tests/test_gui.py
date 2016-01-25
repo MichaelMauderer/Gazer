@@ -13,6 +13,7 @@ import numpy as np
 from PyQt4.QtGui import QApplication
 
 from gazer.qt_gui.gcwidget import GCImageWidget
+from gazer.qt_gui import mainwindow
 
 app = QApplication(sys.argv)
 
@@ -57,3 +58,15 @@ class TestCoordinateConversion(unittest.TestCase):
 
         np.testing.assert_allclose(convert((1000, 500)), (1.0, 0.5))
         np.testing.assert_allclose(convert((1500, 250)), (1.0, 0.25))
+
+
+class TestMainWindowFunctionality(unittest.TestCase):
+    def setUp(self):
+        self.window = mainwindow.GCImageViewerMainWindow()
+
+    @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
+    @mock.patch('gazer.qt_gui.mainwindow.read_ifp')
+    def test_ifp_import_dialog(self, mock_ifp, task_mock):
+        mock_file_name = './foobar.lfp'
+        self.window.import_ifp_file(mock_file_name)
+        self.assert_(task_mock.called)
