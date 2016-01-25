@@ -206,7 +206,7 @@ class GCImageViewerMainWindow(QMainWindow):
 
     def load_scene_file(self, path):
         """
-        Starts asynchronous loading of scene objetc from a .gc file.
+        Starts asynchronous loading of scene object from a .gc file.
 
         Parameters
         ----------
@@ -265,6 +265,9 @@ class GCImageViewerMainWindow(QMainWindow):
         loader.start_task()
 
     def import_directory_of_images(self):
+        """
+        Starts UI procedure to load scene from image stack.
+        """
         param = QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
         folder_name = QFileDialog.getExistingDirectory(self,
                                                        "Open Directory",
@@ -272,14 +275,26 @@ class GCImageViewerMainWindow(QMainWindow):
                                                        param
                                                        )
         if folder_name:
-            scene_load_func = partial(dir_import.dir_to_scene,
-                                      str(folder_name),
-                                      )
-            loader = BlockingTask(scene_load_func,
-                                  'Importing files.',
-                                  parent=self)
-            loader.load_finished.connect(self.self.update_scene)
-            loader.start_task()
+            self.load_image_stack_folder(str(folder_name))
+
+    def load_image_stack_folder(self, path):
+        """
+        Starts asynchronous loading of scene object from an image stack.
+
+        Parameters
+        ----------
+        path: str
+            Path to folder that will be loaded.
+
+        """
+        scene_load_func = partial(dir_import.dir_to_scene,
+                                  path,
+                                  )
+        loader = BlockingTask(scene_load_func,
+                              'Importing files.',
+                              parent=self)
+        loader.load_finished.connect(self.update_scene)
+        loader.start_task()
 
     def export_image_stack(self):
         folder_name = str(QFileDialog.getExistingDirectory(self,

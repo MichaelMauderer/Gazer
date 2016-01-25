@@ -77,3 +77,10 @@ class TestMainWindowFunctionality(unittest.TestCase):
         mock_file_name = './foobar.lfp'
         self.window.load_scene_file(mock_file_name)
         self.assert_(task_mock.called)
+
+    @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
+    @mock.patch('gazer.qt_gui.mainwindow.dir_import.dir_to_scene')
+    def test_image_stack_import(self, mock_load, task_mock):
+        mock_folder_name = './foobar.lfp'
+        self.window.load_image_stack_folder(mock_folder_name)
+        self.assert_(task_mock.called)
