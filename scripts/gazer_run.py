@@ -1,14 +1,9 @@
 from __future__ import unicode_literals, division, print_function
 
-import logging
 import sys
 import os
 
-from PyQt4 import QtGui
-
-import gazer.eyetracking.api
-from gazer import gcio
-from gazer.qt_gui.mainwindow import GCImageViewerMainWindow
+import logging
 
 DEBUG_LOG_FILE = 'debug.log'
 logging.basicConfig(filename=DEBUG_LOG_FILE, level=logging.DEBUG, filemode='w')
@@ -32,6 +27,12 @@ def run_qt_gui():
 
     log_heading()
 
+    from PyQt4 import QtGui
+
+    import gazer
+    import gazer.eyetracking.api
+    from gazer.qt_gui.mainwindow import GCImageViewerMainWindow
+
     app = QtGui.QApplication(sys.argv)
     tracking_apis = gazer.eyetracking.api.get_available()
     logger.info(
@@ -46,7 +47,7 @@ def run_qt_gui():
         else:
             base_path = './'
         rel_path = 'gazer/assets/sachi_workbench.gc'
-        sample_scene = gcio.load_scene(os.path.join(base_path, rel_path))
+        sample_scene = gazer.gcio.load_scene(os.path.join(base_path, rel_path))
         imageviewer.update_scene(sample_scene)
     except RuntimeError:
         logger.exception('Could not load sample scene.')
