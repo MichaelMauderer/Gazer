@@ -8,7 +8,7 @@ from functools import partial
 
 from PyQt4.QtCore import QDir, Qt, QEvent
 from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, \
-    QErrorMessage
+    QSizePolicy, QErrorMessage
 from PyQt4.QtGui import QActionGroup
 
 import gazer
