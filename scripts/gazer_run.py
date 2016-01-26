@@ -31,13 +31,13 @@ def run_qt_gui():
 
     import gazer
     import gazer.eyetracking.api
-    from gazer.qt_gui.mainwindow import GCImageViewerMainWindow
+    from gazer.qt_gui.mainwindow import GazerMainWindow
 
     app = QtGui.QApplication(sys.argv)
     tracking_apis = gazer.eyetracking.api.get_available()
     logger.info(
             'Available tracking apis: {}'.format(str(tracking_apis.keys())))
-    imageviewer = GCImageViewerMainWindow(tracking_apis)
+    imageviewer = GazerMainWindow(tracking_apis)
     imageviewer.show()
 
     try:

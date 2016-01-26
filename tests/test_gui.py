@@ -1,7 +1,3 @@
-"""
-Defines unit tests for :mod:`gcviewer.gui` module.
-"""
-
 from __future__ import division, unicode_literals, print_function
 
 import sys
@@ -62,7 +58,7 @@ class TestCoordinateConversion(unittest.TestCase):
 
 class TestMainWindowFunctionality(unittest.TestCase):
     def setUp(self):
-        self.window = mainwindow.GCImageViewerMainWindow()
+        self.window = mainwindow.GazerMainWindow()
 
     @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
     @mock.patch('gazer.qt_gui.mainwindow.read_ifp')

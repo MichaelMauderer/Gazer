@@ -27,14 +27,14 @@ except ImportError:
     read_ifp = None
 
 
-class GCImageViewerMainWindow(QMainWindow):
+class GazerMainWindow(QMainWindow):
     """
-    Main window of GCViewer qt gui.
+    Main window of Gazer qt gui.
     Provides overall layout and menus to access basic functionality.
     """
 
     def __init__(self, tracking_apis={}):
-        super(GCImageViewerMainWindow, self).__init__()
+        super(GazerMainWindow, self).__init__()
 
         # Ete tracking setup
         self.tracking_apis = tracking_apis
@@ -142,7 +142,7 @@ class GCImageViewerMainWindow(QMainWindow):
                             )
         self.menuBar().addMenu(help_menu)
 
-        self.setWindowTitle("GC Image Viewer")
+        self.setWindowTitle("Gazer")
         self.resize(800, 600)
 
     def _make_tracker_select_menu(self):
@@ -333,7 +333,7 @@ class GCImageViewerMainWindow(QMainWindow):
             if event.key() == Qt.Key_F12:
                 self.toggle_fullscreen()
                 return True
-        return super(GCImageViewerMainWindow, self).event(event)
+        return super(GazerMainWindow, self).event(event)
 
     def toggle_fullscreen(self):
         if self.isFullScreen():
@@ -342,7 +342,7 @@ class GCImageViewerMainWindow(QMainWindow):
             self.showFullScreen()
 
     def update(self, *__args):
-        super(GCImageViewerMainWindow, self).update()
+        super(GazerMainWindow, self).update()
         self.render_area.update()
 
     def show_about(self):
