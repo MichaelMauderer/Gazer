@@ -60,7 +60,7 @@ class GazerMainWindow(QMainWindow):
                                          shortcut="Ctrl+I",
                                          triggered=self.import_ifp)
         self.import_directory_of_images_action = QAction(
-                "&Import directory of images",  # NOQA
+                "&Import from Image Stacks",  # NOQA
                 self,
                 shortcut="Ctrl+D",
                 triggered=self.import_directory_of_images)
