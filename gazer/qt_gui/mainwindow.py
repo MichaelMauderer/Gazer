@@ -7,7 +7,7 @@ from PyQt4 import QtGui
 from functools import partial
 
 from PyQt4.QtCore import QDir, Qt, QEvent
-from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, QSizePolicy, \
+from PyQt4.QtGui import QAction, QFileDialog, QMainWindow, QMenu, \
     QErrorMessage
 from PyQt4.QtGui import QActionGroup
 
@@ -239,7 +239,11 @@ class GCImageViewerMainWindow(QMainWindow):
             loader.start_task()
 
     def import_ifp(self):
-        if not read_ifp:
+        """
+        Starts UI procedure to import a scene from a Lytro raw file.
+        """
+        if read_ifp is None:
+            QErrorMessage(self).showMessage('Lytro import unavailable.')
             return
         file_name = QFileDialog.getOpenFileName(self.parent(),
                                                 "Import File",
@@ -250,7 +254,16 @@ class GCImageViewerMainWindow(QMainWindow):
             self.import_ifp_file(str(file_name))
 
     def import_ifp_file(self, path):
-        if not read_ifp:
+        """
+        Starts asynchronous importing of a scene from a Lytro raw file.
+
+        Parameters
+        ----------
+        path: str
+            Path to file that will be loaded.
+
+        """
+        if read_ifp is None:
             QErrorMessage(self).showMessage('Lytro import unavailable.')
             return
 
