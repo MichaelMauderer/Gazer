@@ -1,9 +1,11 @@
 import os
 import yaml
 
+from appdirs import user_cache_dir
+
 
 def path_to_settings_file():
-    dir_path = os.path.join(os.getenv('APPDATA'), 'gazer')
+    dir_path = os.path.join(user_cache_dir, 'gazer')
     file_name = 'preferences.yaml'
     full_path = os.path.join(dir_path, file_name)
     return full_path
@@ -29,7 +31,7 @@ def ensure_preferences_exists(dir_path, file_name):
 
 
 def load_preferences():
-    dir_path = os.path.join(os.getenv('APPDATA'), 'gazer')
+    dir_path = os.path.join(user_cache_dir, 'gazer')
     file_name = 'preferences.yaml'
     ensure_preferences_exists(dir_path, file_name)
     full_path = os.path.join(dir_path, file_name)
