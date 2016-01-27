@@ -1,11 +1,18 @@
 import os
 import yaml
+import logging
 
-from appdirs import user_cache_dir
+import appdirs
+
+logger = logging.getLogger(__name__)
+
+DATA_PATH = appdirs.user_data_dir('Gazer')
+
+logger.info('DATA_PATH={}'.format(DATA_PATH))
 
 
 def path_to_settings_file():
-    dir_path = os.path.join(user_cache_dir, 'gazer')
+    dir_path = DATA_PATH
     file_name = 'preferences.yaml'
     full_path = os.path.join(dir_path, file_name)
     return full_path
@@ -31,7 +38,7 @@ def ensure_preferences_exists(dir_path, file_name):
 
 
 def load_preferences():
-    dir_path = os.path.join(user_cache_dir, 'gazer')
+    dir_path = DATA_PATH
     file_name = 'preferences.yaml'
     ensure_preferences_exists(dir_path, file_name)
     full_path = os.path.join(dir_path, file_name)
