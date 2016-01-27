@@ -5,7 +5,6 @@ import logging
 import io
 import bz2
 
-import scipy
 import skimage
 import skimage.io
 
