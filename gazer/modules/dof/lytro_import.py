@@ -18,7 +18,7 @@ from gazer.modules.dof.scenes import ImageStackScene
 def tnt_command_sequence(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        tnt = Tnt()
+        tnt = Tnt(verbose=True)
         result = f(tnt, *args, **kwargs)
         tnt.execute()
         return result
