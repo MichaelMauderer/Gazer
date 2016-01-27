@@ -346,7 +346,7 @@ class GazerMainWindow(QMainWindow):
         self.render_area.update()
 
     def show_about(self):
-        info_dict = {'version': '0.1',
+        info_dict = {'version': gazer.__version__,
                      'copyright_year': '2016'}
 
         about_text = """
