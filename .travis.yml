@@ -21,10 +21,10 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 
 install:
-  - conda create --yes --quiet -n gazer-test pip setuptools
-  - pip install -r requirements.txt
+  - conda create --yes --quiet -n gazer-test pip setuptools nose pyqt numpy=1.10.1 pymongo=3.0.3 pyyaml scipy scikit-image
   - source activate gazer-test
-  - pip install coverage coveralls flake8 mock==1.0.1 nose
+  - pip install -e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
+  - pip install coverage coveralls flake8 mock==1.0.1 nose appdirs
 
 
 script:
