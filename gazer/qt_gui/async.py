@@ -11,6 +11,11 @@ logger = logging.getLogger(__name__)
 
 
 class TaskWorker(QThread):
+    """
+    TaskWorker provide asynchronous execution of functions.
+    When the task is finished, the task_done signal will be emited and the
+    function result is available through the result attribute.
+    """
     task_done = pyqtSignal()
 
     def __init__(self, task, *args, **kwargs):
@@ -28,6 +33,11 @@ class TaskWorker(QThread):
 
 
 class BlockingTask(QObject):
+    """
+    Blocking task provides a UI wrapper for long running tasks.
+    While the task is executed a modal progress dialog will be shown.
+    The task can be canceled through the UI.
+    """
     load_finished = pyqtSignal(scene.Scene)
 
     def __init__(self, scene_load_func, message, *args, **kwargs):

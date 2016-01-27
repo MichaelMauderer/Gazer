@@ -43,6 +43,7 @@ def run_qt_gui():
     try:
         # Pyinstaller workaround to find assets while deployed.
         if getattr(sys, 'frozen', False):
+            # noinspection PyProtectedMember
             base_path = sys._MEIPASS
         else:
             base_path = './'

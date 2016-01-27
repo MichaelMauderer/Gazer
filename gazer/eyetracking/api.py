@@ -36,6 +36,14 @@ class EyetrackingAPIBase(object):
 
 
 def get_available():
+    """
+    Detects and returns the available eye tracking apis.
+
+    Returns
+    -------
+    Dict of name:api for all available eye tracking apis.
+
+    """
     apis = {}
     try:
         from gazer.eyetracking.tobii import EyeXWrapper

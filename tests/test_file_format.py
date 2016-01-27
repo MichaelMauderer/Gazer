@@ -15,6 +15,7 @@ TEST_DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/')
 IMAGE_STACK_FOLDER = os.path.join(TEST_DATA_FOLDER, 'example_stack')
 EXAMPLE_GC_FILE_PATH = os.path.join(TEST_DATA_FOLDER, 'example.gc')
 
+
 class TestFileFormatIO(unittest.TestCase):
     def setUp(self):
         self.scene = dir_to_scene(IMAGE_STACK_FOLDER)
@@ -48,4 +49,3 @@ class TestFileFormatIntegrity(unittest.TestCase):
         np.testing.assert_allclose(self.reference_scene.get_indices_image(),
                                    self.test_scene.get_indices_image()
                                    )
-

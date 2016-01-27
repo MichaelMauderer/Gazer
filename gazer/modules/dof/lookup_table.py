@@ -8,12 +8,20 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class LookupTable():
+class LookupTable(object):
     __metaclass__ = ABCMeta
 
     def sample_position(self, pos):
         """
         Return the key for the image that should be shown for this position.
+        Parameters
+        ----------
+        pos: tuple
+            Normalised position in ([0, 1[, [0, 1[).
+
+        Returns
+        -------
+            Value at the given position.
         """
         pass
 

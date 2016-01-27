@@ -41,6 +41,7 @@ class ImageStackScene(Scene):
 
     def __init__(self, image_manager, lookup_table,
                  interpolator=LinearInterpolator()):
+        super(ImageStackScene, self).__init__()
         self.image_manager = image_manager
         self.lookup_table = lookup_table
         self.interpolator = interpolator

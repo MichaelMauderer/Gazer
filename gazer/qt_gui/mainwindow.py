@@ -27,17 +27,18 @@ except ImportError:
     read_ifp = None
 
 
+# noinspection PyCallByClass
 class GazerMainWindow(QMainWindow):
     """
-    Main window of Gazer qt gui.
+    Main window of Gazer Qt gui.
     Provides overall layout and menus to access basic functionality.
     """
 
-    def __init__(self, tracking_apis={}):
+    def __init__(self, tracking_apis=None):
         super(GazerMainWindow, self).__init__()
 
         # Ete tracking setup
-        self.tracking_apis = tracking_apis
+        self.tracking_apis = tracking_apis if tracking_apis is not None else {}
         self.tracker = None
 
         # Main layout

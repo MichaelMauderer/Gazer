@@ -12,8 +12,7 @@ from gazer import eyetracking
 class GCImageWidget(QGLWidget):
     """
     Widget that draws gaze contingent scenes based on current gaze position.
-
-    Gaze updates are retrieved through the qt event system.
+    Wraps the UI agnostic Scene object.
     """
 
     def __init__(self, gc_scene, *args, **kwargs):
@@ -24,6 +23,7 @@ class GCImageWidget(QGLWidget):
         self._show_depthmap = False
 
         self._last_sample = None
+        self._gaze = None
 
         self.active_pixmap_size = QSize(0, 0)
 
@@ -110,17 +110,17 @@ class GCImageWidget(QGLWidget):
         return pixmap.scaled(self.size(), Qt.KeepAspectRatio)
 
     @staticmethod
-    def mouse_event_to_gaze_sample(QMouseEvent):
+    def mouse_event_to_gaze_sample(event):
         return eyetracking.api.EyeData(-1,
-                                       (float(QMouseEvent.globalX()),
-                                        float(QMouseEvent.globalY())))
+                                       (float(event.globalX()),
+                                        float(event.globalY())))
 
-    def mouseMoveEvent(self, QMouseEvent):
+    def mouseMoveEvent(self, event):
         if self.mouse_mode:
-            sample = self.mouse_event_to_gaze_sample(QMouseEvent)
+            sample = self.mouse_event_to_gaze_sample(event)
             self.update_gaze(sample)
 
-    def paintEvent(self, QPaintEvent):
+    def paintEvent(self, event):
 
         painter = QPainter(self)
         painter.setRenderHint(painter.Antialiasing)
