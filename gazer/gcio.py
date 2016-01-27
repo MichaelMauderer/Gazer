@@ -4,6 +4,8 @@ import os
 import logging
 import io
 import bz2
+
+import scipy
 import skimage
 import skimage.io
 
@@ -215,11 +217,34 @@ def write_file(out_file, scene):
 
 
 def extract_file_to_stack(in_file, out_folder):
+    """
+    Extract frames and depth map from the given gc file to the given folder.
+
+    Parameters
+    ----------
+    in_file: str
+        Path to the input gc file.
+    out_folder: str
+        Path to the output folder.
+    """
     scene = read_gcfile(in_file)
     extract_scene_to_stack(scene, out_folder)
 
 
 def extract_scene_to_stack(scene, out_folder):
+    """
+    Extract frames and depth map from the given scene to the given folder.
+
+    Parameters
+    ----------
+    scene: Scene
+        Scene object to be extracted.
+    out_folder: str
+        Path to the output folder.
+    """
+    logger.debug('Available skimage.io plugins: {}'.format(
+            str(skimage.io.find_available_plugins())))
+
     for idx, image in enumerate(scene.iter_images):
         out_filename = os.path.join(str(out_folder), str(idx) + ".jpg")
         skimage.io.imsave(out_filename, image)
