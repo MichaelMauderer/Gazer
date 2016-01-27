@@ -245,10 +245,11 @@ class GazerMainWindow(QMainWindow):
         if read_ifp is None:
             QErrorMessage(self).showMessage('Lytro import unavailable.')
             return
+        extension_filter = "LFP Raw File (*.lfp); LFP XRaw File (*.lfx);"
         file_name = QFileDialog.getOpenFileName(self.parent(),
                                                 "Import File",
                                                 QDir.currentPath(),
-                                                filter="LFP Raw File (*.lfr)",
+                                                filter=extension_filter,
                                                 )
         if file_name:
             self.import_ifp_file(str(file_name))
