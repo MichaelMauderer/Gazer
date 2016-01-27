@@ -1,9 +1,9 @@
 # Build file for windows executable.
 # Requires pyinstaller script to be in PATH or PYINSTALLER_PATH env variable
 # to be set to pyinstaller script location.
-
 from __future__ import print_function, division, unicode_literals
 import os
+import platform
 
 from subprocess import check_output
 
@@ -15,6 +15,9 @@ hook_path = os.path.join(project_root, 'hooks')
 target = os.path.join(project_root, 'scripts', 'gazer_run.py')
 out_path = os.path.join('..', 'dist')
 build_path = os.path.join('..', 'build')
+architecture = platform.architecture()[0]
+
+app_file_name = '{}.{}'.format(app_name, architecture)
 
 opts = '--clean ' \
        '--onefile ' \
@@ -25,14 +28,14 @@ opts = '--clean ' \
        '-y ' \
        '--distpath={out_path} ' \
        '--workpath={build_path} ' \
-       '--name {app_name}'
+       '--name {app_file_name}'
 
 opts = opts.format(project_root=project_root,
                    lib_path=lib_path,
                    hook_path=hook_path,
                    out_path=out_path,
                    build_path=build_path,
-                   app_name=app_name,
+                   app_file_name=app_file_name,
                    )
 
 command = pyinstaller_path + ' ' + opts + ' ' + target
