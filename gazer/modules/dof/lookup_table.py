@@ -27,6 +27,8 @@ class ArrayLookupTable(LookupTable):
         try:
             x = self.array.shape[0]
             y = self.array.shape[1]
+            if x == 1 or y == 1:
+                return None
             color = self.array[int(x * pos[1]), int(y * pos[0])]
             # Avoid issues with RGB images
             result = np.average(color)
