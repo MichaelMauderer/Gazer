@@ -143,8 +143,15 @@ class GazerMainWindow(QMainWindow):
                             )
         self.menuBar().addMenu(help_menu)
 
+        # Add handlers for fullscreen mode
+        self._fullscreen = False
+
         self.setWindowTitle("Gazer")
         self.resize(800, 600)
+
+    def mouseDoubleClickEvent(self, *args, **kwargs):
+        super(GazerMainWindow, self).mouseDoubleClickEvent(*args, **kwargs)
+        self.toggle_fullscreen()
 
     def _make_tracker_select_menu(self):
         self.select_tracker_action_group = QActionGroup(self)
