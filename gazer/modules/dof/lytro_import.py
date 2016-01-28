@@ -10,15 +10,15 @@ import numpy as np
 
 from lpt.lfp.tnt import Tnt
 
-from gcviewer.modules.temp_folder_manager import TempFolderManager
-from gcviewer.modules.dof.dof_data import DOFData
-from gcviewer.modules.dof.scenes import ImageStackScene
+from gazer.modules.temp_folder_manager import TempFolderManager
+from gazer.modules.dof.dof_data import DOFData
+from gazer.modules.dof.scenes import ImageStackScene
 
 
 def tnt_command_sequence(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        tnt = Tnt()
+        tnt = Tnt(verbose=True)
         result = f(tnt, *args, **kwargs)
         tnt.execute()
         return result

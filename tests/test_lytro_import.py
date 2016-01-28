@@ -1,7 +1,7 @@
 import numpy as np
 
 try:
-    from gcviewer.modules.dof.lytro_import import value_map_to_index_map, remap
+    from gazer.modules.dof.lytro_import import value_map_to_index_map, remap
 except ImportError:
     from nose.plugins.skip import SkipTest
 

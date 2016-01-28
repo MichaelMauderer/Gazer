@@ -1,15 +1,9 @@
 from __future__ import unicode_literals, division, print_function
 
-import logging
 import sys
 import os
-import pkgutil
 
-from PyQt4 import QtGui
-
-import gcviewer.eyetracking.api
-from gcviewer import gcio
-from gcviewer.qt_gui.mainwindow import GCImageViewerMainWindow
+import logging
 
 DEBUG_LOG_FILE = 'debug.log'
 logging.basicConfig(filename=DEBUG_LOG_FILE, level=logging.DEBUG, filemode='w')
@@ -33,20 +27,28 @@ def run_qt_gui():
 
     log_heading()
 
+    from PyQt4 import QtGui
+
+    import gazer
+    import gazer.eyetracking.api
+    from gazer.qt_gui.mainwindow import GazerMainWindow
+
     app = QtGui.QApplication(sys.argv)
-    tracking_apis = gcviewer.eyetracking.api.get_available()
+    tracking_apis = gazer.eyetracking.api.get_available()
     logger.info(
             'Available tracking apis: {}'.format(str(tracking_apis.keys())))
-    imageviewer = GCImageViewerMainWindow(tracking_apis)
+    imageviewer = GazerMainWindow(tracking_apis)
     imageviewer.show()
 
     try:
+        # Pyinstaller workaround to find assets while deployed.
         if getattr(sys, 'frozen', False):
+            # noinspection PyProtectedMember
             base_path = sys._MEIPASS
         else:
             base_path = './'
-        rel_path = 'gcviewer/assets/scale.gc'
-        sample_scene = gcio.load_scene(os.path.join(base_path, rel_path))
+        rel_path = 'gazer/assets/sachi_workbench.gc'
+        sample_scene = gazer.gcio.load_scene(os.path.join(base_path, rel_path))
         imageviewer.update_scene(sample_scene)
     except RuntimeError:
         logger.exception('Could not load sample scene.')

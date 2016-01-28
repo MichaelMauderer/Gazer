@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 logger = logging.getLogger(__name__)
 
 
-class ImageManager():
+class ImageManager(object):
     """
     Object that manages a collection of images.
     Specifies common functionality for different implementations.

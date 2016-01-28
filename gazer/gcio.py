@@ -4,6 +4,7 @@ import os
 import logging
 import io
 import bz2
+
 import skimage
 import skimage.io
 
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class DataDecoder(object):
     """
-    Class responsible for deserializing gcviewer.scene.Scene objects.
+    Class responsible for deserializing gazer.scene.Scene objects.
     """
 
     def scene_from_data(self, data):
@@ -24,7 +25,7 @@ class DataDecoder(object):
 
 class DataEncoder(object):
     """
-    Class responsible for serialising gcviewer.scene.Scene objects.
+    Class responsible for serialising gazer.scene.Scene objects.
     """
 
     def data_from_scene(self, scene):
@@ -122,7 +123,7 @@ def read_gcfile(path):
             contents = in_file.read()
             bson_obj = BSON(contents)
             wrapper = bson_obj.decode()
-            from gcviewer.settings import DECODERS
+            from gazer.settings import DECODERS
             wrapper_type = wrapper['type']
             decoder = DECODERS.get(wrapper_type)
             if decoder is None:
@@ -132,7 +133,7 @@ def read_gcfile(path):
                 body = bz2.decompress(body)
             scene = decoder.scene_from_data(body)
             return scene
-        except Exception:
+        except RuntimeError:
             logger.exception('Failed to read file.')
 
 
@@ -152,11 +153,11 @@ def read_image(path):
     """
     logger.debug('Reading file as image: {}'.format(path))
     try:
-        from gcviewer.modules.color.scenes import SimpleArrayDecoder
+        from gazer.modules.color.scenes import SimpleArrayDecoder
         image = skimage.data.imread(path)
         scene = SimpleArrayDecoder().scene_from_array(image)
         return scene
-    except Exception:
+    except RuntimeError:
         logger.exception('Failed to read file as image.')
 
 
@@ -176,7 +177,7 @@ def read_fits(path):
     """
     logger.debug('Reading in_file as fits file')
     try:
-        from gcviewer.modules.color.scenes import SimpleArrayDecoder
+        from gazer.modules.color.scenes import SimpleArrayDecoder
         from astropy.io import fits
         hdu_list = fits.open(path)
         image_data = hdu_list[0].data
@@ -185,7 +186,7 @@ def read_fits(path):
         image_data = np.dstack([image_data, image_data, image_data])
         scene = SimpleArrayDecoder().scene_from_array(image_data)
         return scene
-    except Exception:
+    except RuntimeError:
         logger.exception('Failed to read file as image.')
 
 
@@ -204,7 +205,7 @@ def write_file(out_file, scene):
 
     from settings import ENCODERS
     encoder = ENCODERS.get(scene.scene_type)
-    wrapper = {'encoder': 'gcviewer',
+    wrapper = {'encoder': 'gazer',
                'version': '0.1',
                'compression': 'none',
                'type': scene.scene_type,
@@ -215,11 +216,34 @@ def write_file(out_file, scene):
 
 
 def extract_file_to_stack(in_file, out_folder):
+    """
+    Extract frames and depth map from the given gc file to the given folder.
+
+    Parameters
+    ----------
+    in_file: str
+        Path to the input gc file.
+    out_folder: str
+        Path to the output folder.
+    """
     scene = read_gcfile(in_file)
     extract_scene_to_stack(scene, out_folder)
 
 
 def extract_scene_to_stack(scene, out_folder):
+    """
+    Extract frames and depth map from the given scene to the given folder.
+
+    Parameters
+    ----------
+    scene: Scene
+        Scene object to be extracted.
+    out_folder: str
+        Path to the output folder.
+    """
+    logger.debug('Available skimage.io plugins: {}'.format(
+            str(skimage.io.find_available_plugins())))
+
     for idx, image in enumerate(scene.iter_images):
         out_filename = os.path.join(str(out_folder), str(idx) + ".jpg")
         skimage.io.imsave(out_filename, image)

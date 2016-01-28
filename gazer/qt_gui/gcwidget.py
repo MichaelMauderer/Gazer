@@ -2,37 +2,35 @@ from __future__ import unicode_literals, division, print_function
 
 import numpy as np
 
-from PyQt4.QtCore import pyqtSignal, QPoint, QSize, Qt, QPointF
+from PyQt4.QtCore import QPoint, QSize, Qt, QPointF
 from PyQt4.QtGui import QImage, QPixmap, QPainter, QColor
 from PyQt4.QtOpenGL import QGLWidget
 
-from gcviewer import eyetracking
-from gcviewer.eyetracking.api import EyeData
+from gazer import eyetracking
 
 
 class GCImageWidget(QGLWidget):
     """
     Widget that draws gaze contingent scenes based on current gaze position.
-
-    Gaze updates are retrieved through the qt event system.
+    Wraps the UI agnostic Scene object.
     """
-    gaze_change = pyqtSignal(EyeData)
 
     def __init__(self, gc_scene, *args, **kwargs):
         super(GCImageWidget, self).__init__(*args, **kwargs)
-
-        self.gaze_change.connect(self.update_gaze)
 
         self.mouse_mode = False
         self.show_cursor = False
         self._show_depthmap = False
 
         self._last_sample = None
+        self._gaze = None
 
         self.active_pixmap_size = QSize(0, 0)
 
         self._gc_scene = None
         self.gc_scene = gc_scene
+
+        self.setMouseTracking(True)
 
     @property
     def gc_scene(self):
@@ -112,17 +110,17 @@ class GCImageWidget(QGLWidget):
         return pixmap.scaled(self.size(), Qt.KeepAspectRatio)
 
     @staticmethod
-    def mouse_event_to_gaze_sample(QMouseEvent):
+    def mouse_event_to_gaze_sample(event):
         return eyetracking.api.EyeData(-1,
-                                       (float(QMouseEvent.globalX()),
-                                        float(QMouseEvent.globalY())))
+                                       (float(event.globalX()),
+                                        float(event.globalY())))
 
-    def mouseMoveEvent(self, QMouseEvent):
+    def mouseMoveEvent(self, event):
         if self.mouse_mode:
-            sample = self.mouse_event_to_gaze_sample(QMouseEvent)
-            self.gaze_change.emit(sample)
+            sample = self.mouse_event_to_gaze_sample(event)
+            self.update_gaze(sample)
 
-    def paintEvent(self, QPaintEvent):
+    def paintEvent(self, event):
 
         painter = QPainter(self)
         painter.setRenderHint(painter.Antialiasing)
@@ -134,12 +132,16 @@ class GCImageWidget(QGLWidget):
 
         if self.show_cursor:
             size = 20
-            painter.setBrush(QColor(0, 255, 0))
-            painter.drawEllipse(self._gaze.x() - size / 2,
-                                self._gaze.y() - size / 2,
+            painter.setPen(QColor(0, 0, 0))
+            x_origin = self._gaze.x() - size / 2
+            y_origin = self._gaze.y() - size / 2
+            painter.drawEllipse(x_origin,
+                                y_origin,
                                 size, size)
-            painter.drawText(self._gaze.x() - size / 2,
-                             self._gaze.y() - size / 2,
+            painter.drawText(x_origin,
+                             y_origin,
+                             size, size,
+                             Qt.AlignCenter,
                              str(self.gc_scene.current_index))
         painter.end()
 

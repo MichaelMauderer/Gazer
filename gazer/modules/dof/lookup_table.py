@@ -8,12 +8,20 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class LookupTable():
+class LookupTable(object):
     __metaclass__ = ABCMeta
 
     def sample_position(self, pos):
         """
         Return the key for the image that should be shown for this position.
+        Parameters
+        ----------
+        pos: tuple
+            Normalised position in ([0, 1[, [0, 1[).
+
+        Returns
+        -------
+            Value at the given position.
         """
         pass
 
@@ -27,6 +35,8 @@ class ArrayLookupTable(LookupTable):
         try:
             x = self.array.shape[0]
             y = self.array.shape[1]
+            if x == 1 or y == 1:
+                return None
             color = self.array[int(x * pos[1]), int(y * pos[0])]
             # Avoid issues with RGB images
             result = np.average(color)

@@ -4,4 +4,7 @@ PyInstaller==3.0
 pymongo==3.0.3
 PyQt4==4.11.4
 PyYAML==3.11
--e git://github.com/MichaelMauderer/python-eyex.git@874b390af27da8869816ee5f56ef131844a824ea#egg=python_eyex-dev
+appdirs==1.4.0
+-e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
+
+
