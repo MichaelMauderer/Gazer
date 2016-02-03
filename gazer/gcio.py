@@ -1,17 +1,36 @@
 from __future__ import unicode_literals, division, print_function
 
-import os
-import logging
 import io
-import bz2
+import logging
+import os
 
+import numpy as np
 import skimage
 import skimage.io
-
 from bson import BSON
-import numpy as np
+
+from gazer.file_loading import read_gcfile, read_image, read_fits
 
 logger = logging.getLogger(__name__)
+
+
+def create_default_file_format_loaders():
+    file_format_loaders = {'gc': read_gcfile,
+                           'fits': read_fits,
+                           }
+    for ext in ['jpg', 'bmp', 'png']:
+        file_format_loaders[ext] = read_image
+    return file_format_loaders
+
+
+DEFAULT_FILE_FORMAT_LOADERS = create_default_file_format_loaders()
+
+
+def get_supported_file_formats():
+    """
+    Return list of supported file extensions.
+    """
+    return list(DEFAULT_FILE_FORMAT_LOADERS.keys())
 
 
 class DataDecoder(object):
@@ -72,7 +91,7 @@ def bytes_to_array(string):
     return array
 
 
-def load_scene(path):
+def load_scene(path, file_format_loaders=DEFAULT_FILE_FORMAT_LOADERS):
     """
     Loads the appropriate scene for the file indicated by the path.
 
@@ -80,10 +99,12 @@ def load_scene(path):
     ----------
     path : str
         Path to file to load.
-
+    file_format_loaders: dict
+        Dictionary of filename extension to loading function.
+        Loading functions need to take a file path and return a Scene object.
     Returns
     -------
-    gcviwer.scene.Scene
+    gazer.scene.Scene
         Appropriate scene object to display file.
         Is None if no suitable scene is found.
     """
@@ -91,103 +112,11 @@ def load_scene(path):
     file_name, file_extension = os.path.splitext(path)
     logger.debug('Got file to load: {}'.format(path))
     logger.debug('File extension is {}'.format(file_extension))
-    filetype_loaders = {
-        '.gc': read_gcfile,
-    }
-    loader = filetype_loaders.get(file_extension)
+    file_extension = file_extension[1:]  # Remove leading period.
+    loader = file_format_loaders.get(file_extension)
     if loader is not None:
         return loader(path)
-    return read_image(path)
-
-
-def read_gcfile(path):
-    """
-    Read a gc in_file and decode the encoded scene object.
-    Uses the decoder object specified in the gcviwer.settings.
-
-    Parameters
-    ----------
-    path : in_file like stream
-        File that contains an encoded scene.
-
-    Returns
-    -------
-    gcviewer.scene.Scene
-        Scene object encoded in the in_file or None if no valid Scene
-        was encoded.
-    """
-    logger.debug('Reading file as gcfile {}'.format(path))
-
-    with open(path, 'rb') as in_file:
-        try:
-            contents = in_file.read()
-            bson_obj = BSON(contents)
-            wrapper = bson_obj.decode()
-            from gazer.settings import DECODERS
-            wrapper_type = wrapper['type']
-            decoder = DECODERS.get(wrapper_type)
-            if decoder is None:
-                raise ValueError('Decoder {} not found'.format(wrapper_type))
-            body = wrapper['data']
-            if wrapper['compression'] == 'bz2':
-                body = bz2.decompress(body)
-            scene = decoder.scene_from_data(body)
-            return scene
-        except RuntimeError:
-            logger.exception('Failed to read file.')
-
-
-def read_image(path):
-    """
-    Read an image create a scene object.
-
-    Parameters
-    ----------
-    path : in_file like stream
-        File that contains an image scene.
-
-    Returns
-    -------
-    gcviewer.scene.Scene
-        Scene object
-    """
-    logger.debug('Reading file as image: {}'.format(path))
-    try:
-        from gazer.modules.color.scenes import SimpleArrayDecoder
-        image = skimage.data.imread(path)
-        scene = SimpleArrayDecoder().scene_from_array(image)
-        return scene
-    except RuntimeError:
-        logger.exception('Failed to read file as image.')
-
-
-def read_fits(path):
-    """
-    Read a fits file and create a scene object.
-
-    Parameters
-    ----------
-    path : in_file like stream
-        File that contains an encoded scene.
-
-    Returns
-    -------
-    gcviewer.scene.Scene
-        Scene object
-    """
-    logger.debug('Reading in_file as fits file')
-    try:
-        from gazer.modules.color.scenes import SimpleArrayDecoder
-        from astropy.io import fits
-        hdu_list = fits.open(path)
-        image_data = hdu_list[0].data
-        logger.debug('Retrieved {}'.format(type(image_data)))
-        logger.debug('Has shape {}'.format(image_data.shape))
-        image_data = np.dstack([image_data, image_data, image_data])
-        scene = SimpleArrayDecoder().scene_from_array(image_data)
-        return scene
-    except RuntimeError:
-        logger.exception('Failed to read file as image.')
+    logging.warning('Unknown file extension: {}'.format(file_extension))
 
 
 def write_file(out_file, scene):
@@ -242,7 +171,7 @@ def extract_scene_to_stack(scene, out_folder):
         Path to the output folder.
     """
     logger.debug('Available skimage.io plugins: {}'.format(
-            str(skimage.io.find_available_plugins())))
+        str(skimage.io.find_available_plugins())))
 
     for idx, image in enumerate(scene.iter_images):
         out_filename = os.path.join(str(out_folder), str(idx) + ".jpg")
