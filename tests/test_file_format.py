@@ -7,7 +7,8 @@ import unittest
 
 import numpy as np
 
-from gazer.gcio import read_gcfile, write_file
+from gazer.gcio import write_file
+from gazer.file_loading import read_gcfile
 from gazer.modules.dof.directory_of_images_import import dir_to_scene
 from gazer.modules.dof.scenes import SimpleArrayStackEncoder
 
