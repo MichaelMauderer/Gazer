@@ -25,5 +25,5 @@ Example Images
 
 About
 -----
-This software was created at the University of St Andrews by Michael Mauderer with the help of David Morrison.
+This software was created at the University of St Andrews by Michael Mauderer and David Morrison.
 It was developed as part of the [Deepview project](http://deepview.cs.st-andrews.ac.uk/), supervised by Miguel Nacenta.
