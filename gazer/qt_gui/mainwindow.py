@@ -360,8 +360,18 @@ class GazerMainWindow(QMainWindow):
 
         about_text = """
         <p><b>Gazer</b>&nbsp;&nbsp;&nbsp;v{version}</p>
-        <br>
         <p>&copy; {copyright_year}
-        Michael Mauderer and Miguel Nacenta</p>
+        University of St Andrews
+        </p>
+        <p>Developers <ul style="list-style-type:none">
+                            <li>Michael Mauderer</li>
+                            <li>David Morrison</li>
+                            <li> Miguel Nacenta</li>
+                        </ul>
+        </p>
+        <p>Logo design <ul style="list-style-type:none">
+                            <li>Johannes Lang</li>
+                        </ul>
+        </p>
         """.format(**info_dict)
         QtGui.QMessageBox.about(self, 'About', about_text)
