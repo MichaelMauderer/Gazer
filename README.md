@@ -1,33 +1,30 @@
-GCViewer
-========
+[logo]: https://github.com/michaelmauderer/gazer/master/gazer/assets/logo/Gazer-Logo-fulll.png "Gazer"
 
-Application to view gaze-contingent images, e.g., images with varibale
+![Gazer][logo]
+
+Application to view gaze-contingent images, e.g., images with variable
 depth-of-field created from Lytro images.
 
 Features
 --------
-
-Supports EyeX eye tracker.
+* support for Tobii EyeX eye tracker
+* importer for Lytro ILLUM images.
+* Saving and loading of optimised custom file format that allows easy sharing
+  of images with gaze-contingent depth-of-field.
+* export and import of Image Stacks (combination of DOF slices and a depth map)
 
 Usage
 -----
+Running the UI from source requires the requirements described in the
+requirements.txt and the location of the Tobii.EyeX.Client.dll to be specified
+in the EYEX_LIB_PATH environment variable or be in the working dir the script
+is started from. We recommend setting it to '../lib' and putting the dll into the
+corresponding top level lib folder.
 
-Running the gui requires the Tobii.EyeX.Client.dll to be specified in the
-EYEX_LIB_PATH env variable. We recommend setting it to '../lib' and putting the
-dll into the corresponding top level lib folder.
-
-Installation instructions
--------------------------
-
-Binary Download
----------------
-
-Example Scenes
+Example Images
 --------------
-
-Contributing
--------------
 
 About
 -----
-
+This software was created at the University of St Andrews by Michael Mauderer, David Morrison and Miguel Nacenta.
+It was developed as part of the [Deepview project](http://deepview.cs.st-andrews.ac.uk/).

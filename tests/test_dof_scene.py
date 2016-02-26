@@ -8,11 +8,11 @@ import numpy as np
 
 import unittest
 
-from gcviewer.modules.dof.dof_data import DOFData
-from gcviewer.modules.dof.image_manager import ArrayStackImageManager
-from gcviewer.modules.dof.interpolator import InstantInterpolator
-from gcviewer.modules.dof.lookup_table import ArrayLookupTable
-from gcviewer.modules.dof.scenes import ImageStackScene
+from gazer.modules.dof.dof_data import DOFData
+from gazer.modules.dof.image_manager import ArrayStackImageManager
+from gazer.modules.dof.interpolator import InstantInterpolator
+from gazer.modules.dof.lookup_table import ArrayLookupTable
+from gazer.modules.dof.scenes import ImageStackScene
 
 
 class TestBasicDOFScene(unittest.TestCase):
@@ -44,17 +44,26 @@ class TestImageStackScene(unittest.TestCase):
             3: np.array([3]),
         }
         dof_data = DOFData(self.depth_array, self.frame_mapping)
-        self.scene = ImageStackScene.from_dof_data(dof_data, InstantInterpolator())
+        self.scene = ImageStackScene.from_dof_data(dof_data,
+                                                   InstantInterpolator())
 
     def test_frame_corners(self):
         self.scene.update_gaze((0.0, 0.0))
-        np.testing.assert_almost_equal(self.frame_mapping[0], self.scene.get_image(), err_msg="Assert one has failed")
+        np.testing.assert_almost_equal(self.frame_mapping[0],
+                                       self.scene.get_image(),
+                                       err_msg="Assert one has failed")
         self.scene.update_gaze((0.9, 0.0))
-        np.testing.assert_almost_equal(self.frame_mapping[3], self.scene.get_image(), err_msg="Assert two has failed")
+        np.testing.assert_almost_equal(self.frame_mapping[3],
+                                       self.scene.get_image(),
+                                       err_msg="Assert two has failed")
         self.scene.update_gaze((0.0, 0.9))
-        np.testing.assert_almost_equal(self.frame_mapping[2], self.scene.get_image(), err_msg="Assert three has failed")
+        np.testing.assert_almost_equal(self.frame_mapping[2],
+                                       self.scene.get_image(),
+                                       err_msg="Assert three has failed")
         self.scene.update_gaze((0.9, 0.9))
-        np.testing.assert_almost_equal(self.frame_mapping[1], self.scene.get_image(), err_msg="Assert four has failed")
+        np.testing.assert_almost_equal(self.frame_mapping[1],
+                                       self.scene.get_image(),
+                                       err_msg="Assert four has failed")
 
 
 class TestImageStackManager(unittest.TestCase):
@@ -68,10 +77,12 @@ class TestImageStackManager(unittest.TestCase):
         self.image_manager = ArrayStackImageManager(self.frames)
 
     def test_load_image(self):
-        np.testing.assert_almost_equal(self.image_manager.load_image(2), self.frames[2])
+        np.testing.assert_almost_equal(self.image_manager.load_image(2),
+                                       self.frames[2])
 
     def test_load_image_fraction(self):
-        np.testing.assert_almost_equal(self.image_manager.load_image(1.7), self.frames[1])
+        np.testing.assert_almost_equal(self.image_manager.load_image(1.7),
+                                       self.frames[1])
 
 
 class TestLookupTable(unittest.TestCase):
@@ -84,13 +95,21 @@ class TestLookupTable(unittest.TestCase):
         self.lookup_table = ArrayLookupTable(self.depth_array)
 
     def test_sample_corners(self):
-        np.testing.assert_equal(self.lookup_table.sample_position((0.0, 0.0)), 0)
-        np.testing.assert_equal(self.lookup_table.sample_position((0.9, 0.0)), 2)
-        np.testing.assert_equal(self.lookup_table.sample_position((0.0, 0.9)), 6)
-        np.testing.assert_equal(self.lookup_table.sample_position((0.9, 0.9)), 8)
+        np.testing.assert_equal(self.lookup_table.sample_position((0.0, 0.0)),
+                                0)
+        np.testing.assert_equal(self.lookup_table.sample_position((0.9, 0.0)),
+                                2)
+        np.testing.assert_equal(self.lookup_table.sample_position((0.0, 0.9)),
+                                6)
+        np.testing.assert_equal(self.lookup_table.sample_position((0.9, 0.9)),
+                                8)
 
     def test_out_of_bounds(self):
-        np.testing.assert_equal(self.lookup_table.sample_position((0.0, 1.0)), None)
-        np.testing.assert_equal(self.lookup_table.sample_position((1.0, 0.0)), None)
-        np.testing.assert_equal(self.lookup_table.sample_position((-1.8, 0.0)), None)
-        np.testing.assert_equal(self.lookup_table.sample_position((0.1, 1.1)), None)
+        np.testing.assert_equal(self.lookup_table.sample_position((0.0, 1.0)),
+                                None)
+        np.testing.assert_equal(self.lookup_table.sample_position((1.0, 0.0)),
+                                None)
+        np.testing.assert_equal(self.lookup_table.sample_position((-1.8, 0.0)),
+                                None)
+        np.testing.assert_equal(self.lookup_table.sample_position((0.1, 1.1)),
+                                None)

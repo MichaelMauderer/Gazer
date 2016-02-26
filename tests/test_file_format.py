@@ -7,13 +7,15 @@ import unittest
 
 import numpy as np
 
-from gcviewer.gcio import read_gcfile, write_file
-from gcviewer.modules.dof.directory_of_images_import import dir_to_scene
-from gcviewer.modules.dof.scenes import SimpleArrayStackEncoder
+from gazer.gcio import write_file
+from gazer.file_loading import read_gcfile
+from gazer.modules.dof.directory_of_images_import import dir_to_scene
+from gazer.modules.dof.scenes import SimpleArrayStackEncoder
 
 TEST_DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'data/')
 IMAGE_STACK_FOLDER = os.path.join(TEST_DATA_FOLDER, 'example_stack')
 EXAMPLE_GC_FILE_PATH = os.path.join(TEST_DATA_FOLDER, 'example.gc')
+
 
 class TestFileFormatIO(unittest.TestCase):
     def setUp(self):
@@ -48,4 +50,3 @@ class TestFileFormatIntegrity(unittest.TestCase):
         np.testing.assert_allclose(self.reference_scene.get_indices_image(),
                                    self.test_scene.get_indices_image()
                                    )
-

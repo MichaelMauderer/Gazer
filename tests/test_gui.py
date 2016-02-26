@@ -1,7 +1,3 @@
-"""
-Defines unit tests for :mod:`gcviewer.gui` module.
-"""
-
 from __future__ import division, unicode_literals, print_function
 
 import sys
@@ -12,7 +8,8 @@ import mock
 import numpy as np
 from PyQt4.QtGui import QApplication
 
-from gcviewer.qt_gui.gcwidget import GCImageWidget
+from gazer.qt_gui.gcwidget import GCImageWidget
+from gazer.qt_gui import mainwindow
 
 app = QApplication(sys.argv)
 
@@ -59,3 +56,29 @@ class TestCoordinateConversion(unittest.TestCase):
 
         np.testing.assert_allclose(convert((1000, 500)), (1.0, 0.5))
         np.testing.assert_allclose(convert((1500, 250)), (1.0, 0.25))
+
+
+class TestMainWindowFunctionality(unittest.TestCase):
+    def setUp(self):
+        self.window = mainwindow.GazerMainWindow()
+
+    @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
+    @mock.patch('gazer.qt_gui.mainwindow.read_ifp')
+    def test_ifp_file_import(self, mock_ifp, task_mock):
+        mock_file_name = './foobar.lfp'
+        self.window.import_ifp_file(mock_file_name)
+        self.assert_(task_mock.called)
+
+    @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
+    @mock.patch('gazer.qt_gui.mainwindow.gcio.load_scene')
+    def test_gc_file_import(self, mock_load, task_mock):
+        mock_file_name = './foobar.lfp'
+        self.window.load_scene_file(mock_file_name)
+        self.assert_(task_mock.called)
+
+    @mock.patch('gazer.qt_gui.mainwindow.BlockingTask')
+    @mock.patch('gazer.qt_gui.mainwindow.dir_import.dir_to_scene')
+    def test_image_stack_import(self, mock_load, task_mock):
+        mock_folder_name = './foobar.lfp'
+        self.window.load_image_stack_folder(mock_folder_name)
+        self.assert_(task_mock.called)

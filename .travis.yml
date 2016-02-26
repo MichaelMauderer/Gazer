@@ -9,7 +9,7 @@ matrix:
   - python: 2.7
 
 notifications:
-  slack: sachi:cJEKEpgCGom3g10huT8XE1de
+  slack: gazerteam:IIfxHoAw77Yf2bGcSRuTD46X
 
 before_install:
   - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
@@ -21,16 +21,15 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 
 install:
-  - conda create --yes --quiet -n gcviewer-test pip setuptools nose pyqt numpy=1.10.1 pymongo=3.0.3 pyyaml scipy scikit-image
-  - source activate gcviewer-test
-  - pip install coverage coveralls flake8 mock==1.0.1
-  - pip install -e git://github.com/MichaelMauderer/python-eyex.git@874b390af27da8869816ee5f56ef131844a824ea#egg=python_eyex-dev
-  - pip install -e git://github.com/MichaelMauderer/PyTribe@3de123848d876d96d9cd42a81d802d69c865e697#egg=pytribe-master
+  - conda create --yes --quiet -n gazer-test pip setuptools nose pyqt numpy=1.10.4 pymongo=3.0.3 pyyaml scipy scikit-image
+  - source activate gazer-test
+  - pip install -e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
+  - pip install coverage coveralls flake8 mock==1.0.1 nose appdirs
 
 
 script:
-  - flake8 gcviewer
-  - nosetests --nocapture --with-coverage --cover-package=gcviewer ./tests
+  - flake8 gazer
+  - nosetests --nocapture --with-coverage --cover-package=gazer ./tests
 
 after_success:
   - coveralls
