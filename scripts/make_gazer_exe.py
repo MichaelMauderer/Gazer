@@ -16,7 +16,7 @@ target = os.path.join(project_root, 'scripts', 'gazer_run.py')
 out_path = os.path.join('..', 'dist')
 build_path = os.path.join('..', 'build')
 architecture = platform.architecture()[0]
-icon = '../gazer/assets/logo/Gazer-Logo-Square-128px.ico'
+icon = '../gazer/assets/logo/Gazer-Logo-Square-256px.ico'
 
 app_file_name = '{}.{}'.format(app_name, architecture)
 
