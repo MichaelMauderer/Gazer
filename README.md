@@ -1,5 +1,6 @@
-Gazer
-========
+[logo]: https://github.com/michaelmauderer/gazer/master/gazer/assets/logo/Gazer-Logo-fulll.png "Gazer"
+
+![Gazer][logo]
 
 Application to view gaze-contingent images, e.g., images with variable
 depth-of-field created from Lytro images.
