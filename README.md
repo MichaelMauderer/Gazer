@@ -1,4 +1,4 @@
-[logo]: https://github.com/michaelmauderer/gazer/master/gazer/assets/logo/Gazer-Logo-fulll.png "Gazer"
+[logo]: https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/logo/Gazer-Logo-full.jpg "Gazer"
 
 ![Gazer][logo]
 
