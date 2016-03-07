@@ -41,6 +41,7 @@ install:
 
   # Check that we have the expected version and architecture for Python
   - "python --version"
+  - "pip --version"
   - "conda info -a"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
@@ -52,6 +53,23 @@ install:
   # compiled extensions and are not provided as pre-built wheel packages,
   # pip will build them from source using the MSVC compiler matching the
   # target Python version and architecture
-  - ps: conda create --yes --quiet -n gazer-test pip setuptools nose pyqt numpy=1.10.4 pymongo=3.0.3 pyyaml scipy scikit-image
-  - ps: activate gazer-test
-  - ps: pip install -e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
+
+  - conda create --yes --quiet -n gazer-test pip setuptools nose pyqt numpy=1.10.4 pymongo=3.0.3 pyyaml scipy scikit-image
+  - activate gazer-test
+  - pip install -e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
+  - pip install coverage coveralls flake8 mock==1.0.1 nose appdirs
+
+  # Show the installed packages
+  - conda list
+
+before_test:
+  - which nosetests
+
+test_script:
+  - nosetests --nocapture --with-coverage --cover-package=gazer ./tests
+
+on_success:
+  - echo Test succesful!
+  - coverage report
+
+build: off
