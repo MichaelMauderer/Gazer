@@ -57,10 +57,22 @@ install:
   - conda create --yes --quiet -n gazer-test pip setuptools nose pyqt numpy=1.10.4 pymongo=3.0.3 pyyaml scipy scikit-image
   - activate gazer-test
   - pip install -e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
-  - pip install coverage coveralls flake8 mock==1.0.1 nose appdirs
+  - pip install coverage coveralls flake8 mock==1.0.1 nose appdirs pyinstaller
 
   # Show the installed packages
   - conda list
+
+  # Download and install additional 3rd party dependencies
+  - ps: wget http://developer-files.tobii.com/wp-content/uploads/download-manager-files/EyeXSdk/TobiiEyeXSdk-Cpp-1.6.477.zip -OutFile eyexsdk.zip
+  - ps: 7z x -y -oeyexsdk eyexsdk.zip
+  - SET EYEX_LIB_PATH=C:\projects\gazer\eyexsdk\lib\x86\
+
+  - ps: wget https://s3-us-west-2.amazonaws.com/lytro-power-tools/lytro-power-tools-beta.exe -OutFile lpt.exe
+  - ps: 7z x -y -olpt lpt.exe
+  - ps: ls 
+  - ps: ls lpt
+  - ps: mv C:\projects\gazer\lpt\_•€\ C:\projects\gazer\lpt_\
+  - pip install .\lpt_\lytro-power-tools-1.0.1b0
 
 before_test:
   - which nosetests
@@ -71,5 +83,9 @@ test_script:
 on_success:
   - echo Test succesful!
   - coverage report
+
+after_test:
+  # After the tests were a success, build executable
+  - python C:\projects\gazer\scripts\make_gazer_exe.py
 
 build: off

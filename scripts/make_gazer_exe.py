@@ -8,13 +8,14 @@ import platform
 from subprocess import check_output
 
 app_name = 'gazer'
-project_root = '..'
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print("Project root:", project_root)
 pyinstaller_path = os.getenv('PYINSTALLER_PATH', 'pyinstaller')
-lib_path = os.path.join('..', 'lib')
+lib_path = os.path.join(project_root, 'lib')
 hook_path = os.path.join(project_root, 'hooks')
 target = os.path.join(project_root, 'scripts', 'gazer_run.py')
-out_path = os.path.join('..', 'dist')
-build_path = os.path.join('..', 'build')
+out_path = os.path.join(project_root, 'dist')
+build_path = os.path.join(project_root, 'build')
 architecture = platform.architecture()[0]
 icon = '../gazer/assets/logo/Gazer-Logo-Square-256px.ico'
 
