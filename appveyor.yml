@@ -89,3 +89,7 @@ after_test:
   - python C:\projects\gazer\scripts\make_gazer_exe.py
 
 build: off
+
+artifacts:
+  - path: dist\*.exe
+    name: "Gazer"
