@@ -91,5 +91,7 @@ after_test:
 build: off
 
 artifacts:
-  - path: dist\*.exe
+  - path: dist\Gazer.*.exe
     name: "Gazer"
+  - path: dist\Gazer-debug.*.exe
+    name: "Gazer-Debug"
