@@ -23,23 +23,23 @@ icon = '../gazer/assets/logo/Gazer-Logo-Square-256px.ico'
 def get_ops(debug=False):
     default_opts = ['--clean ',
                     '-y ',
-                    '-p "{project_root}" '.format(project_root),
-                    '--paths="{lib_path}" '.format(lib_path),
-                    '--additional-hooks-dir="{hook_path}" '.format(hook_path),
-                    '--distpath="{out_path}" '.format(out_path),
-                    '--workpath="{build_path}" '.format(build_path),
-                    '--icon "{icon}"'.format(icon),
+                    '-p "{}" '.format(project_root),
+                    '--paths="{}" '.format(lib_path),
+                    '--additional-hooks-dir="{}" '.format(hook_path),
+                    '--distpath="{}" '.format(out_path),
+                    '--workpath="{}" '.format(build_path),
+                    '--icon "{}"'.format(icon),
                     '--onefile ',
                     '--noconsole '
                     ]
 
     if not debug:
         app_file_name = '{}.{}'.format(app_name, architecture)
-        opts = default_opts + ['--name {app_file_name} '.format(app_file_name)]
+        opts = default_opts + ['--name {} '.format(app_file_name)]
     else:
         app_file_name = '{}-debug.{}'.format(app_name, architecture)
         opts = default_opts[:-2] + [
-            '--name {app_file_name} '.format(app_file_name)]
+            '--name {} '.format(app_file_name)]
 
     return ' '.join(opts)
 
