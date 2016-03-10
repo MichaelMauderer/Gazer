@@ -24,14 +24,14 @@ app_file_name = '{}.{}'.format(app_name, architecture)
 opts = '--clean ' \
        '--onefile ' \
        '--noconsole ' \
-       '-p {project_root} ' \
-       '--paths={lib_path} ' \
-       '--additional-hooks-dir={hook_path} ' \
+       '-p "{project_root}" ' \
+       '--paths="{lib_path}" ' \
+       '--additional-hooks-dir="{hook_path}" ' \
        '-y ' \
-       '--distpath={out_path} ' \
-       '--workpath={build_path} ' \
+       '--distpath="{out_path}" ' \
+       '--workpath="{build_path}" ' \
        '--name {app_file_name} ' \
-       '--icon {icon}'
+       '--icon "{icon}"'
 
 opts = opts.format(project_root=project_root,
                    lib_path=lib_path,
@@ -42,7 +42,9 @@ opts = opts.format(project_root=project_root,
                    icon=icon,
                    )
 
-command = pyinstaller_path + ' ' + opts + ' ' + target
+command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
+                                                   opts=opts,
+                                                   target=target)
 print(command)
 print(check_output(command, shell=True))
 
