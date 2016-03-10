@@ -19,31 +19,39 @@ build_path = os.path.join(project_root, 'build')
 architecture = platform.architecture()[0]
 icon = '../gazer/assets/logo/Gazer-Logo-Square-256px.ico'
 
-app_file_name = '{}.{}'.format(app_name, architecture)
 
-opts = '--clean ' \
-       '--onefile ' \
-       '--noconsole ' \
-       '-p "{project_root}" ' \
-       '--paths="{lib_path}" ' \
-       '--additional-hooks-dir="{hook_path}" ' \
-       '-y ' \
-       '--distpath="{out_path}" ' \
-       '--workpath="{build_path}" ' \
-       '--name {app_file_name} ' \
-       '--icon "{icon}"'
+def get_ops(debug=False):
+    default_opts = ['--clean ',
+                    '-y ',
+                    '-p "{project_root}" '.format(project_root),
+                    '--paths="{lib_path}" '.format(lib_path),
+                    '--additional-hooks-dir="{hook_path}" '.format(hook_path),
+                    '--distpath="{out_path}" '.format(out_path),
+                    '--workpath="{build_path}" '.format(build_path),
+                    '--icon "{icon}"'.format(icon),
+                    '--onefile ',
+                    '--noconsole '
+                    ]
 
-opts = opts.format(project_root=project_root,
-                   lib_path=lib_path,
-                   hook_path=hook_path,
-                   out_path=out_path,
-                   build_path=build_path,
-                   app_file_name=app_file_name,
-                   icon=icon,
-                   )
+    if not debug:
+        app_file_name = '{}.{}'.format(app_name, architecture)
+        opts = default_opts + ['--name {app_file_name} '.format(app_file_name)]
+    else:
+        app_file_name = '{}-debug.{}'.format(app_name, architecture)
+        opts = default_opts[:-2] + [
+            '--name {app_file_name} '.format(app_file_name)]
+
+    return ' '.join(opts)
+
 
 command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
-                                                   opts=opts,
+                                                   opts=get_ops(),
+                                                   target=target)
+print(command)
+print(check_output(command, shell=True))
+
+command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
+                                                   opts=get_ops(debug=True),
                                                    target=target)
 print(command)
 print(check_output(command, shell=True))
