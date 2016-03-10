@@ -86,6 +86,7 @@ on_success:
 
 after_test:
   # After the tests were a success, build executable
+  - cd C:\projects\gazer\scripts
   - python C:\projects\gazer\scripts\make_gazer_exe.py
 
 build: off
