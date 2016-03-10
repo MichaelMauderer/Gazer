@@ -38,7 +38,7 @@ def get_ops(debug=False):
         opts = default_opts + ['--name {} '.format(app_file_name)]
     else:
         app_file_name = '{}-debug.{}'.format(app_name, architecture)
-        opts = default_opts[:-2] + [
+        opts = default_opts[:-1] + [
             '--name {} '.format(app_file_name)]
 
     return ' '.join(opts)

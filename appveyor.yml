@@ -78,7 +78,7 @@ before_test:
 
 test_script:
   - nosetests --nocapture --with-coverage --cover-package=gazer ./tests
-  - coverage report
+
 
 on_success:
   - echo Test succesful!
@@ -87,11 +87,12 @@ after_test:
   # After the tests were a success, build executable
   - cd C:\projects\gazer\scripts
   - python C:\projects\gazer\scripts\make_gazer_exe.py
+  - ls C:\projects\gazer\dist
 
 build: off
 
 artifacts:
-  - path: dist\Gazer.*.exe
-    name: "Gazer"
-  - path: dist\Gazer-debug.*.exe
-    name: "Gazer-Debug"
+  - path: dist\gazer.*.exe
+    name: Gazer
+  - path: dist\gazer-debug.*.exe
+    name: Gazer-Debug
