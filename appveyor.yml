@@ -79,10 +79,10 @@ before_test:
 
 test_script:
   - nosetests --nocapture --with-coverage --cover-package=gazer ./tests
+  - coverage report
 
 on_success:
   - echo Test succesful!
-  - coverage report
 
 after_test:
   # After the tests were a success, build executable
