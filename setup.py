@@ -8,6 +8,6 @@ setup(
         url='',
         license='GPL',
         author='Michael Mauderer',
-        author_email='',
+        author_email='mail@michaelmauderer.com',
         description=''
 )
