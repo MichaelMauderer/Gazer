@@ -1,4 +1,8 @@
 [logo]: https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/logo/Gazer-Logo-full.jpg "Gazer"
+[pier-preview]: https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/pier-preview.PNG "St Andrews Pier"
+[cloister-preview]: https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/cloister-preview.PNG "St Andrews Cloister"
+[workbench-preview]: https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/workbench-preview.PNG "SACHI Workbench"
+[scale-preview]: https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/scale-preview.PNG "Paper Scale"
 
 ![Gazer][logo]
 
@@ -23,6 +27,12 @@ corresponding top level lib folder.
 
 Example Images
 --------------
+
+
+<a href="https://github.com/MichaelMauderer/Gazer/raw/develop/gazer/assets/st-andrews-pier.gc"><img src="https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/pier-preview.PNG" align="float left" width="400" ></a>
+<a href="https://github.com/MichaelMauderer/Gazer/raw/develop/gazer/assets/st-andrews-cloister.gc"><img src="https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/cloister-preview.PNG" align="float left" width="400" ></a>
+<a href="https://github.com/MichaelMauderer/Gazer/raw/develop/gazer/assets/sachi_workbench.gc"><img src="https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/workbench-preview.PNG" align="float left" width="400" ></a>
+<a href="https://github.com/MichaelMauderer/Gazer/raw/develop/gazer/assets/scale.gc"><img src="https://github.com/MichaelMauderer/Gazer/blob/develop/gazer/assets/scale-preview.PNG" align="float left" width="400" ></a>
 
 About
 -----
