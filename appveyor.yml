@@ -95,5 +95,5 @@ build: off
 artifacts:
   - path: dist\gazer.*.exe
     name: Gazer
-  - path: dist\gazer-debug.*.exe
+  - path: dist\gazer-debug.*\
     name: Gazer-Debug
