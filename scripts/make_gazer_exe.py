@@ -37,7 +37,7 @@ def get_ops(debug=False):
         opts = default_opts + ['--name {} '.format(app_file_name),
                                '--onefile ',]
     else:
-        app_file_name = '{}-debug.{}'.format(app_name, architecture)
+        app_file_name = '{}-debug'.format(app_name)
         opts = default_opts[:-1] + [
             '--name {} '.format(app_file_name),
             '--onedir',
@@ -48,12 +48,6 @@ def get_ops(debug=False):
 
 command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
                                                    opts=get_ops(),
-                                                   target=target)
-print(command)
-print(check_output(command, shell=True))
-
-command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
-                                                   opts=get_ops(debug=True),
                                                    target=target)
 print(command)
 print(check_output(command, shell=True))
