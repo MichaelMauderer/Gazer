@@ -2,6 +2,9 @@ from __future__ import unicode_literals, division, print_function
 
 import sys
 import os
+import argparse
+
+import nose
 
 import logging
 
@@ -85,7 +88,18 @@ def run_qt_gui():
     sys.exit(app.exec_())
 
 
+def run_tests():
+    return nose.run()
+
+
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', action='store_true',
+                        help='run test suite')
+    args = parser.parse_args()
+
+    if args.d:
+        run_tests()
     try:
         run_qt_gui()
     except RuntimeError:
