@@ -77,22 +77,21 @@ before_test:
   - which nosetests
 
 test_script:
+
+  # Run tests on codebase
+  - cd C:\projects\gazer\
   - nosetests --nocapture --with-coverage --cover-package=gazer ./tests
 
+  # Run test from binary
+  - cd C:\projects\gazer\dist\gazer-debug
+  - gazer-debug.exe -d
 
 on_success:
   - echo Test succesful!
 
-after_test:
-  # After the tests were a success, build executable
-  #- dir c:\ /s | findstr /i libmkl_*.dll
+build_script:
   - cd C:\projects\gazer\scripts
   - python C:\projects\gazer\scripts\make_gazer_exe.py
-  - ls C:\projects\gazer\dist
-  - cd C:\projects\gazer\dist\gazer-debug
-  - gazer-debug.exe -d
-
-build: off
 
 artifacts:
   - path: dist\gazer-debug
