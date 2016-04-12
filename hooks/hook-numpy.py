@@ -10,11 +10,10 @@ logger = logging.getLogger(__name__)
 
 lib_dir = 'C:\\miniconda'
 mkl_libs = []
-logger.info('Searching for MKL libs in')
+logger.info('Searching for MKL libs in {}'.format(lib_dir))
 for root, dirs, files in os.walk(lib_dir):
     matches = list(filter(lambda x: x.startswith('libmkl_'), files))
     mkl_libs += matches
-    logger.info('\t {}'.format(root))
 
 if mkl_libs:
     logger.info("MKL libs found: {}".format(' '.join(mkl_libs)))
