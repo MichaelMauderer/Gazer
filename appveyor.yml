@@ -89,6 +89,8 @@ after_test:
   - cd C:\projects\gazer\scripts
   - python C:\projects\gazer\scripts\make_gazer_exe.py
   - ls C:\projects\gazer\dist
+  - cd C:\projects\gazer\dist\gazer-debug
+  - gazer-debug.exe -d
 
 build: off
 
