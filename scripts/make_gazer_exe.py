@@ -41,6 +41,7 @@ def get_ops(debug=False):
         opts = default_opts[:-1] + [
             '--name {} '.format(app_file_name),
             '--onedir',
+            '--debug',
         ]
 
     return ' '.join(opts)
