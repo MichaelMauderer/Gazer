@@ -89,7 +89,7 @@ def run_qt_gui():
 
 
 def run_tests():
-    return nose.run(argv=sys.argv[:1])
+    return nose.main(argv=sys.argv[:1])
 
 
 if __name__ == '__main__':
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.d:
-        sys.exit(run_tests())
+        run_tests()
     else:
         try:
             run_qt_gui()
