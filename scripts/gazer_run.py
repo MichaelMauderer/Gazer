@@ -99,8 +99,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.d:
-        run_tests()
-    try:
-        run_qt_gui()
-    except RuntimeError:
-        logging.exception('Program terminated with an exception. ')
+        sys.exit(run_tests())
+    else:
+        try:
+            run_qt_gui()
+        except RuntimeError:
+            logging.exception('Program terminated with an exception. ')
