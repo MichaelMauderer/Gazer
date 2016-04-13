@@ -29,13 +29,14 @@ def get_ops(debug=False):
                     '--distpath="{}" '.format(out_path),
                     '--workpath="{}" '.format(build_path),
                     '--icon "{}"'.format(icon),
-                    '--noconsole '
+
                     ]
 
     if not debug:
         app_file_name = '{}.{}'.format(app_name, architecture)
         opts = default_opts + ['--name {} '.format(app_file_name),
-                               '--onefile ',]
+                               '--onefile ',
+                               '--noconsole ', ]
     else:
         app_file_name = '{}-debug'.format(app_name)
         opts = default_opts[:-1] + [
