@@ -93,6 +93,10 @@ build_script:
   - cd C:\projects\gazer\scripts
   - python C:\projects\gazer\scripts\make_gazer_exe.py
 
+after_build:
+  - 7z a gazer-debug.zip ..\dist\gazer-debug
+  - appveyor PushArtifact gazer-debug.zip
+
 artifacts:
   - path: dist\gazer-debug
     name: Gazer-Debug
