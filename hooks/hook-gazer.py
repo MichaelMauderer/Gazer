@@ -6,6 +6,7 @@ import os
 datas = [
     (os.path.join(os.getenv('EYEX_LIB_PATH'), 'Tobii.EyeX.Client.dll'), '.\\'),
     ('../gazer/assets', './gazer/assets'),
+    ('../tests', './tests')
 ]
 
 datas += collect_data_files("skimage.io._plugins")
@@ -13,8 +14,6 @@ datas += collect_data_files("skimage.io._plugins")
 hiddenimports = ['gazer',
                  'scipy',
                  'skimage.io',
-                 #'skimage.io._plugins',
                  ]
 
 hiddenimports += collect_submodules('scipy')
-#hiddenimports += collect_submodules('skimage.io._plugins')

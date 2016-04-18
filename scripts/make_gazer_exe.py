@@ -8,40 +8,55 @@ import platform
 from subprocess import check_output
 
 app_name = 'gazer'
-project_root = '..'
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print("Project root:", project_root)
 pyinstaller_path = os.getenv('PYINSTALLER_PATH', 'pyinstaller')
-lib_path = os.path.join('..', 'lib')
+lib_path = os.path.join(project_root, 'lib')
 hook_path = os.path.join(project_root, 'hooks')
 target = os.path.join(project_root, 'scripts', 'gazer_run.py')
-out_path = os.path.join('..', 'dist')
-build_path = os.path.join('..', 'build')
+out_path = os.path.join(project_root, 'dist')
+build_path = os.path.join(project_root, 'build')
 architecture = platform.architecture()[0]
 icon = '../gazer/assets/logo/Gazer-Logo-Square-256px.ico'
 
-app_file_name = '{}.{}'.format(app_name, architecture)
 
-opts = '--clean ' \
-       '--onefile ' \
-       '--noconsole ' \
-       '-p {project_root} ' \
-       '--paths={lib_path} ' \
-       '--additional-hooks-dir={hook_path} ' \
-       '-y ' \
-       '--distpath={out_path} ' \
-       '--workpath={build_path} ' \
-       '--name {app_file_name} ' \
-       '--icon {icon}'
+def get_ops(debug=False):
+    default_opts = ['--clean ',
+                    '-y ',
+                    '-p "{}" '.format(project_root),
+                    '--paths="{}" '.format(lib_path),
+                    '--additional-hooks-dir="{}" '.format(hook_path),
+                    '--distpath="{}" '.format(out_path),
+                    '--workpath="{}" '.format(build_path),
+                    '--icon "{}"'.format(icon),
 
-opts = opts.format(project_root=project_root,
-                   lib_path=lib_path,
-                   hook_path=hook_path,
-                   out_path=out_path,
-                   build_path=build_path,
-                   app_file_name=app_file_name,
-                   icon=icon,
-                   )
+                    ]
 
-command = pyinstaller_path + ' ' + opts + ' ' + target
+    if not debug:
+        app_file_name = '{}.{}'.format(app_name, architecture)
+        opts = default_opts + ['--name {} '.format(app_file_name),
+                               '--onefile ',
+                               '--noconsole ', ]
+    else:
+        app_file_name = '{}-debug'.format(app_name)
+        opts = default_opts[:-1] + [
+            '--name {} '.format(app_file_name),
+            '--onedir',
+            '--debug',
+        ]
+
+    return ' '.join(opts)
+
+
+command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
+                                                   opts=get_ops(),
+                                                   target=target)
+print(command)
+print(check_output(command, shell=True))
+
+command = '{pyinstaller} {opts} "{target}"'.format(pyinstaller=pyinstaller_path,
+                                                   opts=get_ops(debug=True),
+                                                   target=target)
 print(command)
 print(check_output(command, shell=True))
 

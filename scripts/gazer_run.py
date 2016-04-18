@@ -2,6 +2,9 @@ from __future__ import unicode_literals, division, print_function
 
 import sys
 import os
+import argparse
+
+import nose
 
 import logging
 
@@ -85,8 +88,20 @@ def run_qt_gui():
     sys.exit(app.exec_())
 
 
+def run_tests():
+    return nose.main(argv=sys.argv[:1])
+
+
 if __name__ == '__main__':
-    try:
-        run_qt_gui()
-    except RuntimeError:
-        logging.exception('Program terminated with an exception. ')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', action='store_true',
+                        help='run test suite')
+    args = parser.parse_args()
+
+    if args.d:
+        run_tests()
+    else:
+        try:
+            run_qt_gui()
+        except RuntimeError:
+            logging.exception('Program terminated with an exception. ')

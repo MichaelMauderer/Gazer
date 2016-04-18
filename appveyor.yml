@@ -1,0 +1,102 @@
+environment:
+  matrix:
+    # Pre-installed Python versions, which Appveyor may upgrade to
+    # a later point release.
+    # See: http://www.appveyor.com/docs/installed-software#python
+
+    - PYTHON: "C:\\Miniconda"
+      PYTHON_VERSION: "2.7.x"
+      PYTHON_ARCH: "32"
+      PYQT_URL: "http://kent.dl.sourceforge.net/project/pyqt/PyQt4/PyQt-4.11.4/PyQt4-4.11.4-gpl-Py2.7-Qt4.8.7-x32.exe"
+      EYEX_LIB_PATH: C:\projects\gazer\eyexsdk\lib\x86\
+
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7.x"
+      PYTHON_ARCH: "64"
+      PYQT_URL: "http://kent.dl.sourceforge.net/project/pyqt/PyQt4/PyQt-4.11.4/PyQt4-4.11.4-gpl-Py2.7-Qt4.8.7-x64.exe"
+      EYEX_LIB_PATH: C:\projects\gazer\eyexsdk\lib\x64\
+
+matrix:
+  fast_finish: true
+
+install:
+  # If there is a newer build queued for the same PR, cancel this one.
+  # The AppVeyor 'rollout builds' option is supposed to serve the same
+  # purpose but it is problematic because it tends to cancel builds pushed
+  # directly to master instead of just PR builds (or the converse).
+  # credits: JuliaLang developers.
+  - ps: if ($env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:APPVEYOR_BUILD_NUMBER -ne ((Invoke-RestMethod `
+        https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG/history?recordsNumber=50).builds | `
+        Where-Object pullRequestId -eq $env:APPVEYOR_PULL_REQUEST_NUMBER)[0].buildNumber) { `
+          throw "There are newer queued builds for this pull request, failing early." }
+  - ECHO "Filesystem root:"
+  - ps: "ls \"C:/\""
+
+  - ECHO "Installed SDKs:"
+  - ps: "ls \"C:/Program Files/Microsoft SDKs/Windows\""
+
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PYTHON%\\bin;%PATH%"
+
+  # Check that we have the expected version and architecture for Python
+  - "python --version"
+  - "pip --version"
+  - "conda info -a"
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+
+  # Upgrade to the latest version of pip to avoid it displaying warnings
+  # about it being out of date.
+  - "pip install --disable-pip-version-check --user --upgrade pip"
+
+  # Install the build dependencies of the project. If some dependencies contain
+  # compiled extensions and are not provided as pre-built wheel packages,
+  # pip will build them from source using the MSVC compiler matching the
+  # target Python version and architecture
+
+  - conda create --yes --quiet -n gazer-test pip setuptools==19.2 nose pyqt numpy pymongo pyyaml scipy scikit-image
+  - activate gazer-test
+  - pip install -e git://github.com/MichaelMauderer/python-eyex.git@v0.3.1#egg=python_eyex
+  - pip install coverage coveralls flake8 mock==1.0.1 nose appdirs pyinstaller
+
+  # Show the installed packages
+  - conda list
+
+  # Download and install additional 3rd party dependencies
+  - ps: wget http://developer-files.tobii.com/wp-content/uploads/download-manager-files/EyeXSdk/TobiiEyeXSdk-Cpp-1.6.477.zip -OutFile eyexsdk.zip
+  - ps: 7z x -y -oeyexsdk eyexsdk.zip
+  - ps: wget https://s3-us-west-2.amazonaws.com/lytro-power-tools/lytro-power-tools-beta.exe -OutFile lpt.exe
+  - ps: 7z x -y -olpt lpt.exe
+  - ps: ls 
+  - ps: ls lpt
+  - ps: mv C:\projects\gazer\lpt\_•€\ C:\projects\gazer\lpt_\
+  - pip install .\lpt_\lytro-power-tools-1.0.1b0
+
+before_test:
+  - which nosetests
+
+test_script:
+
+  # Run tests on codebase
+  - cd C:\projects\gazer\
+  - nosetests --nocapture --with-coverage --cover-package=gazer ./tests
+
+  # Run test from binary
+  - cd C:\projects\gazer\dist\gazer-debug
+  - gazer-debug.exe -d
+
+on_success:
+  - echo Test succesful!
+
+build_script:
+  - cd C:\projects\gazer\scripts
+  - python C:\projects\gazer\scripts\make_gazer_exe.py
+
+after_build:
+  - 7z a gazer-debug.zip ..\dist\gazer-debug
+  - appveyor PushArtifact gazer-debug.zip
+
+artifacts:
+  - path: dist\gazer.*.exe
+    name: Gazer
