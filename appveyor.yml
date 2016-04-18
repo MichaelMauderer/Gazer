@@ -98,7 +98,5 @@ after_build:
   - appveyor PushArtifact gazer-debug.zip
 
 artifacts:
-  - path: dist\gazer-debug
-    name: Gazer-Debug
   - path: dist\gazer.*.exe
     name: Gazer
