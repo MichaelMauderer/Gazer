@@ -1,22 +1,20 @@
+# -*- coding: utf-8 -*-
 """
-Ensures numpy libraries are correctly copied from conda package.
-Based on : http://stackoverflow.com/a/35853001/1175813
+Created on Sat Mar 12 15:49:51 2016
+@author: http://stackoverflow.com/questions/35478526/
+pyinstaller-numpy-intel-mkl-fatal-error-cannot-load-mkl-intel-thread-dll
 """
-from PyInstaller import log as logging
+
+from PyInstaller import log as logging 
 from PyInstaller import compat
-import os
+from os import listdir
 
-logger = logging.getLogger(__name__)
-
-lib_dir = 'C:\\miniconda'
-mkl_libs = []
-logger.info('Searching for MKL libs in {}'.format(lib_dir))
-for root, dirs, files in os.walk(lib_dir):
-    matches = list(filter(lambda x: x.startswith('libmkl_'), files))
-    mkl_libs += matches
-
-if mkl_libs:
-    logger.info("MKL libs found: {}".format(' '.join(mkl_libs)))
-    binaries = map(lambda l: os.path.join(lib_dir, l), mkl_libs)
-else:
-    logger.warning("MKL libs not found.")
+try:
+    libdir = compat.base_prefix + "/Library/bin"
+    mkllib = [x for x in listdir(libdir) if x.startswith('mkl_')]
+    if mkllib != []:
+        logger = logging.getLogger(__name__)
+        logger.info("MKL installed as part of numpy, importing that!")
+        binaries = [(libdir + "/" + l, '') for l in mkllib]
+except FileNotFoundError:
+    pass
